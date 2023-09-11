@@ -3,6 +3,7 @@
         "stm32f4xx.h": "c",
         "main.h": "c",
         "board.h": "c",
-        "pinmap.h": "c"
+        "pinmap.h": "c",
+        "stm32f4xx_it.h": "c"
     }
 }

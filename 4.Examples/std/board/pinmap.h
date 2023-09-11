@@ -17,7 +17,7 @@
 
 #define LED_ON(port, pin)         GPIO_WriteBit(port, pin, Bit_RESET)  // 低有效
 #define LED_OFF(port, pin)        GPIO_WriteBit(port, pin, Bit_SET)
-#define LED_TGL(port, pin)        GPIO_WriteBit(!GPIO_ReadInputDataBit(port, pin))
+#define LED_TGL(port, pin)        GPIO_WriteBit(port, pin, !GPIO_ReadInputDataBit(port, pin))
 
 //
 
@@ -46,32 +46,40 @@
 #define RS232_TX_GPIO_CLK         RCC_AHB1Periph_GPIOA
 #define RS232_TX_GPIO_PORT        GPIOA
 #define RS232_TX_GPIO_PIN         GPIO_Pin_9
+#define RS232_TX_GPIO_PINSRC      GPIO_PinSource9
 
 #define RS232_RX_GPIO_CLK         RCC_AHB1Periph_GPIOA
 #define RS232_RX_GPIO_PORT        GPIOA
 #define RS232_RX_GPIO_PIN         GPIO_Pin_10
+#define RS232_RX_GPIO_PINSRC      GPIO_PinSource10
 
-#define RS232_UART_CLKEN(...)     RCC_APB2PeriphClockCmd(...)
+#define RS232_GPIO_AF             GPIO_AF_USART1
+
 #define RS232_UART_CLK            RCC_APB2Periph_USART1
 #define RS232_UART_PORT           USART1
+#define RS232_UART_CLKEN(...)     RCC_APB2PeriphClockCmd(__VA_ARGS__)
 
 //
 
 #define RS485_TX_GPIO_CLK         RCC_AHB1Periph_GPIOD
 #define RS485_TX_GPIO_PORT        GPIOD
 #define RS485_TX_GPIO_PIN         GPIO_Pin_5
+#define RS485_TX_GPIO_PINSRC      GPIO_PinSource5
 
 #define RS485_RX_GPIO_CLK         RCC_AHB1Periph_GPIOD
 #define RS485_RX_GPIO_PORT        GPIOD
 #define RS485_RX_GPIO_PIN         GPIO_Pin_6
+#define RS485_RX_GPIO_PINSRC      GPIO_PinSource6
 
 #define RS485_RTS_GPIO_CLK        RCC_AHB1Periph_GPIOD
 #define RS485_RTS_GPIO_PORT       GPIOD
 #define RS485_RTS_GPIO_PIN        GPIO_Pin_7
 
-#define RS485_UART_CLKEN(...)     RCC_APB1PeriphClockCmd(...)
-#define RS485_UART_CLK            RCC_APB1Periph_USART2
+#define RS485_GPIO_AF             GPIO_AF_USART2
+
 #define RS485_UART_PORT           USART2
+#define RS485_UART_CLK            RCC_APB1Periph_USART2
+#define RS485_UART_CLKEN(...)     RCC_APB1PeriphClockCmd(__VA_ARGS__)
 
 #define RS485_SetTxDir()          GPIO_WriteBit(RS485_RTS_GPIO_PORT, RS485_RTS_GPIO_PIN, Bit_RESET)
 #define RS485_SetRxDir()          GPIO_WriteBit(RS485_RTS_GPIO_PORT, RS485_RTS_GPIO_PIN, Bit_SET)
@@ -113,8 +121,8 @@
 #define W25Q128_CS_GPIO_PIN       GPIO_Pin_3
 
 #define W25Q128_SPI_PORT          SPI2
-#define W25Q128_SPI_CLKEN(...)    RCC_APB1PeriphClockCmd(...)
 #define W25Q128_SPI_CLK           RCC_APB1Periph_SPI2
+#define W25Q128_SPI_CLKEN(...)    RCC_APB1PeriphClockCmd(__VA_ARGS__)
 
 //
 
@@ -136,9 +144,9 @@
 #define NRF24L01_IRQ_GPIO_PORT    GPIOE
 #define NRF24L01_IRQ_GPIO_PIN     GPIO_Pin_9
 
-#define NRF24L01_SPI_CLKEN(...)   RCC_APB1PeriphClockCmd(...)
-#define NRF24L01_SPI_CLK          RCC_APB1Periph_SPI2
 #define NRF24L01_SPI_PORT         SPI2
+#define NRF24L01_SPI_CLK          RCC_APB1Periph_SPI2
+#define NRF24L01_SPI_CLKEN(...)   RCC_APB1PeriphClockCmd(__VA_ARGS__)
 
 //
 
