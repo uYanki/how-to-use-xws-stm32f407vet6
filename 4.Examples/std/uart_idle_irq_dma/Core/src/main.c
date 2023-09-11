@@ -214,7 +214,7 @@ void USART_Transmit_DMA(void* datsrc, u16 len)
     // transmit data
     DMA_Cmd(USART_TX_DMA_STREAM, DISABLE);
 
-#if 1
+#if 0
     DMA_MemoryTargetConfig(USART_TX_DMA_STREAM, (u32)datsrc, DMA_Memory_0);
     DMA_SetCurrDataCounter(USART_TX_DMA_STREAM, len);
 #else
@@ -258,8 +258,6 @@ void USART_IRQHandler(void)
     // transmit complete
     else if (USART_GetITStatus(USART_PORT, USART_IT_TC) == SET)
     {
-        LED_TGL(LED1_GPIO_PORT, LED1_GPIO_PIN);
-
         // clear flag
         DMA_ClearFlag(USART_TX_DMA_STREAM, USART_TX_DMA_TCIF);
         USART_ClearFlag(USART_PORT, USART_FLAG_TC);
