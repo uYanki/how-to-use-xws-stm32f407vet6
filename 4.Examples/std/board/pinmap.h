@@ -17,7 +17,7 @@
 
 #define LED_ON(port, pin)         GPIO_WriteBit(port, pin, Bit_RESET)  // 低有效
 #define LED_OFF(port, pin)        GPIO_WriteBit(port, pin, Bit_SET)
-#define LED_TGL(port, pin)        GPIO_WriteBit(port, pin, !GPIO_ReadInputDataBit(port, pin))
+#define LED_TGL(port, pin)        GPIO_WriteBit(port, pin, (BitAction)!GPIO_ReadInputDataBit(port, pin))
 
 //
 

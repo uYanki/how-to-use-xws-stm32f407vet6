@@ -47,3 +47,15 @@ void Key_Init(void)
     GPIO_InitStruct.GPIO_Pin = KEY3_GPIO_PIN;
     GPIO_Init(KEY3_GPIO_PORT, &GPIO_InitStruct);
 }
+
+void FirewareDelay(u32 nWaitTime)  // 待改 dwt
+{
+    u8 n;
+    while (nWaitTime--)
+    {
+        n = UINT8_MAX;
+        while (n--)
+        {
+        }
+    }
+}

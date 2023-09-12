@@ -6,4 +6,6 @@
 void Led_Init(void);
 void Key_Init(void);
 
+void FirewareDelay(u32 nWaitTime);
+
 #endif

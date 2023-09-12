@@ -1,12 +1,37 @@
 #include "main.h"
 
 #include <stdio.h>
+#include <stdbool.h>
 
 ///
 
+#define USART_MODE_NORMAL            1
+#define USART_MODE_RS232             2
+#define USART_MODE_RS422             3
+#define USART_MODE_RS485             4
+
+#define CONFIG_USART_DEBUG           1
+
+#define CONFIG_USART_MODE            USART_MODE_RS232
+// #define CONFIG_USART_MODE            USART_MODE_RS485
+
+#define CONFIG_USART_REDIRECT_PRINTF 1
+#define CONFIG_USART_REDIRECT_SCANF  1
+
+#ifndef CONFIG_USART_MODE
+#define CONFIG_USART_MODE USART_MODE_NORMAL
+#endif
+
+#if 0  // debug only
+		__disable_irq();
+		print("USART_IT_IDLE");
+		print("\r\n");
+		__enable_irq();
+#endif
+
 // gpio & usart
 
-#if 0
+#if CONFIG_USART_MODE == USART_MODE_RS232
 
 #define USART_PORT           RS232_UART_PORT
 #define USART_CLK            RS232_UART_CLK
@@ -26,7 +51,7 @@
 #define USART_RX_GPIO_PINSRC RS232_RX_GPIO_PINSRC
 #define USART_RX_GPIO_AF     RS232_GPIO_AF
 
-#else
+#elif CONFIG_USART_MODE == USART_MODE_RS485
 
 #define USART_PORT           RS485_UART_PORT
 #define USART_CLK            RS485_UART_CLK
@@ -52,9 +77,15 @@
 #define USART_SetTxDir()     RS485_SetTxDir()
 #define USART_SetRxDir()     RS485_SetRxDir()
 
+#else
+
+#error "unsupported port"
+
 #endif
 
 // dma
+
+#define DMA_Flags(stream)    (DMA_FLAG_TCIF##stream | DMA_FLAG_FEIF##stream | DMA_FLAG_DMEIF##stream | DMA_FLAG_TEIF##stream | DMA_FLAG_HTIF##stream)
 
 #define USART_DR_BASE        &(USART_PORT->DR)
 
@@ -62,12 +93,13 @@
 #define USART_TX_DMA_CLK     RCC_AHB1Periph_DMA2
 #define USART_TX_DMA_CHANNEL DMA_Channel_4
 #define USART_TX_DMA_STREAM  DMA2_Stream7
-#define USART_TX_DMA_TCIF    DMA_IT_TCIF7  // transmission complete interrupt flag
+#define USART_TX_DMA_FLAG    DMA_Flags(7)
 
 #define USART_RX_DMA_CLKEN   RCC_AHB1PeriphClockCmd
 #define USART_RX_DMA_CLK     RCC_AHB1Periph_DMA2
 #define USART_RX_DMA_CHANNEL DMA_Channel_4
 #define USART_RX_DMA_STREAM  DMA2_Stream5
+#define USART_RX_DMA_FLAG    DMA_Flags(4)
 
 ////
 
@@ -103,7 +135,7 @@ void UART_Config(u32 baudrate)
         GPIO_InitStructure.GPIO_Pin = USART_RX_GPIO_PIN;
         GPIO_Init(USART_RX_GPIO_PORT, &GPIO_InitStructure);
 
-#ifdef USART_RTS_GPIO_CLK
+#if CONFIG_USART_MODE == USART_MODE_RS485
 
         RCC_AHB1PeriphClockCmd(RS485_RTS_GPIO_CLK, ENABLE);
 
@@ -153,6 +185,14 @@ void UART_Config(u32 baudrate)
         USART_TX_DMA_CLKEN(USART_TX_DMA_CLK, ENABLE);
         USART_RX_DMA_CLKEN(USART_RX_DMA_CLK, ENABLE);
 
+        DMA_DeInit(USART_TX_DMA_STREAM);
+        while (DMA_GetCmdStatus(USART_TX_DMA_STREAM) != DISABLE)
+            ;
+
+        DMA_DeInit(USART_RX_DMA_STREAM);
+        while (DMA_GetCmdStatus(USART_RX_DMA_STREAM) != DISABLE)
+            ;
+
         // common
 
         DMA_InitStructure.DMA_MemoryBurst    = DMA_MemoryBurst_Single;
@@ -171,8 +211,6 @@ void UART_Config(u32 baudrate)
 
         // tx dma
 
-        DMA_Cmd(USART_TX_DMA_STREAM, DISABLE);
-
         DMA_InitStructure.DMA_Mode            = DMA_Mode_Normal;  // oneshot
         DMA_InitStructure.DMA_Channel         = USART_TX_DMA_CHANNEL;
         DMA_InitStructure.DMA_DIR             = DMA_DIR_MemoryToPeripheral;
@@ -180,10 +218,9 @@ void UART_Config(u32 baudrate)
         DMA_InitStructure.DMA_BufferSize      = 0;
 
         DMA_Init(USART_TX_DMA_STREAM, &DMA_InitStructure);
+        DMA_Cmd(USART_TX_DMA_STREAM, DISABLE);
 
         // rx dma
-
-        DMA_Cmd(USART_RX_DMA_STREAM, DISABLE);
 
         DMA_InitStructure.DMA_Mode            = DMA_Mode_Circular;
         DMA_InitStructure.DMA_Channel         = USART_RX_DMA_CHANNEL;
@@ -192,27 +229,62 @@ void UART_Config(u32 baudrate)
         DMA_InitStructure.DMA_BufferSize      = USART_RXBUF_SIZE;
 
         DMA_Init(USART_RX_DMA_STREAM, &DMA_InitStructure);
+        DMA_Cmd(USART_RX_DMA_STREAM, DISABLE);
     }
 
-    // enable idle irq
-    USART_ITConfig(USART_PORT, USART_IT_TC, ENABLE);
-    USART_ITConfig(USART_PORT, USART_IT_IDLE, ENABLE);
-    // enable uart DMA request
+    // enable uart
+    USART_Cmd(USART_PORT, ENABLE);
+
+    // interrupt ( recommend set it after `USART_Cmd` )
+    {
+        // disable irq
+        USART_ITConfig(USART_PORT, USART_IT_RXNE, DISABLE);
+        USART_ITConfig(USART_PORT, USART_IT_TXE, DISABLE);
+
+        // enable irq
+        // @note: `USART_FLAG_TC` is set after calling `USART_Init` or `USART_Cmd`
+        // if not clear it, `USART_ITConfig` will trigger interrupt
+        USART_ClearFlag(USART_PORT, USART_FLAG_TC);
+        USART_ITConfig(USART_PORT, USART_IT_TC, ENABLE);
+        USART_ITConfig(USART_PORT, USART_IT_IDLE, ENABLE);  // idle
+    }
+
+    // enable DMA request
     USART_DMACmd(USART_PORT, USART_DMAReq_Tx | USART_DMAReq_Rx, ENABLE);
     // enable uart RX DMA
     DMA_Cmd(USART_RX_DMA_STREAM, ENABLE);
-    // enable uart
-    USART_Cmd(USART_PORT, ENABLE);
 }
 
-void USART_Transmit_DMA(void* datsrc, u16 len)
+bool USART_Transmit_DMA(void* datsrc, u16 len, bool block /*阻塞式等待*/)
 {
-#ifdef USART_RTS_GPIO_CLK
+    // - USART_FLAG_TC: transmission complete, data has been sent out
+    // - USART_FLAG_TXE: transmission data register empty, data move from data
+    //        register to shift register, but data has not yet been sent out
+
+    if (block)
+    {
+        while (USART_GetFlagStatus(USART_PORT, USART_FLAG_TXE) == RESET)
+            ;
+    }
+    else
+    {
+        // if (DMA_GetFlagStatus(USART_TX_DMA_STREAM, DMA_FLAG_TEIFx) == SET) // 丢数据
+        if (USART_GetFlagStatus(USART_PORT, USART_FLAG_TXE) == RESET)
+        {
+            return false;
+        }
+    }
+
+#if CONFIG_USART_MODE == USART_MODE_RS485
+    // set tx mode
     USART_SetTxDir();
 #endif
 
-    // transmit data
     DMA_Cmd(USART_TX_DMA_STREAM, DISABLE);
+
+    // check if it is configurable
+    while (DMA_GetCmdStatus(USART_TX_DMA_STREAM) != DISABLE)
+        ;
 
 #if 0
     DMA_MemoryTargetConfig(USART_TX_DMA_STREAM, (u32)datsrc, DMA_Memory_0);
@@ -222,74 +294,61 @@ void USART_Transmit_DMA(void* datsrc, u16 len)
     USART_TX_DMA_STREAM->NDTR = len;
 #endif
 
+    // transmit data
     DMA_Cmd(USART_TX_DMA_STREAM, ENABLE);
 
-#if 0  // clear flag in USART_IRQHandler
-
-    while (USART_GetFlagStatus(USART_PORT, USART_FLAG_TC) == RESET)
-        ;  // necessary, otherwise the last bit of data is incorrect
-
-    // clear flag
-    DMA_ClearFlag(USART_TX_DMA_STREAM, USART_TX_DMA_TCIF);
-    USART_ClearFlag(USART_PORT, USART_FLAG_TC);
-
-#ifdef USART_RTS_GPIO_CLK
-    USART_SetRxDir();
-#endif
-
-#endif
+    return true;
 }
 
 void USART_IRQHandler(void)
 {
-    // idle irq
+    // idle interrupt
     if (USART_GetITStatus(USART_PORT, USART_IT_IDLE) == SET)
     {
-        uint16_t remaining = DMA_GetCurrDataCounter(USART_RX_DMA_STREAM);
+        // clear interrupt flag:
+        // It is cleared by a software sequence (an read to the USART_SR register
+        // followed by a read to the USART_DR register).
+        USART_ClearITPendingBit(USART_PORT, USART_IT_IDLE);
+        USART_ReceiveData(USART_PORT);
+
+        uint16_t length = USART_RXBUF_SIZE - DMA_GetCurrDataCounter(USART_RX_DMA_STREAM);
+
+        DMA_Cmd(USART_RX_DMA_STREAM, DISABLE);
+        DMA_ClearFlag(USART_RX_DMA_STREAM, USART_RX_DMA_FLAG);
+
+#if CONFIG_USART_DEBUG  // debug only
+			
+        if (length > 0)
+        {
+            // transmit what receive
+            USART_Transmit_DMA(USART_RXBUF_ADDR, length, true);
+        }
+				
+#endif
 
         // receive data
-        DMA_Cmd(USART_RX_DMA_STREAM, DISABLE);
         DMA_SetCurrDataCounter(USART_RX_DMA_STREAM, USART_RXBUF_SIZE);
         DMA_Cmd(USART_RX_DMA_STREAM, ENABLE);
-
-        // transmit data (debug only)
-        USART_Transmit_DMA(USART_RXBUF_ADDR, USART_RXBUF_SIZE - remaining);
     }
-    // transmit complete
-    else if (USART_GetITStatus(USART_PORT, USART_IT_TC) == SET)
+    // transmit complete interrupt
+    if (USART_GetITStatus(USART_PORT, USART_IT_TC) == SET)
     {
         // clear flag
-        DMA_ClearFlag(USART_TX_DMA_STREAM, USART_TX_DMA_TCIF);
+        USART_ClearITPendingBit(USART_PORT, USART_IT_TC);
         USART_ClearFlag(USART_PORT, USART_FLAG_TC);
-
-#ifdef USART_RTS_GPIO_CLK
+        DMA_ClearFlag(USART_TX_DMA_STREAM, USART_TX_DMA_FLAG);
+#if CONFIG_USART_MODE == USART_MODE_RS485
+        // set rx mode
         USART_SetRxDir();
 #endif
-    }
-
-    // clear interrupt flag:
-    // It is cleared by a software sequence (an read to the USART_SR register
-    // followed by a read to the USART_DR register).
-    // @note: the compiler will not optimize variables modified by volatile
-    if (USART_PORT->SR & 0x1F)
-    {
-        // for
-        // - PE: Parity error
-        // - FE: Framing error
-        // - NF: Noise detected flag
-        // - ORE: Overrun error
-        // - IDLE: IDLE line detected
-        USART_PORT->DR;
     }
 }
 
 ///
 
-#ifndef USART_RTS_GPIO_CLK
+#if CONFIG_USART_MODE == USART_MODE_RS485
 
-#define print printf
-
-#else
+#if 0
 
 #define print(...)           \
     do {                     \
@@ -298,7 +357,26 @@ void USART_IRQHandler(void)
         USART_SetRxDir();    \
     } while (0)
 
+#else
+
+extern void $Super$$printf(void);
+
+void $Sub$$printf(void)
+{
+    USART_SetTxDir();
+    $Super$$printf();  // 调用原函数
+    // USART_SetRxDir();
+}
+
 #endif
+
+#endif
+
+///
+
+#if CONFIG_USART_REDIRECT_PRINTF
+
+#define println(fmt, arg...) printf(fmt "\r\n", ##arg)
 
 int fputc(int ch, FILE* f)
 {
@@ -310,6 +388,10 @@ int fputc(int ch, FILE* f)
     return (ch);
 }
 
+#endif
+
+#if CONFIG_USART_REDIRECT_SCANF
+
 int fgetc(FILE* f)
 {
     while (USART_GetFlagStatus(USART_PORT, USART_FLAG_RXNE) == RESET)
@@ -317,6 +399,55 @@ int fgetc(FILE* f)
 
     return (int)USART_ReceiveData(USART_PORT);
 }
+
+#endif
+
+///
+
+// GUN - Extension: https://blog.csdn.net/shangzh/article/details/39398577
+
+#if defined(__GNUC__)
+// get minimum  value ( with type check )
+#define _min(x, y) ({ const typeof(x) __x = (x); const typeof(y) __y = (y); (void) (&__x == &__y); __x < __y ? __x: __y; }) 
+#else
+#define _min(x, y) ((x) < (y) ? (x) : (y))
+#endif
+
+/// MDK - extension
+
+// 补丁函数(闭包)
+
+void sayhello(void)
+{
+    printf("hello");
+}
+
+void $Sub$$sayhello(void)
+{
+    // MDK 拓展语法: https://zhuanlan.zhihu.com/p/145219269
+    // μVision Help -> search `USE of $Sub and $Super`
+    // position: Compiler Getting Started Guide. Hardware initialization.
+
+    // before
+    printf("[");
+
+    // 调用原函数
+#if defined(__CC_ARM) || defined(__CLANG_ARM)
+    extern void $Super$$sayhello(void);
+    $Super$$sayhello();
+#elif defined(__ICCARM__) || defined(__GNUC__)
+    extern void sayhello(void);
+    sayhello();
+#endif
+
+    // after
+    printf("]\r\n");
+}
+
+///
+
+// clang-format off
+// clang-format on
 
 ///
 
@@ -328,11 +459,39 @@ int main()
     Led_Init();
     Key_Init();
 
+    {
+			  // get minimum
+        println("%d", _min(12, 13));
+
+			  // array init
+        u8 array[10] = {
+            [0] = 10,
+            [3] = 50,
+#if defined(__GNUC__)
+            [6 ... 8] = 100,
+#endif
+        };
+        println("%d,%d,%d", array[0], array[3], array[7]);
+    }
+
+    u16 t = 0;
+
     while (1)
     {
         if (KEY_IS_PRESS(KEY1_GPIO_PORT, KEY1_GPIO_PIN))
         {
-            USART_Transmit_DMA("hello\r\n", 7);
+            if (++t == 0)
+            {
+#if 1
+                sayhello();
+#else
+                USART_Transmit_DMA("hello\r\n", 7, false);
+#endif
+            }
+        }
+        else
+        {
+            t = 0;
         }
     }
 }
