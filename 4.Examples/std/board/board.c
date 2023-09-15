@@ -1,6 +1,7 @@
-
-
 #include "board.h"
+
+// clang-format off
+// clang-format on
 
 void Led_Init(void)
 {
@@ -48,7 +49,50 @@ void Key_Init(void)
     GPIO_Init(KEY3_GPIO_PORT, &GPIO_InitStruct);
 }
 
-void FirewareDelay(u32 nWaitTime)  // 待改 dwt
+void RS232_Init(u32 baudrate)
+{
+    // gpio
+    {
+        GPIO_InitTypeDef GPIO_InitStructure;
+
+        RCC_AHB1PeriphClockCmd(RS232_TX_GPIO_CLK | RS232_RX_GPIO_CLK, ENABLE);
+
+        GPIO_PinAFConfig(RS232_TX_GPIO_PORT, RS232_TX_GPIO_PINSRC, RS232_GPIO_AF);
+        GPIO_PinAFConfig(RS232_RX_GPIO_PORT, RS232_RX_GPIO_PINSRC, RS232_GPIO_AF);
+
+        GPIO_InitStructure.GPIO_Mode  = GPIO_Mode_AF;
+        GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;
+        GPIO_InitStructure.GPIO_PuPd  = GPIO_PuPd_NOPULL;
+        GPIO_InitStructure.GPIO_Speed = GPIO_High_Speed;
+
+        GPIO_InitStructure.GPIO_Pin = RS232_TX_GPIO_PIN;
+        GPIO_Init(RS232_TX_GPIO_PORT, &GPIO_InitStructure);
+
+        GPIO_InitStructure.GPIO_Pin = RS232_RX_GPIO_PIN;
+        GPIO_Init(RS232_RX_GPIO_PORT, &GPIO_InitStructure);
+    }
+
+    // uart
+    {
+        USART_InitTypeDef USART_InitStructure;
+
+        RS232_UART_CLKEN(RS232_UART_CLK, ENABLE);
+
+        USART_InitStructure.USART_BaudRate            = baudrate;
+        USART_InitStructure.USART_HardwareFlowControl = USART_HardwareFlowControl_None;
+        USART_InitStructure.USART_Mode                = USART_Mode_Tx | USART_Mode_Rx;
+        USART_InitStructure.USART_Parity              = USART_Parity_No;
+        USART_InitStructure.USART_StopBits            = USART_StopBits_1;
+        USART_InitStructure.USART_WordLength          = USART_WordLength_8b;
+
+        USART_Init(RS232_UART_PORT, &USART_InitStructure);
+    }
+
+    // enable uart
+    USART_Cmd(RS232_UART_PORT, ENABLE);
+}
+
+void FirewareDelay(u32 nWaitTime)
 {
     u8 n;
     while (nWaitTime--)
