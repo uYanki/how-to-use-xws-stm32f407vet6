@@ -373,7 +373,7 @@
             <ScatterFile>.\Objects\demo.sct</ScatterFile>
             <IncludeLibs></IncludeLibs>
             <IncludeLibsPath></IncludeLibsPath>
-            <Misc></Misc>
+            <Misc>--keep=*</Misc>
             <LinkerInputFile></LinkerInputFile>
             <DisabledWarnings></DisabledWarnings>
           </LDads>
@@ -387,6 +387,11 @@
               <FileName>startup_stm32f40_41xxx.s</FileName>
               <FileType>2</FileType>
               <FilePath>.\Core\src\startup_stm32f40_41xxx.s</FilePath>
+            </File>
+            <File>
+              <FileName>startup_stm32f40_41xxx_ram.s</FileName>
+              <FileType>2</FileType>
+              <FilePath>.\Core\src\startup_stm32f40_41xxx_ram.s</FilePath>
             </File>
           </Files>
         </Group>

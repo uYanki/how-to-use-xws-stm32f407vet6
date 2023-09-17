@@ -44,7 +44,7 @@ __attribute__((section("RAMCODE")))
 #### 运行结果
 
 ```
-* flash_foo1 in 8000afc
+* flash_foo1 in 0x8000afc
 * flash_foo2 in 0x8000b20
 * ram_foo1 in 0x20000000
 * ram_foo2 in 0x20000014

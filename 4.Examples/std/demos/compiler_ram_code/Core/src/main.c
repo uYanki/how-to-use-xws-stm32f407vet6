@@ -37,7 +37,7 @@ __asm int readpc(void){
 void flash_foo1()
 {
     u32 p = readlr() - 7u;
-    printf("* %s in %x\n", __func__, p);
+    printf("* %s in 0x%x\n", __func__, p);
 }
 
 void flash_foo2()
