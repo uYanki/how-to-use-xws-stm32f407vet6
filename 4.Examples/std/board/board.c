@@ -92,6 +92,28 @@ void RS232_Init(u32 baudrate)
     USART_Cmd(RS232_UART_PORT, ENABLE);
 }
 
+#if CONOFIG_RS232_PRINT
+
+int fputc(int ch, FILE* f)
+{
+    if (ch == '\n')
+    {
+        USART_SendData(RS232_UART_PORT, '\r');
+
+        while (USART_GetFlagStatus(RS232_UART_PORT, USART_FLAG_TXE) == RESET)
+            ;
+    }
+
+    USART_SendData(RS232_UART_PORT, (uint8_t)ch);
+
+    while (USART_GetFlagStatus(RS232_UART_PORT, USART_FLAG_TXE) == RESET)
+        ;
+
+    return (ch);
+}
+
+#endif
+
 void FirewareDelay(u32 nWaitTime)
 {
     u8 n;
