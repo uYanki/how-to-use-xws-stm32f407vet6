@@ -1,6 +1,8 @@
 #ifndef __AUTO_INIT_H__
 #define __AUTO_INIT_H__
 
+#include "sleep.h"
+
 #define CONFIG_USDK_INIT_DEBUG 1
 
 #if defined(__ARMCC_VERSION) || defined(__GNUC__)
@@ -51,13 +53,14 @@ typedef struct {
 
 #endif
 
-#define INIT_LEVEL_FIRST       "0"
 #define INIT_LEVEL_BOARD       "1"  // board support package
 #define INIT_LEVEL_DEVICE      "2"  // device
 #define INIT_LEVEL_COMPONENT   "3"  // components
 #define INIT_LEVEL_ENVIRONMENT "4"  // environment
 #define INIT_LEVEL_APPLICATION "5"  // application
-#define INIT_LEVEL_LAST        "6"
+
+#define INIT_RESULT_SUCCESS    0
+#define INIT_RESULT_FAILURE    1
 
 extern void usdk_hw_uart_init(void);
 

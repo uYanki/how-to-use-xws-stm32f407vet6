@@ -1,22 +1,23 @@
 #include "autoinit.h"
 
-static int system_begin()
+static int system_begin(void)
 {
-    return 0;
+    return INIT_RESULT_SUCCESS;
 }
 
-USDK_INIT_EXPORT(system_begin, INIT_LEVEL_FIRST)  // first
+USDK_INIT_EXPORT(system_begin, "0")  // first
 
-static int system_end()
+static int system_end(void)
 {
-    return 0;
+    return INIT_RESULT_SUCCESS;
 }
 
-USDK_INIT_EXPORT(system_end, INIT_LEVEL_LAST)  // last
+USDK_INIT_EXPORT(system_end, "9")  // last
 
-void usdk_startup()
+void usdk_startup(void)
 {
-    extern void usdk_hw_uart_init(void);
+    dwt_init();
+
     usdk_hw_uart_init();
 
 #if CONFIG_USDK_INIT_DEBUG
@@ -32,7 +33,7 @@ void usdk_startup()
 
     volatile const lpfn_init_t* ptr;
 
-    for (ptr = &__usdk_init_begin; ptr <= &__usdk_init_end; ptr++)
+    for (ptr = &__usdk_init_system_begin; ptr <= &__usdk_init_system_end; ptr++)
     {
         (*ptr)();
     }
@@ -72,6 +73,10 @@ int entry(void)
 #pragma INIT_SECTION(usdk_startup)
 #endif
 
-__weak void usdk_hw_uart_init()
+__WEAK void usdk_hw_uart_init()
 {
+#if CONFIG_USDK_INIT_DEBUG
+    while (1)
+        ;
+#endif
 }

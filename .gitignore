@@ -1,1 +1,5 @@
-Objects
+
+*.crf
+*.o
+*.d
+*.iex

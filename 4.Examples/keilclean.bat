@@ -22,6 +22,6 @@ del JLinkLog.txt /s
 
 del *.iex /s
 del *.htm /s
-::del *.sct /s
+::del *.sct /s  :: 有些例程自定义了该文件
 ::del *.map /s
 exit

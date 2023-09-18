@@ -4,6 +4,9 @@
         "main.h": "c",
         "board.h": "c",
         "pinmap.h": "c",
-        "dwt.h": "c"
+        "dwt.h": "c",
+        "autoinit.h": "c",
+        "sleep.h": "c",
+        "board_conf.h": "c"
     }
 }

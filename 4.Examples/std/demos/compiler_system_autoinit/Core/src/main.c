@@ -20,7 +20,7 @@ int bsp_init(void)
     Led_Init();
     Key_Init();
 
-    return 0;
+    return INIT_RESULT_SUCCESS;
 }
 
 USDK_INIT_EXPORT(bsp_init, INIT_LEVEL_BOARD)
