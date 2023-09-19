@@ -6,10 +6,10 @@
                 "d:\\how-to-use-xws-stm32f407vet6\\4.Examples\\std\\fwlib\\Libraries\\STM32F4xx_StdPeriph_Driver\\inc",
                 "d:\\how-to-use-xws-stm32f407vet6\\4.Examples\\std\\fwlib\\Libraries\\CMSIS\\Include",
                 "d:\\how-to-use-xws-stm32f407vet6\\4.Examples\\std\\board",
-                "d:\\how-to-use-xws-stm32f407vet6\\4.Examples\\std\\demos\\compiler_ram_code\\Core\\inc",
+                "d:\\how-to-use-xws-stm32f407vet6\\4.Examples\\std\\demos\\compiler_swrst_keep_variable\\Core\\inc",
                 "C:\\Keil_v5\\ARM\\ARMCC\\include",
                 "C:\\Keil_v5\\ARM\\ARMCC\\include\\rw",
-                "d:\\how-to-use-xws-stm32f407vet6\\4.Examples\\std\\demos\\compiler_ram_code\\Core\\src",
+                "d:\\how-to-use-xws-stm32f407vet6\\4.Examples\\std\\demos\\compiler_swrst_keep_variable\\Core\\src",
                 "d:\\how-to-use-xws-stm32f407vet6\\4.Examples\\std\\board\\dwt",
                 "d:\\how-to-use-xws-stm32f407vet6\\4.Examples\\std\\fwlib\\Libraries\\STM32F4xx_StdPeriph_Driver\\src"
             ],

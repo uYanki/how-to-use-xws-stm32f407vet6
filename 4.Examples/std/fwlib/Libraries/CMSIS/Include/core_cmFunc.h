@@ -625,8 +625,18 @@ __attribute__( ( always_inline ) ) __STATIC_INLINE void __set_FPSCR(uint32_t fps
 {
 #if (__FPU_PRESENT == 1) && (__FPU_USED == 1)
   /* Empty asm statement works as a scheduling barrier */
+
   __ASM volatile ("");
+	
+  #if (__ARMCC_VERSION >= 6000000) // Arm Compiler 6
+	__ASM volatile ("VMRS r0, fpscr\n\t"
+                "BIC r0, r0, #0x00370000\n\t"
+                "ORR r0, r0, #0x00002000\n\t"
+                "VMSR fpscr, r0");
+  #elif (__ARMCC_VERSION >= 5000000) // Arm Compiler 5
   __ASM volatile ("VMSR fpscr, %0" : : "r" (fpscr) : "vfpcc");
+	#endif
+	
   __ASM volatile ("");
 #endif
 }
