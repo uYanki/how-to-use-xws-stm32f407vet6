@@ -4,6 +4,7 @@
         "main.h": "c",
         "board.h": "c",
         "pinmap.h": "c",
-        "dwt.h": "c"
+        "dwt.h": "c",
+        "sleep.h": "c"
     }
 }

@@ -431,16 +431,6 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>bsp/dwt</GroupName>
-          <Files>
-            <File>
-              <FileName>dwt.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\board\dwt\dwt.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>lib</GroupName>
         </Group>
         <Group>
@@ -663,6 +653,16 @@
         </Group>
         <Group>
           <GroupName>docs</GroupName>
+        </Group>
+        <Group>
+          <GroupName>system</GroupName>
+          <Files>
+            <File>
+              <FileName>sleep.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\board\system\sleep.c</FilePath>
+            </File>
+          </Files>
         </Group>
       </Groups>
     </Target>

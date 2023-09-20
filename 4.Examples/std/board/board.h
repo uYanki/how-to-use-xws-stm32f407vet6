@@ -4,6 +4,8 @@
 #include "pinmap.h"
 #include "board_conf.h"
 
+#include "stm32f4xx.h"
+
 #if CONOFIG_RS232_PRINT
 #include <stdio.h>
 #endif

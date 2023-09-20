@@ -16,7 +16,7 @@ USDK_INIT_EXPORT(system_end, "9")  // last
 
 void usdk_startup(void)
 {
-    dwt_init();
+    sleep_init();
 
     usdk_hw_uart_init();
 

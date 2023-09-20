@@ -431,12 +431,12 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>bsp/dwt</GroupName>
+          <GroupName>system</GroupName>
           <Files>
             <File>
-              <FileName>dwt.c</FileName>
+              <FileName>sleep.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\board\dwt\dwt.c</FilePath>
+              <FilePath>..\..\board\system\sleep.c</FilePath>
             </File>
           </Files>
         </Group>

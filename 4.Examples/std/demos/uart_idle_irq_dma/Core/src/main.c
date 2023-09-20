@@ -1,4 +1,5 @@
 #include "main.h"
+#include "system/sleep.h"
 
 #include <stdio.h>
 #include <stdbool.h>
@@ -386,7 +387,7 @@ int $Sub$$__2printf(const char* fmt, ...)
 
     // set tx dir
     USART_SetTxDir();
-    DWT_Wait(40);
+    sleep_us(40);
 
     $Super$$__2printf("<*>");
 
@@ -398,7 +399,7 @@ int $Sub$$__2printf(const char* fmt, ...)
 
     // set rx dir
     // @note: it is set in usart_irq
-    // DWT_Wait(40);
+    // sleep_us(40);
     // USART_SetRxDir();
 
     return len;
@@ -412,14 +413,14 @@ int $Sub$$__2printf(const char* fmt, va_list args)
 
     // set tx dir
     USART_SetTxDir();
-    DWT_Wait(40);
+    sleep_us(40);
 
     $Super$$__2printf("<*>");
     len = $Super$$__2printf(fmt, args);  // print
 
     // set rx dir
     // @note: it is set in usart_irq
-    // DWT_Wait(40);
+    // sleep_us(40);
     // USART_SetRxDir();
 
     return len;
@@ -466,6 +467,7 @@ int fgetc(FILE* f)
 int main()
 {
     NVIC_PriorityGroupConfig(NVIC_PriorityGroup_0);
+		sleep_init();
     UART_Config(115200);
 
     Led_Init();

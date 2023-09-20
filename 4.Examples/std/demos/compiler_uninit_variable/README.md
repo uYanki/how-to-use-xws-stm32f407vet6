@@ -1,4 +1,4 @@
-## 软复位不重置变量
+## 复位不初始化变量（不重置变量值）
 
 * 方法 1
 
@@ -33,6 +33,22 @@ LR_IROM1 0x08000000 0x00080000  {    ; load region size_region
    *(.swrst_keep)
   }
 }
+```
 
+----
+
+切换为 AC6 时 `__set_FPSCR` 报错，解决方法：
+
+![6](.assest/README/6.png)
+
+```c
+#if (__ARMCC_VERSION >= 6000000) // Arm Compiler 6
+__ASM volatile ("VMRS r0, fpscr\n\t"
+                "BIC r0, r0, #0x00370000\n\t"
+                "ORR r0, r0, #0x00002000\n\t"
+                "VMSR fpscr, r0");
+#elif (__ARMCC_VERSION >= 5000000) // Arm Compiler 5
+__ASM volatile ("VMSR fpscr, %0" : : "r" (fpscr) : "vfpcc");
+#endif
 ```
 

@@ -1,5 +1,7 @@
 #include "sleep.h"
-#include "autoinit.h"
+
+//---------------------------------------------------------------
+//
 
 #define DWT_FREQ         (SystemCoreClock)
 
@@ -53,4 +55,55 @@ u32 GetSysClk(void)
     RCC_ClocksTypeDef clocks;
     RCC_GetClocksFreq(&clocks);
     return clocks.SYSCLK_Frequency;
+}
+
+u32 dwt_tick(void)
+{
+    return DWT_CYCCNT;
+}
+
+//---------------------------------------------------------------
+//
+#define TIM_CLK  RCC_APB1Periph_TIM3
+#define TIM_PORT TIM3
+
+void tim_init(void)  // freq = SystemCoreClock/2 Hz
+{
+    TIM_TimeBaseInitTypeDef TIM_TimeBaseStructure;
+
+    RCC_APB1PeriphClockCmd(TIM_CLK, ENABLE);
+
+    TIM_TimeBaseStructure.TIM_Prescaler     = (SystemCoreClock / 1e6) - 1;
+    TIM_TimeBaseStructure.TIM_Period        = 2 - 1;  // TIMx->ARR
+    TIM_TimeBaseStructure.TIM_CounterMode   = TIM_CounterMode_Down;
+    TIM_TimeBaseStructure.TIM_ClockDivision = TIM_CKD_DIV1;
+
+    TIM_TimeBaseInit(TIM_PORT, &TIM_TimeBaseStructure);
+}
+
+void _tim_wait(u16 us)
+{
+    TIM_PORT->CNT = us - 1;
+    TIM_PORT->CR1 |= TIM_CR1_CEN;
+    while ((TIM_PORT->SR & TIM_FLAG_Update) != SET)
+        ;
+    TIM_PORT->CR1 &= (~TIM_CR1_CEN);
+    TIM_PORT->SR &= ~TIM_FLAG_Update;
+}
+
+void tim_wait(u32 us)
+{
+    u16 hi, lo;
+
+    us >>= 1;
+
+    hi = us >> 16;
+    lo = us & 0xFFFF;
+
+    while (hi--)
+    {
+        _tim_wait(0xFFFF);
+    }
+
+    _tim_wait(lo);
 }

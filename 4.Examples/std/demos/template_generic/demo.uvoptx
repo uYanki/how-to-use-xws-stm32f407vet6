@@ -290,7 +290,7 @@
   </Group>
 
   <Group>
-    <GroupName>bsp/dwt</GroupName>
+    <GroupName>system</GroupName>
     <tvExp>1</tvExp>
     <tvExpOptDlg>0</tvExpOptDlg>
     <cbSel>0</cbSel>
@@ -302,8 +302,8 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\..\board\dwt\dwt.c</PathWithFileName>
-      <FilenameWithoutPath>dwt.c</FilenameWithoutPath>
+      <PathWithFileName>..\..\board\system\sleep.c</PathWithFileName>
+      <FilenameWithoutPath>sleep.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>

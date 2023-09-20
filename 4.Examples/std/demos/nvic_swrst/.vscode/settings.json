@@ -1,0 +1,16 @@
+{
+    "files.associations": {
+        "stm32f4xx.h": "c",
+        "main.h": "c",
+        "board.h": "c",
+        "pinmap.h": "c",
+        "dwt.h": "c",
+        "sleep.h": "c",
+        "swrst.h": "c",
+        "stdio.h": "c",
+        "autoinit.h": "c",
+        "string.h": "c",
+        "buildtime.h": "c",
+        "board_conf.h": "c"
+    }
+}
