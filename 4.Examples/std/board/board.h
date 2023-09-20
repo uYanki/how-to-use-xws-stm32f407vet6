@@ -6,7 +6,7 @@
 
 #include "stm32f4xx.h"
 
-#if CONOFIG_RS232_PRINT
+#if CONFIG_RS232_PRINT
 #include <stdio.h>
 #endif
 

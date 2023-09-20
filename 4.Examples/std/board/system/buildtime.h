@@ -1,6 +1,8 @@
 #ifndef __BUILD_TIME_H__
 #define __BUILD_TIME_H__
 
+#include "stm32f4xx.h"
+
 #define CONFIG_VERSION_MAJOR 5  // Major
 #define CONFIG_VERSION_MINOR 0  // Minor
 #define CONFIG_VERSION_PATCH 1  // Patch

@@ -92,7 +92,7 @@ void RS232_Init(u32 baudrate)
     USART_Cmd(RS232_UART_PORT, ENABLE);
 }
 
-#if CONOFIG_RS232_PRINT
+#if CONFIG_RS232_PRINT
 
 int fputc(int ch, FILE* f)
 {
