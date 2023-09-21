@@ -1,0 +1,6 @@
+{
+    "files.associations": {
+        "co_odinterface.h": "c",
+        "stdarg.h": "c"
+    }
+}
