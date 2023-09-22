@@ -3,7 +3,7 @@
 <title>Static Call Graph - [demo\demo.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image demo\demo.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060960: Last Updated: Fri Sep 22 01:55:05 2023
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060960: Last Updated: Sat Sep 23 02:09:04 2023
 <BR><P>
 <H3>Maximum Stack Usage =        436 bytes + Unknown(Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
@@ -74,7 +74,7 @@ Function Pointers
  <LI><a href="#[2c]">I2C2_EV_IRQHandler</a> from startup_stm32f407xx.o(.text) referenced from startup_stm32f407xx.o(RESET)
  <LI><a href="#[54]">I2C3_ER_IRQHandler</a> from startup_stm32f407xx.o(.text) referenced from startup_stm32f407xx.o(RESET)
  <LI><a href="#[53]">I2C3_EV_IRQHandler</a> from startup_stm32f407xx.o(.text) referenced from startup_stm32f407xx.o(RESET)
- <LI><a href="#[7a]">MX_CAN2_Init</a> from main.o(i.MX_CAN2_Init) referenced from main.o(i.main)
+ <LI><a href="#[7a]">MX_CAN1_Init</a> from main.o(i.MX_CAN1_Init) referenced from main.o(i.main)
  <LI><a href="#[4]">MemManage_Handler</a> from stm32f4xx_it.o(i.MemManage_Handler) referenced from startup_stm32f407xx.o(RESET)
  <LI><a href="#[2]">NMI_Handler</a> from stm32f4xx_it.o(i.NMI_Handler) referenced from startup_stm32f407xx.o(RESET)
  <LI><a href="#[75]">OD_readDisabled</a> from co_odinterface.o(i.OD_readDisabled) referenced from co_odinterface.o(i.OD_getSub)
@@ -149,7 +149,7 @@ Function Pointers
  <LI><a href="#[6]">UsageFault_Handler</a> from stm32f4xx_it.o(i.UsageFault_Handler) referenced from startup_stm32f407xx.o(RESET)
  <LI><a href="#[b]">WWDG_IRQHandler</a> from startup_stm32f407xx.o(.text) referenced from startup_stm32f407xx.o(RESET)
  <LI><a href="#[5e]">__main</a> from entry.o(.ARM.Collect$$$$00000000) referenced from startup_stm32f407xx.o(.text)
- <LI><a href="#[79]">fputc</a> from main.o(i.fputc) referenced from printf5.o(i.__0printf$5)
+ <LI><a href="#[79]">fputc</a> from main.o(i.fputc) referenced from printf8.o(i.__0printf$8)
  <LI><a href="#[5c]">main</a> from main.o(i.main) referenced from entry9a.o(.ARM.Collect$$$$0000000B)
 </UL>
 <P>
@@ -159,7 +159,7 @@ Global Symbols
 <P><STRONG><a name="[5e]"></a>__main</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, entry.o(.ARM.Collect$$$$00000000))
 <BR>[Address Reference Count : 1]<UL><LI> startup_stm32f407xx.o(.text)
 </UL>
-<P><STRONG><a name="[126]"></a>_main_stk</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, entry2.o(.ARM.Collect$$$$00000001))
+<P><STRONG><a name="[128]"></a>_main_stk</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, entry2.o(.ARM.Collect$$$$00000001))
 
 <P><STRONG><a name="[7b]"></a>_main_scatterload</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, entry5.o(.ARM.Collect$$$$00000004))
 <BR><BR>[Calls]<UL><LI><a href="#[7c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__scatterload
@@ -169,17 +169,17 @@ Global Symbols
 <BR><BR>[Called By]<UL><LI><a href="#[7c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__scatterload
 </UL>
 
-<P><STRONG><a name="[127]"></a>_main_clock</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, entry7b.o(.ARM.Collect$$$$00000008))
+<P><STRONG><a name="[129]"></a>_main_clock</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, entry7b.o(.ARM.Collect$$$$00000008))
 
-<P><STRONG><a name="[128]"></a>_main_cpp_init</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, entry8b.o(.ARM.Collect$$$$0000000A))
+<P><STRONG><a name="[12a]"></a>_main_cpp_init</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, entry8b.o(.ARM.Collect$$$$0000000A))
 
-<P><STRONG><a name="[129]"></a>_main_init</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, entry9a.o(.ARM.Collect$$$$0000000B))
+<P><STRONG><a name="[12b]"></a>_main_init</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, entry9a.o(.ARM.Collect$$$$0000000B))
 
-<P><STRONG><a name="[12a]"></a>__rt_lib_shutdown_fini</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, entry12b.o(.ARM.Collect$$$$0000000E))
+<P><STRONG><a name="[12c]"></a>__rt_lib_shutdown_fini</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, entry12b.o(.ARM.Collect$$$$0000000E))
 
-<P><STRONG><a name="[12b]"></a>__rt_final_cpp</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, entry10a.o(.ARM.Collect$$$$0000000F))
+<P><STRONG><a name="[12d]"></a>__rt_final_cpp</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, entry10a.o(.ARM.Collect$$$$0000000F))
 
-<P><STRONG><a name="[12c]"></a>__rt_final_exit</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, entry11a.o(.ARM.Collect$$$$00000011))
+<P><STRONG><a name="[12e]"></a>__rt_final_exit</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, entry11a.o(.ARM.Collect$$$$00000011))
 
 <P><STRONG><a name="[1]"></a>Reset_Handler</STRONG> (Thumb, 8 bytes, Stack size 0 bytes, startup_stm32f407xx.o(.text))
 <BR>[Address Reference Count : 1]<UL><LI> startup_stm32f407xx.o(RESET)
@@ -415,7 +415,7 @@ Global Symbols
 <LI><a href="#[11c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_printf_core
 </UL>
 
-<P><STRONG><a name="[12d]"></a>___aeabi_memcpy8$move</STRONG> (Thumb, 0 bytes, Stack size 8 bytes, memmovea.o(.text), UNUSED)
+<P><STRONG><a name="[12f]"></a>___aeabi_memcpy8$move</STRONG> (Thumb, 0 bytes, Stack size 8 bytes, memmovea.o(.text), UNUSED)
 
 <P><STRONG><a name="[b7]"></a>__aeabi_memcpy</STRONG> (Thumb, 64 bytes, Stack size 8 bytes, memmovea.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = __aeabi_memcpy
@@ -459,18 +459,18 @@ Global Symbols
 <LI><a href="#[6d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OD_write_1201_additional
 </UL>
 
-<P><STRONG><a name="[12e]"></a>__aeabi_memmove4</STRONG> (Thumb, 0 bytes, Stack size 8 bytes, memmovea.o(.text), UNUSED)
+<P><STRONG><a name="[130]"></a>__aeabi_memmove4</STRONG> (Thumb, 0 bytes, Stack size 8 bytes, memmovea.o(.text), UNUSED)
 
-<P><STRONG><a name="[12f]"></a>__aeabi_memmove8</STRONG> (Thumb, 0 bytes, Stack size 8 bytes, memmovea.o(.text), UNUSED)
+<P><STRONG><a name="[131]"></a>__aeabi_memmove8</STRONG> (Thumb, 0 bytes, Stack size 8 bytes, memmovea.o(.text), UNUSED)
 
 <P><STRONG><a name="[81]"></a>__aeabi_memset</STRONG> (Thumb, 14 bytes, Stack size 0 bytes, memseta.o(.text))
 <BR><BR>[Called By]<UL><LI><a href="#[82]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_memset$wrapper
 <LI><a href="#[80]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memclr
 </UL>
 
-<P><STRONG><a name="[130]"></a>__aeabi_memset4</STRONG> (Thumb, 0 bytes, Stack size 0 bytes, memseta.o(.text), UNUSED)
+<P><STRONG><a name="[132]"></a>__aeabi_memset4</STRONG> (Thumb, 0 bytes, Stack size 0 bytes, memseta.o(.text), UNUSED)
 
-<P><STRONG><a name="[131]"></a>__aeabi_memset8</STRONG> (Thumb, 0 bytes, Stack size 0 bytes, memseta.o(.text), UNUSED)
+<P><STRONG><a name="[133]"></a>__aeabi_memset8</STRONG> (Thumb, 0 bytes, Stack size 0 bytes, memseta.o(.text), UNUSED)
 
 <P><STRONG><a name="[80]"></a>__aeabi_memclr</STRONG> (Thumb, 4 bytes, Stack size 0 bytes, memseta.o(.text))
 <BR><BR>[Calls]<UL><LI><a href="#[81]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memset
@@ -494,13 +494,13 @@ Global Symbols
 <LI><a href="#[92]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CO_EM_init
 </UL>
 
-<P><STRONG><a name="[132]"></a>__aeabi_memclr8</STRONG> (Thumb, 0 bytes, Stack size 0 bytes, memseta.o(.text), UNUSED)
+<P><STRONG><a name="[134]"></a>__aeabi_memclr8</STRONG> (Thumb, 0 bytes, Stack size 0 bytes, memseta.o(.text), UNUSED)
 
 <P><STRONG><a name="[82]"></a>_memset$wrapper</STRONG> (Thumb, 18 bytes, Stack size 8 bytes, memseta.o(.text), UNUSED)
 <BR><BR>[Calls]<UL><LI><a href="#[81]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memset
 </UL>
 
-<P><STRONG><a name="[125]"></a>strlen</STRONG> (Thumb, 14 bytes, Stack size 0 bytes, strlen.o(.text))
+<P><STRONG><a name="[127]"></a>strlen</STRONG> (Thumb, 14 bytes, Stack size 0 bytes, strlen.o(.text))
 <BR><BR>[Called By]<UL><LI><a href="#[bf]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;readFromOd
 </UL>
 
@@ -516,13 +516,13 @@ Global Symbols
 <BR><BR>[Called By]<UL><LI><a href="#[7d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_uldivmod
 </UL>
 
-<P><STRONG><a name="[133]"></a>_ll_shift_l</STRONG> (Thumb, 0 bytes, Stack size 0 bytes, llshl.o(.text), UNUSED)
+<P><STRONG><a name="[135]"></a>_ll_shift_l</STRONG> (Thumb, 0 bytes, Stack size 0 bytes, llshl.o(.text), UNUSED)
 
 <P><STRONG><a name="[7e]"></a>__aeabi_llsr</STRONG> (Thumb, 32 bytes, Stack size 0 bytes, llushr.o(.text))
 <BR><BR>[Called By]<UL><LI><a href="#[7d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_uldivmod
 </UL>
 
-<P><STRONG><a name="[134]"></a>_ll_ushift_r</STRONG> (Thumb, 0 bytes, Stack size 0 bytes, llushr.o(.text), UNUSED)
+<P><STRONG><a name="[136]"></a>_ll_ushift_r</STRONG> (Thumb, 0 bytes, Stack size 0 bytes, llushr.o(.text), UNUSED)
 
 <P><STRONG><a name="[7c]"></a>__scatterload</STRONG> (Thumb, 28 bytes, Stack size 0 bytes, init.o(.text))
 <BR><BR>[Calls]<UL><LI><a href="#[85]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__main_after_scatterload
@@ -530,66 +530,66 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[7b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_main_scatterload
 </UL>
 
-<P><STRONG><a name="[135]"></a>__scatterload_rt2</STRONG> (Thumb, 0 bytes, Stack size 0 bytes, init.o(.text), UNUSED)
+<P><STRONG><a name="[137]"></a>__scatterload_rt2</STRONG> (Thumb, 0 bytes, Stack size 0 bytes, init.o(.text), UNUSED)
 
-<P><STRONG><a name="[136]"></a>__decompress</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, __dczerorl2.o(.text), UNUSED)
+<P><STRONG><a name="[138]"></a>__decompress</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, __dczerorl2.o(.text), UNUSED)
 
-<P><STRONG><a name="[137]"></a>__decompress1</STRONG> (Thumb, 86 bytes, Stack size unknown bytes, __dczerorl2.o(.text), UNUSED)
+<P><STRONG><a name="[139]"></a>__decompress1</STRONG> (Thumb, 86 bytes, Stack size unknown bytes, __dczerorl2.o(.text), UNUSED)
 
 <P><STRONG><a name="[5]"></a>BusFault_Handler</STRONG> (Thumb, 4 bytes, Stack size 0 bytes, stm32f4xx_it.o(i.BusFault_Handler))
 <BR>[Address Reference Count : 1]<UL><LI> startup_stm32f407xx.o(RESET)
 </UL>
 <P><STRONG><a name="[1f]"></a>CAN1_RX0_IRQHandler</STRONG> (Thumb, 10 bytes, Stack size 8 bytes, stm32f4xx_it.o(i.CAN1_RX0_IRQHandler))
-<BR><BR>[Stack]<UL><LI>Max Depth = 124<LI>Call Chain = CAN1_RX0_IRQHandler &rArr; HAL_CAN_IRQHandler &rArr; HAL_CAN_TxMailbox2CompleteCallback &rArr; CO_CANinterrupt_TX &rArr; prv_send_can_message &rArr; HAL_CAN_AddTxMessage
+<BR><BR>[Stack]<UL><LI>Max Depth = 160<LI>Call Chain = CAN1_RX0_IRQHandler &rArr; HAL_CAN_IRQHandler &rArr; HAL_CAN_RxFifo1MsgPendingCallback &rArr; prv_read_can_received_msg &rArr; __2printf
 </UL>
 <BR>[Calls]<UL><LI><a href="#[86]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_CAN_IRQHandler
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> startup_stm32f407xx.o(RESET)
 </UL>
 <P><STRONG><a name="[20]"></a>CAN1_RX1_IRQHandler</STRONG> (Thumb, 10 bytes, Stack size 8 bytes, stm32f4xx_it.o(i.CAN1_RX1_IRQHandler))
-<BR><BR>[Stack]<UL><LI>Max Depth = 124<LI>Call Chain = CAN1_RX1_IRQHandler &rArr; HAL_CAN_IRQHandler &rArr; HAL_CAN_TxMailbox2CompleteCallback &rArr; CO_CANinterrupt_TX &rArr; prv_send_can_message &rArr; HAL_CAN_AddTxMessage
+<BR><BR>[Stack]<UL><LI>Max Depth = 160<LI>Call Chain = CAN1_RX1_IRQHandler &rArr; HAL_CAN_IRQHandler &rArr; HAL_CAN_RxFifo1MsgPendingCallback &rArr; prv_read_can_received_msg &rArr; __2printf
 </UL>
 <BR>[Calls]<UL><LI><a href="#[86]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_CAN_IRQHandler
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> startup_stm32f407xx.o(RESET)
 </UL>
 <P><STRONG><a name="[21]"></a>CAN1_SCE_IRQHandler</STRONG> (Thumb, 10 bytes, Stack size 8 bytes, stm32f4xx_it.o(i.CAN1_SCE_IRQHandler))
-<BR><BR>[Stack]<UL><LI>Max Depth = 124<LI>Call Chain = CAN1_SCE_IRQHandler &rArr; HAL_CAN_IRQHandler &rArr; HAL_CAN_TxMailbox2CompleteCallback &rArr; CO_CANinterrupt_TX &rArr; prv_send_can_message &rArr; HAL_CAN_AddTxMessage
+<BR><BR>[Stack]<UL><LI>Max Depth = 160<LI>Call Chain = CAN1_SCE_IRQHandler &rArr; HAL_CAN_IRQHandler &rArr; HAL_CAN_RxFifo1MsgPendingCallback &rArr; prv_read_can_received_msg &rArr; __2printf
 </UL>
 <BR>[Calls]<UL><LI><a href="#[86]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_CAN_IRQHandler
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> startup_stm32f407xx.o(RESET)
 </UL>
 <P><STRONG><a name="[1e]"></a>CAN1_TX_IRQHandler</STRONG> (Thumb, 10 bytes, Stack size 8 bytes, stm32f4xx_it.o(i.CAN1_TX_IRQHandler))
-<BR><BR>[Stack]<UL><LI>Max Depth = 124<LI>Call Chain = CAN1_TX_IRQHandler &rArr; HAL_CAN_IRQHandler &rArr; HAL_CAN_TxMailbox2CompleteCallback &rArr; CO_CANinterrupt_TX &rArr; prv_send_can_message &rArr; HAL_CAN_AddTxMessage
+<BR><BR>[Stack]<UL><LI>Max Depth = 160<LI>Call Chain = CAN1_TX_IRQHandler &rArr; HAL_CAN_IRQHandler &rArr; HAL_CAN_RxFifo1MsgPendingCallback &rArr; prv_read_can_received_msg &rArr; __2printf
 </UL>
 <BR>[Calls]<UL><LI><a href="#[86]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_CAN_IRQHandler
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> startup_stm32f407xx.o(RESET)
 </UL>
 <P><STRONG><a name="[4b]"></a>CAN2_RX0_IRQHandler</STRONG> (Thumb, 10 bytes, Stack size 8 bytes, stm32f4xx_it.o(i.CAN2_RX0_IRQHandler))
-<BR><BR>[Stack]<UL><LI>Max Depth = 124<LI>Call Chain = CAN2_RX0_IRQHandler &rArr; HAL_CAN_IRQHandler &rArr; HAL_CAN_TxMailbox2CompleteCallback &rArr; CO_CANinterrupt_TX &rArr; prv_send_can_message &rArr; HAL_CAN_AddTxMessage
+<BR><BR>[Stack]<UL><LI>Max Depth = 160<LI>Call Chain = CAN2_RX0_IRQHandler &rArr; HAL_CAN_IRQHandler &rArr; HAL_CAN_RxFifo1MsgPendingCallback &rArr; prv_read_can_received_msg &rArr; __2printf
 </UL>
 <BR>[Calls]<UL><LI><a href="#[86]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_CAN_IRQHandler
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> startup_stm32f407xx.o(RESET)
 </UL>
 <P><STRONG><a name="[4c]"></a>CAN2_RX1_IRQHandler</STRONG> (Thumb, 10 bytes, Stack size 8 bytes, stm32f4xx_it.o(i.CAN2_RX1_IRQHandler))
-<BR><BR>[Stack]<UL><LI>Max Depth = 124<LI>Call Chain = CAN2_RX1_IRQHandler &rArr; HAL_CAN_IRQHandler &rArr; HAL_CAN_TxMailbox2CompleteCallback &rArr; CO_CANinterrupt_TX &rArr; prv_send_can_message &rArr; HAL_CAN_AddTxMessage
+<BR><BR>[Stack]<UL><LI>Max Depth = 160<LI>Call Chain = CAN2_RX1_IRQHandler &rArr; HAL_CAN_IRQHandler &rArr; HAL_CAN_RxFifo1MsgPendingCallback &rArr; prv_read_can_received_msg &rArr; __2printf
 </UL>
 <BR>[Calls]<UL><LI><a href="#[86]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_CAN_IRQHandler
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> startup_stm32f407xx.o(RESET)
 </UL>
 <P><STRONG><a name="[4d]"></a>CAN2_SCE_IRQHandler</STRONG> (Thumb, 10 bytes, Stack size 8 bytes, stm32f4xx_it.o(i.CAN2_SCE_IRQHandler))
-<BR><BR>[Stack]<UL><LI>Max Depth = 124<LI>Call Chain = CAN2_SCE_IRQHandler &rArr; HAL_CAN_IRQHandler &rArr; HAL_CAN_TxMailbox2CompleteCallback &rArr; CO_CANinterrupt_TX &rArr; prv_send_can_message &rArr; HAL_CAN_AddTxMessage
+<BR><BR>[Stack]<UL><LI>Max Depth = 160<LI>Call Chain = CAN2_SCE_IRQHandler &rArr; HAL_CAN_IRQHandler &rArr; HAL_CAN_RxFifo1MsgPendingCallback &rArr; prv_read_can_received_msg &rArr; __2printf
 </UL>
 <BR>[Calls]<UL><LI><a href="#[86]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_CAN_IRQHandler
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> startup_stm32f407xx.o(RESET)
 </UL>
 <P><STRONG><a name="[4a]"></a>CAN2_TX_IRQHandler</STRONG> (Thumb, 10 bytes, Stack size 8 bytes, stm32f4xx_it.o(i.CAN2_TX_IRQHandler))
-<BR><BR>[Stack]<UL><LI>Max Depth = 124<LI>Call Chain = CAN2_TX_IRQHandler &rArr; HAL_CAN_IRQHandler &rArr; HAL_CAN_TxMailbox2CompleteCallback &rArr; CO_CANinterrupt_TX &rArr; prv_send_can_message &rArr; HAL_CAN_AddTxMessage
+<BR><BR>[Stack]<UL><LI>Max Depth = 160<LI>Call Chain = CAN2_TX_IRQHandler &rArr; HAL_CAN_IRQHandler &rArr; HAL_CAN_RxFifo1MsgPendingCallback &rArr; prv_read_can_received_msg &rArr; __2printf
 </UL>
 <BR>[Calls]<UL><LI><a href="#[86]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_CAN_IRQHandler
 </UL>
@@ -607,11 +607,11 @@ Global Symbols
 <BR>[Calls]<UL><LI><a href="#[88]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CO_CANsetConfigurationMode
 <LI><a href="#[89]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CO_CANmodule_init
 </UL>
-<BR>[Called By]<UL><LI><a href="#[11f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;canopen_app_resetCommunication
+<BR>[Called By]<UL><LI><a href="#[121]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;canopen_app_resetCommunication
 </UL>
 
 <P><STRONG><a name="[8a]"></a>CO_CANinterrupt_TX</STRONG> (Thumb, 96 bytes, Stack size 24 bytes, co_driver_stm32.o(i.CO_CANinterrupt_TX))
-<BR><BR>[Stack]<UL><LI>Max Depth = 68<LI>Call Chain = CO_CANinterrupt_TX &rArr; prv_send_can_message &rArr; HAL_CAN_AddTxMessage
+<BR><BR>[Stack]<UL><LI>Max Depth = 96<LI>Call Chain = CO_CANinterrupt_TX &rArr; prv_send_can_message &rArr; __2printf
 </UL>
 <BR>[Calls]<UL><LI><a href="#[8b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;prv_send_can_message
 </UL>
@@ -626,7 +626,7 @@ Global Symbols
 <BR>[Calls]<UL><LI><a href="#[8d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_CAN_Stop
 </UL>
 <BR>[Called By]<UL><LI><a href="#[ca]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CO_delete
-<LI><a href="#[11f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;canopen_app_resetCommunication
+<LI><a href="#[121]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;canopen_app_resetCommunication
 </UL>
 
 <P><STRONG><a name="[89]"></a>CO_CANmodule_init</STRONG> (Thumb, 252 bytes, Stack size 72 bytes, co_driver_stm32.o(i.CO_CANmodule_init))
@@ -653,7 +653,7 @@ Global Symbols
 <LI><a href="#[94]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CO_HBconsumer_init
 <LI><a href="#[92]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CO_EM_init
 </UL>
-<BR>[Called By]<UL><LI><a href="#[11f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;canopen_app_resetCommunication
+<BR>[Called By]<UL><LI><a href="#[121]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;canopen_app_resetCommunication
 </UL>
 
 <P><STRONG><a name="[98]"></a>CO_CANopenInitPDO</STRONG> (Thumb, 300 bytes, Stack size 72 bytes, canopen.o(i.CO_CANopenInitPDO))
@@ -662,7 +662,7 @@ Global Symbols
 <BR>[Calls]<UL><LI><a href="#[9a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CO_TPDO_init
 <LI><a href="#[99]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CO_RPDO_init
 </UL>
-<BR>[Called By]<UL><LI><a href="#[11f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;canopen_app_resetCommunication
+<BR>[Called By]<UL><LI><a href="#[121]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;canopen_app_resetCommunication
 </UL>
 
 <P><STRONG><a name="[a8]"></a>CO_CANrxBufferInit</STRONG> (Thumb, 104 bytes, Stack size 28 bytes, co_driver_stm32.o(i.CO_CANrxBufferInit))
@@ -680,7 +680,7 @@ Global Symbols
 </UL>
 
 <P><STRONG><a name="[9b]"></a>CO_CANsend</STRONG> (Thumb, 80 bytes, Stack size 16 bytes, co_driver_stm32.o(i.CO_CANsend))
-<BR><BR>[Stack]<UL><LI>Max Depth = 60<LI>Call Chain = CO_CANsend &rArr; prv_send_can_message &rArr; HAL_CAN_AddTxMessage
+<BR><BR>[Stack]<UL><LI>Max Depth = 88<LI>Call Chain = CO_CANsend &rArr; prv_send_can_message &rArr; __2printf
 </UL>
 <BR>[Calls]<UL><LI><a href="#[8b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;prv_send_can_message
 </UL>
@@ -697,9 +697,9 @@ Global Symbols
 </UL>
 <BR>[Calls]<UL><LI><a href="#[8d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_CAN_Stop
 </UL>
-<BR>[Called By]<UL><LI><a href="#[120]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;canopen_app_process
+<BR>[Called By]<UL><LI><a href="#[122]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;canopen_app_process
 <LI><a href="#[87]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CO_CANinit
-<LI><a href="#[11f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;canopen_app_resetCommunication
+<LI><a href="#[121]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;canopen_app_resetCommunication
 </UL>
 
 <P><STRONG><a name="[9c]"></a>CO_CANsetNormalMode</STRONG> (Thumb, 24 bytes, Stack size 8 bytes, co_driver_stm32.o(i.CO_CANsetNormalMode))
@@ -707,7 +707,7 @@ Global Symbols
 </UL>
 <BR>[Calls]<UL><LI><a href="#[9d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_CAN_Start
 </UL>
-<BR>[Called By]<UL><LI><a href="#[11f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;canopen_app_resetCommunication
+<BR>[Called By]<UL><LI><a href="#[121]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;canopen_app_resetCommunication
 </UL>
 
 <P><STRONG><a name="[a3]"></a>CO_CANtxBufferInit</STRONG> (Thumb, 60 bytes, Stack size 20 bytes, co_driver_stm32.o(i.CO_CANtxBufferInit))
@@ -738,7 +738,7 @@ Global Symbols
 </UL>
 
 <P><STRONG><a name="[a4]"></a>CO_EM_process</STRONG> (Thumb, 422 bytes, Stack size 40 bytes, co_emergency.o(i.CO_EM_process))
-<BR><BR>[Stack]<UL><LI>Max Depth = 100<LI>Call Chain = CO_EM_process &rArr; CO_CANsend &rArr; prv_send_can_message &rArr; HAL_CAN_AddTxMessage
+<BR><BR>[Stack]<UL><LI>Max Depth = 128<LI>Call Chain = CO_EM_process &rArr; CO_CANsend &rArr; prv_send_can_message &rArr; __2printf
 </UL>
 <BR>[Calls]<UL><LI><a href="#[9b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CO_CANsend
 <LI><a href="#[a5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CO_error
@@ -780,7 +780,7 @@ Global Symbols
 </UL>
 <BR>[Calls]<UL><LI><a href="#[ab]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CO_LSSslave_init
 </UL>
-<BR>[Called By]<UL><LI><a href="#[11f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;canopen_app_resetCommunication
+<BR>[Called By]<UL><LI><a href="#[121]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;canopen_app_resetCommunication
 </UL>
 
 <P><STRONG><a name="[ab]"></a>CO_LSSslave_init</STRONG> (Thumb, 174 bytes, Stack size 56 bytes, co_lssslave.o(i.CO_LSSslave_init))
@@ -794,7 +794,7 @@ Global Symbols
 </UL>
 
 <P><STRONG><a name="[ac]"></a>CO_LSSslave_process</STRONG> (Thumb, 508 bytes, Stack size 48 bytes, co_lssslave.o(i.CO_LSSslave_process))
-<BR><BR>[Stack]<UL><LI>Max Depth = 108<LI>Call Chain = CO_LSSslave_process &rArr; CO_CANsend &rArr; prv_send_can_message &rArr; HAL_CAN_AddTxMessage
+<BR><BR>[Stack]<UL><LI>Max Depth = 136<LI>Call Chain = CO_LSSslave_process &rArr; CO_CANsend &rArr; prv_send_can_message &rArr; __2printf
 </UL>
 <BR>[Calls]<UL><LI><a href="#[9b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CO_CANsend
 </UL>
@@ -814,7 +814,7 @@ Global Symbols
 </UL>
 
 <P><STRONG><a name="[ae]"></a>CO_NMT_process</STRONG> (Thumb, 324 bytes, Stack size 40 bytes, co_nmt_heartbeat.o(i.CO_NMT_process))
-<BR><BR>[Stack]<UL><LI>Max Depth = 100<LI>Call Chain = CO_NMT_process &rArr; CO_CANsend &rArr; prv_send_can_message &rArr; HAL_CAN_AddTxMessage
+<BR><BR>[Stack]<UL><LI>Max Depth = 128<LI>Call Chain = CO_NMT_process &rArr; CO_CANsend &rArr; prv_send_can_message &rArr; __2printf
 </UL>
 <BR>[Calls]<UL><LI><a href="#[af]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CO_isError
 <LI><a href="#[9b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CO_CANsend
@@ -859,7 +859,7 @@ Global Symbols
 </UL>
 
 <P><STRONG><a name="[bb]"></a>CO_SDOserver_process</STRONG> (Thumb, 1566 bytes, Stack size 56 bytes, co_sdoserver.o(i.CO_SDOserver_process))
-<BR><BR>[Stack]<UL><LI>Max Depth = 116<LI>Call Chain = CO_SDOserver_process &rArr; CO_CANsend &rArr; prv_send_can_message &rArr; HAL_CAN_AddTxMessage
+<BR><BR>[Stack]<UL><LI>Max Depth = 144<LI>Call Chain = CO_SDOserver_process &rArr; CO_CANsend &rArr; prv_send_can_message &rArr; __2printf
 </UL>
 <BR>[Calls]<UL><LI><a href="#[bd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OD_getSub
 <LI><a href="#[be]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OD_getSDOabCode
@@ -888,7 +888,7 @@ Global Symbols
 </UL>
 
 <P><STRONG><a name="[c4]"></a>CO_SYNC_process</STRONG> (Thumb, 306 bytes, Stack size 40 bytes, co_sync.o(i.CO_SYNC_process))
-<BR><BR>[Stack]<UL><LI>Max Depth = 100<LI>Call Chain = CO_SYNC_process &rArr; CO_CANsend &rArr; prv_send_can_message &rArr; HAL_CAN_AddTxMessage
+<BR><BR>[Stack]<UL><LI>Max Depth = 128<LI>Call Chain = CO_SYNC_process &rArr; CO_CANsend &rArr; prv_send_can_message &rArr; __2printf
 </UL>
 <BR>[Calls]<UL><LI><a href="#[9b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CO_CANsend
 <LI><a href="#[a5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CO_error
@@ -932,7 +932,7 @@ Global Symbols
 </UL>
 
 <P><STRONG><a name="[c8]"></a>CO_TPDO_process</STRONG> (Thumb, 362 bytes, Stack size 32 bytes, co_pdo.o(i.CO_TPDO_process))
-<BR><BR>[Stack]<UL><LI>Max Depth = 156<LI>Call Chain = CO_TPDO_process &rArr; CO_TPDOsend &rArr; CO_CANsend &rArr; prv_send_can_message &rArr; HAL_CAN_AddTxMessage
+<BR><BR>[Stack]<UL><LI>Max Depth = 184<LI>Call Chain = CO_TPDO_process &rArr; CO_TPDOsend &rArr; CO_CANsend &rArr; prv_send_can_message &rArr; __2printf
 </UL>
 <BR>[Calls]<UL><LI><a href="#[c9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CO_TPDOsend
 </UL>
@@ -945,7 +945,7 @@ Global Symbols
 <BR>[Calls]<UL><LI><a href="#[8c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CO_CANmodule_disable
 <LI><a href="#[cb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;free
 </UL>
-<BR>[Called By]<UL><LI><a href="#[120]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;canopen_app_process
+<BR>[Called By]<UL><LI><a href="#[122]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;canopen_app_process
 <LI><a href="#[d0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CO_new
 </UL>
 
@@ -966,11 +966,11 @@ Global Symbols
 <BR>[Calls]<UL><LI><a href="#[ca]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CO_delete
 <LI><a href="#[83]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;calloc
 </UL>
-<BR>[Called By]<UL><LI><a href="#[11d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;canopen_app_init
+<BR>[Called By]<UL><LI><a href="#[11f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;canopen_app_init
 </UL>
 
 <P><STRONG><a name="[d1]"></a>CO_process</STRONG> (Thumb, 362 bytes, Stack size 88 bytes, canopen.o(i.CO_process))
-<BR><BR>[Stack]<UL><LI>Max Depth = 204<LI>Call Chain = CO_process &rArr; CO_SDOserver_process &rArr; CO_CANsend &rArr; prv_send_can_message &rArr; HAL_CAN_AddTxMessage
+<BR><BR>[Stack]<UL><LI>Max Depth = 232<LI>Call Chain = CO_process &rArr; CO_SDOserver_process &rArr; CO_CANsend &rArr; prv_send_can_message &rArr; __2printf
 </UL>
 <BR>[Calls]<UL><LI><a href="#[c5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CO_TIME_process
 <LI><a href="#[bb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CO_SDOserver_process
@@ -983,7 +983,7 @@ Global Symbols
 <LI><a href="#[d4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CO_isError
 <LI><a href="#[d2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CO_NMT_getInternalState
 </UL>
-<BR>[Called By]<UL><LI><a href="#[120]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;canopen_app_process
+<BR>[Called By]<UL><LI><a href="#[122]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;canopen_app_process
 </UL>
 
 <P><STRONG><a name="[d6]"></a>CO_process_RPDO</STRONG> (Thumb, 80 bytes, Stack size 32 bytes, canopen.o(i.CO_process_RPDO))
@@ -996,7 +996,7 @@ Global Symbols
 </UL>
 
 <P><STRONG><a name="[d7]"></a>CO_process_SYNC</STRONG> (Thumb, 102 bytes, Stack size 32 bytes, canopen.o(i.CO_process_SYNC))
-<BR><BR>[Stack]<UL><LI>Max Depth = 132<LI>Call Chain = CO_process_SYNC &rArr; CO_SYNC_process &rArr; CO_CANsend &rArr; prv_send_can_message &rArr; HAL_CAN_AddTxMessage
+<BR><BR>[Stack]<UL><LI>Max Depth = 160<LI>Call Chain = CO_process_SYNC &rArr; CO_SYNC_process &rArr; CO_CANsend &rArr; prv_send_can_message &rArr; __2printf
 </UL>
 <BR>[Calls]<UL><LI><a href="#[c4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CO_SYNC_process
 <LI><a href="#[d8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CO_CANclearPendingSyncPDOs
@@ -1006,7 +1006,7 @@ Global Symbols
 </UL>
 
 <P><STRONG><a name="[d9]"></a>CO_process_TPDO</STRONG> (Thumb, 76 bytes, Stack size 32 bytes, canopen.o(i.CO_process_TPDO))
-<BR><BR>[Stack]<UL><LI>Max Depth = 188<LI>Call Chain = CO_process_TPDO &rArr; CO_TPDO_process &rArr; CO_TPDOsend &rArr; CO_CANsend &rArr; prv_send_can_message &rArr; HAL_CAN_AddTxMessage
+<BR><BR>[Stack]<UL><LI>Max Depth = 216<LI>Call Chain = CO_process_TPDO &rArr; CO_TPDO_process &rArr; CO_TPDOsend &rArr; CO_CANsend &rArr; prv_send_can_message &rArr; __2printf
 </UL>
 <BR>[Calls]<UL><LI><a href="#[c8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CO_TPDO_process
 <LI><a href="#[d2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CO_NMT_getInternalState
@@ -1026,12 +1026,12 @@ Global Symbols
 <P><STRONG><a name="[8]"></a>DebugMon_Handler</STRONG> (Thumb, 2 bytes, Stack size 0 bytes, stm32f4xx_it.o(i.DebugMon_Handler))
 <BR>[Address Reference Count : 1]<UL><LI> startup_stm32f407xx.o(RESET)
 </UL>
-<P><STRONG><a name="[111]"></a>Error_Handler</STRONG> (Thumb, 6 bytes, Stack size 0 bytes, main.o(i.Error_Handler))
+<P><STRONG><a name="[110]"></a>Error_Handler</STRONG> (Thumb, 6 bytes, Stack size 0 bytes, main.o(i.Error_Handler))
 <BR><BR>[Called By]<UL><LI><a href="#[11a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SystemClock_Config
 <LI><a href="#[116]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MX_USART1_UART_Init
 <LI><a href="#[114]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MX_TIM6_Init
-<LI><a href="#[7a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MX_CAN2_Init
-<LI><a href="#[110]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MX_CAN1_Init
+<LI><a href="#[111]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MX_CAN2_Init
+<LI><a href="#[7a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MX_CAN1_Init
 </UL>
 
 <P><STRONG><a name="[8f]"></a>HAL_CAN_ActivateNotification</STRONG> (Thumb, 42 bytes, Stack size 8 bytes, stm32f4xx_hal_can.o(i.HAL_CAN_ActivateNotification))
@@ -1057,18 +1057,18 @@ Global Symbols
 <BR><BR>[Called By]<UL><LI><a href="#[86]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_CAN_IRQHandler
 </UL>
 
-<P><STRONG><a name="[123]"></a>HAL_CAN_GetRxMessage</STRONG> (Thumb, 378 bytes, Stack size 16 bytes, stm32f4xx_hal_can.o(i.HAL_CAN_GetRxMessage))
+<P><STRONG><a name="[125]"></a>HAL_CAN_GetRxMessage</STRONG> (Thumb, 378 bytes, Stack size 16 bytes, stm32f4xx_hal_can.o(i.HAL_CAN_GetRxMessage))
 <BR><BR>[Stack]<UL><LI>Max Depth = 16<LI>Call Chain = HAL_CAN_GetRxMessage
 </UL>
 <BR>[Called By]<UL><LI><a href="#[f1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;prv_read_can_received_msg
 </UL>
 
-<P><STRONG><a name="[124]"></a>HAL_CAN_GetTxMailboxesFreeLevel</STRONG> (Thumb, 54 bytes, Stack size 0 bytes, stm32f4xx_hal_can.o(i.HAL_CAN_GetTxMailboxesFreeLevel))
+<P><STRONG><a name="[126]"></a>HAL_CAN_GetTxMailboxesFreeLevel</STRONG> (Thumb, 54 bytes, Stack size 0 bytes, stm32f4xx_hal_can.o(i.HAL_CAN_GetTxMailboxesFreeLevel))
 <BR><BR>[Called By]<UL><LI><a href="#[8b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;prv_send_can_message
 </UL>
 
 <P><STRONG><a name="[86]"></a>HAL_CAN_IRQHandler</STRONG> (Thumb, 590 bytes, Stack size 40 bytes, stm32f4xx_hal_can.o(i.HAL_CAN_IRQHandler))
-<BR><BR>[Stack]<UL><LI>Max Depth = 116<LI>Call Chain = HAL_CAN_IRQHandler &rArr; HAL_CAN_TxMailbox2CompleteCallback &rArr; CO_CANinterrupt_TX &rArr; prv_send_can_message &rArr; HAL_CAN_AddTxMessage
+<BR><BR>[Stack]<UL><LI>Max Depth = 152<LI>Call Chain = HAL_CAN_IRQHandler &rArr; HAL_CAN_RxFifo1MsgPendingCallback &rArr; prv_read_can_received_msg &rArr; __2printf
 </UL>
 <BR>[Calls]<UL><LI><a href="#[e4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_CAN_RxFifo0FullCallback
 <LI><a href="#[ea]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_CAN_ErrorCallback
@@ -1100,8 +1100,8 @@ Global Symbols
 <BR>[Calls]<UL><LI><a href="#[ed]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GetTick
 <LI><a href="#[ec]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_CAN_MspInit
 </UL>
-<BR>[Called By]<UL><LI><a href="#[7a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MX_CAN2_Init
-<LI><a href="#[110]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MX_CAN1_Init
+<BR>[Called By]<UL><LI><a href="#[111]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MX_CAN2_Init
+<LI><a href="#[7a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MX_CAN1_Init
 </UL>
 
 <P><STRONG><a name="[ec]"></a>HAL_CAN_MspInit</STRONG> (Thumb, 424 bytes, Stack size 32 bytes, stm32f4xx_hal_msp.o(i.HAL_CAN_MspInit))
@@ -1120,7 +1120,7 @@ Global Symbols
 </UL>
 
 <P><STRONG><a name="[e5]"></a>HAL_CAN_RxFifo0MsgPendingCallback</STRONG> (Thumb, 16 bytes, Stack size 8 bytes, co_driver_stm32.o(i.HAL_CAN_RxFifo0MsgPendingCallback))
-<BR><BR>[Stack]<UL><LI>Max Depth = 72<LI>Call Chain = HAL_CAN_RxFifo0MsgPendingCallback &rArr; prv_read_can_received_msg &rArr; HAL_CAN_GetRxMessage
+<BR><BR>[Stack]<UL><LI>Max Depth = 112<LI>Call Chain = HAL_CAN_RxFifo0MsgPendingCallback &rArr; prv_read_can_received_msg &rArr; __2printf
 </UL>
 <BR>[Calls]<UL><LI><a href="#[f1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;prv_read_can_received_msg
 </UL>
@@ -1132,7 +1132,7 @@ Global Symbols
 </UL>
 
 <P><STRONG><a name="[e7]"></a>HAL_CAN_RxFifo1MsgPendingCallback</STRONG> (Thumb, 16 bytes, Stack size 8 bytes, co_driver_stm32.o(i.HAL_CAN_RxFifo1MsgPendingCallback))
-<BR><BR>[Stack]<UL><LI>Max Depth = 72<LI>Call Chain = HAL_CAN_RxFifo1MsgPendingCallback &rArr; prv_read_can_received_msg &rArr; HAL_CAN_GetRxMessage
+<BR><BR>[Stack]<UL><LI>Max Depth = 112<LI>Call Chain = HAL_CAN_RxFifo1MsgPendingCallback &rArr; prv_read_can_received_msg &rArr; __2printf
 </UL>
 <BR>[Calls]<UL><LI><a href="#[f1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;prv_read_can_received_msg
 </UL>
@@ -1148,7 +1148,8 @@ Global Symbols
 </UL>
 <BR>[Calls]<UL><LI><a href="#[ed]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GetTick
 </UL>
-<BR>[Called By]<UL><LI><a href="#[9c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CO_CANsetNormalMode
+<BR>[Called By]<UL><LI><a href="#[5c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
+<LI><a href="#[9c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CO_CANsetNormalMode
 </UL>
 
 <P><STRONG><a name="[8d]"></a>HAL_CAN_Stop</STRONG> (Thumb, 106 bytes, Stack size 16 bytes, stm32f4xx_hal_can.o(i.HAL_CAN_Stop))
@@ -1165,7 +1166,7 @@ Global Symbols
 </UL>
 
 <P><STRONG><a name="[de]"></a>HAL_CAN_TxMailbox0CompleteCallback</STRONG> (Thumb, 16 bytes, Stack size 8 bytes, co_driver_stm32.o(i.HAL_CAN_TxMailbox0CompleteCallback))
-<BR><BR>[Stack]<UL><LI>Max Depth = 76<LI>Call Chain = HAL_CAN_TxMailbox0CompleteCallback &rArr; CO_CANinterrupt_TX &rArr; prv_send_can_message &rArr; HAL_CAN_AddTxMessage
+<BR><BR>[Stack]<UL><LI>Max Depth = 104<LI>Call Chain = HAL_CAN_TxMailbox0CompleteCallback &rArr; CO_CANinterrupt_TX &rArr; prv_send_can_message &rArr; __2printf
 </UL>
 <BR>[Calls]<UL><LI><a href="#[8a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CO_CANinterrupt_TX
 </UL>
@@ -1177,7 +1178,7 @@ Global Symbols
 </UL>
 
 <P><STRONG><a name="[e0]"></a>HAL_CAN_TxMailbox1CompleteCallback</STRONG> (Thumb, 16 bytes, Stack size 8 bytes, co_driver_stm32.o(i.HAL_CAN_TxMailbox1CompleteCallback))
-<BR><BR>[Stack]<UL><LI>Max Depth = 76<LI>Call Chain = HAL_CAN_TxMailbox1CompleteCallback &rArr; CO_CANinterrupt_TX &rArr; prv_send_can_message &rArr; HAL_CAN_AddTxMessage
+<BR><BR>[Stack]<UL><LI>Max Depth = 104<LI>Call Chain = HAL_CAN_TxMailbox1CompleteCallback &rArr; CO_CANinterrupt_TX &rArr; prv_send_can_message &rArr; __2printf
 </UL>
 <BR>[Calls]<UL><LI><a href="#[8a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CO_CANinterrupt_TX
 </UL>
@@ -1189,7 +1190,7 @@ Global Symbols
 </UL>
 
 <P><STRONG><a name="[e2]"></a>HAL_CAN_TxMailbox2CompleteCallback</STRONG> (Thumb, 16 bytes, Stack size 8 bytes, co_driver_stm32.o(i.HAL_CAN_TxMailbox2CompleteCallback))
-<BR><BR>[Stack]<UL><LI>Max Depth = 76<LI>Call Chain = HAL_CAN_TxMailbox2CompleteCallback &rArr; CO_CANinterrupt_TX &rArr; prv_send_can_message &rArr; HAL_CAN_AddTxMessage
+<BR><BR>[Stack]<UL><LI>Max Depth = 104<LI>Call Chain = HAL_CAN_TxMailbox2CompleteCallback &rArr; CO_CANinterrupt_TX &rArr; prv_send_can_message &rArr; __2printf
 </UL>
 <BR>[Calls]<UL><LI><a href="#[8a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CO_CANinterrupt_TX
 </UL>
@@ -1215,14 +1216,14 @@ Global Symbols
 
 <P><STRONG><a name="[ed]"></a>HAL_GetTick</STRONG> (Thumb, 6 bytes, Stack size 0 bytes, stm32f4xx_hal.o(i.HAL_GetTick))
 <BR><BR>[Called By]<UL><LI><a href="#[8d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_CAN_Stop
-<LI><a href="#[9d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_CAN_Start
-<LI><a href="#[120]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;canopen_app_process
+<LI><a href="#[122]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;canopen_app_process
 <LI><a href="#[10e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_UART_Transmit
 <LI><a href="#[fe]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_RCC_OscConfig
 <LI><a href="#[f9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_RCC_ClockConfig
+<LI><a href="#[9d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_CAN_Start
 <LI><a href="#[eb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_CAN_Init
 <LI><a href="#[10f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UART_WaitOnFlagUntilTimeout
-<LI><a href="#[11f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;canopen_app_resetCommunication
+<LI><a href="#[121]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;canopen_app_resetCommunication
 </UL>
 
 <P><STRONG><a name="[119]"></a>HAL_IncTick</STRONG> (Thumb, 16 bytes, Stack size 0 bytes, stm32f4xx_hal.o(i.HAL_IncTick))
@@ -1275,8 +1276,8 @@ Global Symbols
 <BR><BR>[Called By]<UL><LI><a href="#[f2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_Init
 </UL>
 
-<P><STRONG><a name="[121]"></a>HAL_NVIC_SystemReset</STRONG> (Thumb, 60 bytes, Stack size 0 bytes, stm32f4xx_hal_cortex.o(i.HAL_NVIC_SystemReset))
-<BR><BR>[Called By]<UL><LI><a href="#[120]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;canopen_app_process
+<P><STRONG><a name="[123]"></a>HAL_NVIC_SystemReset</STRONG> (Thumb, 60 bytes, Stack size 0 bytes, stm32f4xx_hal_cortex.o(i.HAL_NVIC_SystemReset))
+<BR><BR>[Called By]<UL><LI><a href="#[122]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;canopen_app_process
 </UL>
 
 <P><STRONG><a name="[f9]"></a>HAL_RCC_ClockConfig</STRONG> (Thumb, 368 bytes, Stack size 16 bytes, stm32f4xx_hal_rcc.o(i.HAL_RCC_ClockConfig))
@@ -1366,9 +1367,9 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[ff]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_TIM_Base_Init
 </UL>
 
-<P><STRONG><a name="[122]"></a>HAL_TIM_Base_Start_IT</STRONG> (Thumb, 138 bytes, Stack size 0 bytes, stm32f4xx_hal_tim.o(i.HAL_TIM_Base_Start_IT))
+<P><STRONG><a name="[124]"></a>HAL_TIM_Base_Start_IT</STRONG> (Thumb, 138 bytes, Stack size 0 bytes, stm32f4xx_hal_tim.o(i.HAL_TIM_Base_Start_IT))
 <BR><BR>[Called By]<UL><LI><a href="#[5c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
-<LI><a href="#[11f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;canopen_app_resetCommunication
+<LI><a href="#[121]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;canopen_app_resetCommunication
 </UL>
 
 <P><STRONG><a name="[103]"></a>HAL_TIM_IC_CaptureCallback</STRONG> (Thumb, 2 bytes, Stack size 0 bytes, stm32f4xx_hal_tim.o(i.HAL_TIM_IC_CaptureCallback))
@@ -1376,7 +1377,7 @@ Global Symbols
 </UL>
 
 <P><STRONG><a name="[102]"></a>HAL_TIM_IRQHandler</STRONG> (Thumb, 406 bytes, Stack size 8 bytes, stm32f4xx_hal_tim.o(i.HAL_TIM_IRQHandler))
-<BR><BR>[Stack]<UL><LI>Max Depth = 220<LI>Call Chain = HAL_TIM_IRQHandler &rArr; HAL_TIM_PeriodElapsedCallback &rArr; canopen_app_interrupt &rArr; CO_process_TPDO &rArr; CO_TPDO_process &rArr; CO_TPDOsend &rArr; CO_CANsend &rArr; prv_send_can_message &rArr; HAL_CAN_AddTxMessage
+<BR><BR>[Stack]<UL><LI>Max Depth = 248<LI>Call Chain = HAL_TIM_IRQHandler &rArr; HAL_TIM_PeriodElapsedCallback &rArr; canopen_app_interrupt &rArr; CO_process_TPDO &rArr; CO_TPDO_process &rArr; CO_TPDOsend &rArr; CO_CANsend &rArr; prv_send_can_message &rArr; __2printf
 </UL>
 <BR>[Calls]<UL><LI><a href="#[106]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_TIM_PeriodElapsedCallback
 <LI><a href="#[108]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_TIM_TriggerCallback
@@ -1398,7 +1399,7 @@ Global Symbols
 </UL>
 
 <P><STRONG><a name="[106]"></a>HAL_TIM_PeriodElapsedCallback</STRONG> (Thumb, 30 bytes, Stack size 8 bytes, main.o(i.HAL_TIM_PeriodElapsedCallback))
-<BR><BR>[Stack]<UL><LI>Max Depth = 212<LI>Call Chain = HAL_TIM_PeriodElapsedCallback &rArr; canopen_app_interrupt &rArr; CO_process_TPDO &rArr; CO_TPDO_process &rArr; CO_TPDOsend &rArr; CO_CANsend &rArr; prv_send_can_message &rArr; HAL_CAN_AddTxMessage
+<BR><BR>[Stack]<UL><LI>Max Depth = 240<LI>Call Chain = HAL_TIM_PeriodElapsedCallback &rArr; canopen_app_interrupt &rArr; CO_process_TPDO &rArr; CO_TPDO_process &rArr; CO_TPDOsend &rArr; CO_CANsend &rArr; prv_send_can_message &rArr; __2printf
 </UL>
 <BR>[Calls]<UL><LI><a href="#[10a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;canopen_app_interrupt
 </UL>
@@ -1554,7 +1555,7 @@ Global Symbols
 </UL>
 <BR>[Calls]<UL><LI><a href="#[fe]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_RCC_OscConfig
 <LI><a href="#[f9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_RCC_ClockConfig
-<LI><a href="#[111]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Error_Handler
+<LI><a href="#[110]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Error_Handler
 <LI><a href="#[9e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memclr4
 </UL>
 <BR>[Called By]<UL><LI><a href="#[5c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
@@ -1564,7 +1565,7 @@ Global Symbols
 <BR>[Address Reference Count : 1]<UL><LI> startup_stm32f407xx.o(.text)
 </UL>
 <P><STRONG><a name="[41]"></a>TIM6_DAC_IRQHandler</STRONG> (Thumb, 10 bytes, Stack size 8 bytes, stm32f4xx_it.o(i.TIM6_DAC_IRQHandler))
-<BR><BR>[Stack]<UL><LI>Max Depth = 228<LI>Call Chain = TIM6_DAC_IRQHandler &rArr; HAL_TIM_IRQHandler &rArr; HAL_TIM_PeriodElapsedCallback &rArr; canopen_app_interrupt &rArr; CO_process_TPDO &rArr; CO_TPDO_process &rArr; CO_TPDOsend &rArr; CO_CANsend &rArr; prv_send_can_message &rArr; HAL_CAN_AddTxMessage
+<BR><BR>[Stack]<UL><LI>Max Depth = 256<LI>Call Chain = TIM6_DAC_IRQHandler &rArr; HAL_TIM_IRQHandler &rArr; HAL_TIM_PeriodElapsedCallback &rArr; canopen_app_interrupt &rArr; CO_process_TPDO &rArr; CO_TPDO_process &rArr; CO_TPDOsend &rArr; CO_CANsend &rArr; prv_send_can_message &rArr; __2printf
 </UL>
 <BR>[Calls]<UL><LI><a href="#[102]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_TIM_IRQHandler
 </UL>
@@ -1579,39 +1580,41 @@ Global Symbols
 <P><STRONG><a name="[6]"></a>UsageFault_Handler</STRONG> (Thumb, 4 bytes, Stack size 0 bytes, stm32f4xx_it.o(i.UsageFault_Handler))
 <BR>[Address Reference Count : 1]<UL><LI> startup_stm32f407xx.o(RESET)
 </UL>
-<P><STRONG><a name="[11b]"></a>__0printf$5</STRONG> (Thumb, 22 bytes, Stack size 24 bytes, printf5.o(i.__0printf$5), UNUSED)
+<P><STRONG><a name="[11b]"></a>__0printf$8</STRONG> (Thumb, 22 bytes, Stack size 24 bytes, printf8.o(i.__0printf$8), UNUSED)
 <BR><BR>[Calls]<UL><LI><a href="#[11c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_printf_core
 </UL>
 
-<P><STRONG><a name="[138]"></a>__1printf$5</STRONG> (Thumb, 0 bytes, Stack size 24 bytes, printf5.o(i.__0printf$5), UNUSED)
+<P><STRONG><a name="[13a]"></a>__1printf$8</STRONG> (Thumb, 0 bytes, Stack size 24 bytes, printf8.o(i.__0printf$8), UNUSED)
 
-<P><STRONG><a name="[11e]"></a>__2printf</STRONG> (Thumb, 0 bytes, Stack size 24 bytes, printf5.o(i.__0printf$5))
+<P><STRONG><a name="[120]"></a>__2printf</STRONG> (Thumb, 0 bytes, Stack size 24 bytes, printf8.o(i.__0printf$8))
 <BR><BR>[Stack]<UL><LI>Max Depth = 24<LI>Call Chain = __2printf
 </UL>
-<BR>[Called By]<UL><LI><a href="#[120]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;canopen_app_process
-<LI><a href="#[11d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;canopen_app_init
+<BR>[Called By]<UL><LI><a href="#[122]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;canopen_app_process
+<LI><a href="#[11f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;canopen_app_init
 <LI><a href="#[5c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
-<LI><a href="#[11f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;canopen_app_resetCommunication
+<LI><a href="#[8b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;prv_send_can_message
+<LI><a href="#[f1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;prv_read_can_received_msg
+<LI><a href="#[121]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;canopen_app_resetCommunication
 </UL>
 
-<P><STRONG><a name="[139]"></a>__scatterload_copy</STRONG> (Thumb, 14 bytes, Stack size unknown bytes, handlers.o(i.__scatterload_copy), UNUSED)
+<P><STRONG><a name="[13b]"></a>__scatterload_copy</STRONG> (Thumb, 14 bytes, Stack size unknown bytes, handlers.o(i.__scatterload_copy), UNUSED)
 
-<P><STRONG><a name="[13a]"></a>__scatterload_null</STRONG> (Thumb, 2 bytes, Stack size unknown bytes, handlers.o(i.__scatterload_null), UNUSED)
+<P><STRONG><a name="[13c]"></a>__scatterload_null</STRONG> (Thumb, 2 bytes, Stack size unknown bytes, handlers.o(i.__scatterload_null), UNUSED)
 
-<P><STRONG><a name="[13b]"></a>__scatterload_zeroinit</STRONG> (Thumb, 14 bytes, Stack size unknown bytes, handlers.o(i.__scatterload_zeroinit), UNUSED)
+<P><STRONG><a name="[13d]"></a>__scatterload_zeroinit</STRONG> (Thumb, 14 bytes, Stack size unknown bytes, handlers.o(i.__scatterload_zeroinit), UNUSED)
 
-<P><STRONG><a name="[11d]"></a>canopen_app_init</STRONG> (Thumb, 64 bytes, Stack size 16 bytes, co_app_stm32.o(i.canopen_app_init))
+<P><STRONG><a name="[11f]"></a>canopen_app_init</STRONG> (Thumb, 64 bytes, Stack size 16 bytes, co_app_stm32.o(i.canopen_app_init))
 <BR><BR>[Stack]<UL><LI>Max Depth = 412<LI>Call Chain = canopen_app_init &rArr; canopen_app_resetCommunication &rArr; CO_CANopenInitPDO &rArr; CO_TPDO_init &rArr; PDO_initMapping &rArr; PDOconfigMap &rArr; OD_getSub
 </UL>
 <BR>[Calls]<UL><LI><a href="#[d0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CO_new
-<LI><a href="#[11f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;canopen_app_resetCommunication
-<LI><a href="#[11e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__2printf
+<LI><a href="#[121]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;canopen_app_resetCommunication
+<LI><a href="#[120]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__2printf
 </UL>
 <BR>[Called By]<UL><LI><a href="#[5c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
 <P><STRONG><a name="[10a]"></a>canopen_app_interrupt</STRONG> (Thumb, 106 bytes, Stack size 16 bytes, co_app_stm32.o(i.canopen_app_interrupt))
-<BR><BR>[Stack]<UL><LI>Max Depth = 204<LI>Call Chain = canopen_app_interrupt &rArr; CO_process_TPDO &rArr; CO_TPDO_process &rArr; CO_TPDOsend &rArr; CO_CANsend &rArr; prv_send_can_message &rArr; HAL_CAN_AddTxMessage
+<BR><BR>[Stack]<UL><LI>Max Depth = 232<LI>Call Chain = canopen_app_interrupt &rArr; CO_process_TPDO &rArr; CO_TPDO_process &rArr; CO_TPDOsend &rArr; CO_CANsend &rArr; prv_send_can_message &rArr; __2printf
 </UL>
 <BR>[Calls]<UL><LI><a href="#[d9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CO_process_TPDO
 <LI><a href="#[d7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CO_process_SYNC
@@ -1620,25 +1623,25 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[106]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_TIM_PeriodElapsedCallback
 </UL>
 
-<P><STRONG><a name="[120]"></a>canopen_app_process</STRONG> (Thumb, 146 bytes, Stack size 16 bytes, co_app_stm32.o(i.canopen_app_process))
+<P><STRONG><a name="[122]"></a>canopen_app_process</STRONG> (Thumb, 146 bytes, Stack size 16 bytes, co_app_stm32.o(i.canopen_app_process))
 <BR><BR>[Stack]<UL><LI>Max Depth = 412<LI>Call Chain = canopen_app_process &rArr; canopen_app_resetCommunication &rArr; CO_CANopenInitPDO &rArr; CO_TPDO_init &rArr; PDO_initMapping &rArr; PDOconfigMap &rArr; OD_getSub
 </UL>
 <BR>[Calls]<UL><LI><a href="#[ed]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GetTick
-<LI><a href="#[121]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_NVIC_SystemReset
+<LI><a href="#[123]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_NVIC_SystemReset
 <LI><a href="#[88]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CO_CANsetConfigurationMode
 <LI><a href="#[d1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CO_process
 <LI><a href="#[ca]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CO_delete
-<LI><a href="#[11f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;canopen_app_resetCommunication
-<LI><a href="#[11e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__2printf
+<LI><a href="#[121]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;canopen_app_resetCommunication
+<LI><a href="#[120]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__2printf
 </UL>
 <BR>[Called By]<UL><LI><a href="#[5c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
-<P><STRONG><a name="[11f]"></a>canopen_app_resetCommunication</STRONG> (Thumb, 412 bytes, Stack size 56 bytes, co_app_stm32.o(i.canopen_app_resetCommunication))
+<P><STRONG><a name="[121]"></a>canopen_app_resetCommunication</STRONG> (Thumb, 412 bytes, Stack size 56 bytes, co_app_stm32.o(i.canopen_app_resetCommunication))
 <BR><BR>[Stack]<UL><LI>Max Depth = 396<LI>Call Chain = canopen_app_resetCommunication &rArr; CO_CANopenInitPDO &rArr; CO_TPDO_init &rArr; PDO_initMapping &rArr; PDOconfigMap &rArr; OD_getSub
 </UL>
 <BR>[Calls]<UL><LI><a href="#[ed]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GetTick
-<LI><a href="#[122]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_TIM_Base_Start_IT
+<LI><a href="#[124]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_TIM_Base_Start_IT
 <LI><a href="#[88]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CO_CANsetConfigurationMode
 <LI><a href="#[8c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CO_CANmodule_disable
 <LI><a href="#[aa]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CO_LSSinit
@@ -1646,10 +1649,10 @@ Global Symbols
 <LI><a href="#[90]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CO_CANopenInit
 <LI><a href="#[87]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CO_CANinit
 <LI><a href="#[9c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CO_CANsetNormalMode
-<LI><a href="#[11e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__2printf
+<LI><a href="#[120]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__2printf
 </UL>
-<BR>[Called By]<UL><LI><a href="#[120]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;canopen_app_process
-<LI><a href="#[11d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;canopen_app_init
+<BR>[Called By]<UL><LI><a href="#[122]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;canopen_app_process
+<LI><a href="#[11f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;canopen_app_init
 </UL>
 
 <P><STRONG><a name="[79]"></a>fputc</STRONG> (Thumb, 20 bytes, Stack size 16 bytes, main.o(i.fputc))
@@ -1657,7 +1660,7 @@ Global Symbols
 </UL>
 <BR>[Calls]<UL><LI><a href="#[10e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_UART_Transmit
 </UL>
-<BR>[Address Reference Count : 1]<UL><LI> printf5.o(i.__0printf$5)
+<BR>[Address Reference Count : 1]<UL><LI> printf8.o(i.__0printf$8)
 </UL>
 <P><STRONG><a name="[cb]"></a>free</STRONG> (Thumb, 76 bytes, Stack size 8 bytes, malloc.o(i.free))
 <BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = free
@@ -1665,22 +1668,23 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[ca]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CO_delete
 </UL>
 
-<P><STRONG><a name="[5c]"></a>main</STRONG> (Thumb, 172 bytes, Stack size 24 bytes, main.o(i.main))
+<P><STRONG><a name="[5c]"></a>main</STRONG> (Thumb, 164 bytes, Stack size 24 bytes, main.o(i.main))
 <BR><BR>[Stack]<UL><LI>Max Depth = 436<LI>Call Chain = main &rArr; canopen_app_process &rArr; canopen_app_resetCommunication &rArr; CO_CANopenInitPDO &rArr; CO_TPDO_init &rArr; PDO_initMapping &rArr; PDOconfigMap &rArr; OD_getSub
 </UL>
-<BR>[Calls]<UL><LI><a href="#[120]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;canopen_app_process
-<LI><a href="#[11d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;canopen_app_init
-<LI><a href="#[122]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_TIM_Base_Start_IT
+<BR>[Calls]<UL><LI><a href="#[122]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;canopen_app_process
+<LI><a href="#[11f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;canopen_app_init
+<LI><a href="#[124]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_TIM_Base_Start_IT
 <LI><a href="#[f2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_Init
 <LI><a href="#[113]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GPIO_WritePin
+<LI><a href="#[9d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_CAN_Start
 <LI><a href="#[11a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SystemClock_Config
 <LI><a href="#[dc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CanTxMsg
 <LI><a href="#[116]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MX_USART1_UART_Init
 <LI><a href="#[114]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MX_TIM6_Init
 <LI><a href="#[112]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MX_GPIO_Init
-<LI><a href="#[7a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MX_CAN2_Init
-<LI><a href="#[110]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MX_CAN1_Init
-<LI><a href="#[11e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__2printf
+<LI><a href="#[111]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MX_CAN2_Init
+<LI><a href="#[7a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MX_CAN1_Init
+<LI><a href="#[120]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__2printf
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> entry9a.o(.ARM.Collect$$$$0000000B)
 </UL>
@@ -1693,25 +1697,25 @@ Global Symbols
 <H3>
 Local Symbols
 </H3>
-<P><STRONG><a name="[110]"></a>MX_CAN1_Init</STRONG> (Thumb, 68 bytes, Stack size 8 bytes, main.o(i.MX_CAN1_Init))
+<P><STRONG><a name="[7a]"></a>MX_CAN1_Init</STRONG> (Thumb, 68 bytes, Stack size 8 bytes, main.o(i.MX_CAN1_Init))
 <BR><BR>[Stack]<UL><LI>Max Depth = 104<LI>Call Chain = MX_CAN1_Init &rArr; HAL_CAN_Init &rArr; HAL_CAN_MspInit &rArr; HAL_NVIC_SetPriority &rArr; __NVIC_SetPriority
 </UL>
 <BR>[Calls]<UL><LI><a href="#[eb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_CAN_Init
-<LI><a href="#[111]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Error_Handler
-</UL>
-<BR>[Called By]<UL><LI><a href="#[5c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
-</UL>
-
-<P><STRONG><a name="[7a]"></a>MX_CAN2_Init</STRONG> (Thumb, 68 bytes, Stack size 8 bytes, main.o(i.MX_CAN2_Init))
-<BR><BR>[Stack]<UL><LI>Max Depth = 104<LI>Call Chain = MX_CAN2_Init &rArr; HAL_CAN_Init &rArr; HAL_CAN_MspInit &rArr; HAL_NVIC_SetPriority &rArr; __NVIC_SetPriority
-</UL>
-<BR>[Calls]<UL><LI><a href="#[eb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_CAN_Init
-<LI><a href="#[111]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Error_Handler
+<LI><a href="#[110]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Error_Handler
 </UL>
 <BR>[Called By]<UL><LI><a href="#[5c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> main.o(i.main)
 </UL>
+<P><STRONG><a name="[111]"></a>MX_CAN2_Init</STRONG> (Thumb, 66 bytes, Stack size 8 bytes, main.o(i.MX_CAN2_Init))
+<BR><BR>[Stack]<UL><LI>Max Depth = 104<LI>Call Chain = MX_CAN2_Init &rArr; HAL_CAN_Init &rArr; HAL_CAN_MspInit &rArr; HAL_NVIC_SetPriority &rArr; __NVIC_SetPriority
+</UL>
+<BR>[Calls]<UL><LI><a href="#[eb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_CAN_Init
+<LI><a href="#[110]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Error_Handler
+</UL>
+<BR>[Called By]<UL><LI><a href="#[5c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
+</UL>
+
 <P><STRONG><a name="[112]"></a>MX_GPIO_Init</STRONG> (Thumb, 226 bytes, Stack size 32 bytes, main.o(i.MX_GPIO_Init))
 <BR><BR>[Stack]<UL><LI>Max Depth = 56<LI>Call Chain = MX_GPIO_Init &rArr; HAL_GPIO_Init
 </UL>
@@ -1727,7 +1731,7 @@ Local Symbols
 </UL>
 <BR>[Calls]<UL><LI><a href="#[ff]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_TIM_Base_Init
 <LI><a href="#[115]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_TIMEx_MasterConfigSynchronization
-<LI><a href="#[111]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Error_Handler
+<LI><a href="#[110]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Error_Handler
 </UL>
 <BR>[Called By]<UL><LI><a href="#[5c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
@@ -1736,7 +1740,7 @@ Local Symbols
 <BR><BR>[Stack]<UL><LI>Max Depth = 96<LI>Call Chain = MX_USART1_UART_Init &rArr; HAL_UART_Init &rArr; UART_SetConfig &rArr; __aeabi_uldivmod
 </UL>
 <BR>[Calls]<UL><LI><a href="#[10b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_UART_Init
-<LI><a href="#[111]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Error_Handler
+<LI><a href="#[110]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Error_Handler
 </UL>
 <BR>[Called By]<UL><LI><a href="#[5c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
@@ -1889,7 +1893,7 @@ Local Symbols
 <LI> co_pdo.o(i.OD_write_14xx)
 </UL>
 <P><STRONG><a name="[c9]"></a>CO_TPDOsend</STRONG> (Thumb, 216 bytes, Stack size 64 bytes, co_pdo.o(i.CO_TPDOsend))
-<BR><BR>[Stack]<UL><LI>Max Depth = 124<LI>Call Chain = CO_TPDOsend &rArr; CO_CANsend &rArr; prv_send_can_message &rArr; HAL_CAN_AddTxMessage
+<BR><BR>[Stack]<UL><LI>Max Depth = 152<LI>Call Chain = CO_TPDOsend &rArr; CO_CANsend &rArr; prv_send_can_message &rArr; __2printf
 </UL>
 <BR>[Calls]<UL><LI><a href="#[9b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CO_CANsend
 <LI><a href="#[b7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memcpy
@@ -2115,7 +2119,7 @@ Local Symbols
 <BR><BR>[Stack]<UL><LI>Max Depth = 48<LI>Call Chain = readFromOd &rArr; __aeabi_memmove
 </UL>
 <BR>[Calls]<UL><LI><a href="#[be]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OD_getSDOabCode
-<LI><a href="#[125]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;strlen
+<LI><a href="#[127]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;strlen
 <LI><a href="#[c7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memmove
 </UL>
 <BR>[Called By]<UL><LI><a href="#[bb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CO_SDOserver_process
@@ -2189,29 +2193,41 @@ Local Symbols
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> co_lssslave.o(i.CO_LSSslave_init)
 </UL>
-<P><STRONG><a name="[f1]"></a>prv_read_can_received_msg</STRONG> (Thumb, 144 bytes, Stack size 48 bytes, co_driver_stm32.o(i.prv_read_can_received_msg))
-<BR><BR>[Stack]<UL><LI>Max Depth = 64<LI>Call Chain = prv_read_can_received_msg &rArr; HAL_CAN_GetRxMessage
+<P><STRONG><a name="[f1]"></a>prv_read_can_received_msg</STRONG> (Thumb, 204 bytes, Stack size 80 bytes, co_driver_stm32.o(i.prv_read_can_received_msg))
+<BR><BR>[Stack]<UL><LI>Max Depth = 104<LI>Call Chain = prv_read_can_received_msg &rArr; __2printf
 </UL>
-<BR>[Calls]<UL><LI><a href="#[123]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_CAN_GetRxMessage
+<BR>[Calls]<UL><LI><a href="#[125]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_CAN_GetRxMessage
+<LI><a href="#[120]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__2printf
 </UL>
 <BR>[Called By]<UL><LI><a href="#[e7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_CAN_RxFifo1MsgPendingCallback
 <LI><a href="#[e5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_CAN_RxFifo0MsgPendingCallback
 </UL>
 
-<P><STRONG><a name="[8b]"></a>prv_send_can_message</STRONG> (Thumb, 86 bytes, Stack size 24 bytes, co_driver_stm32.o(i.prv_send_can_message))
-<BR><BR>[Stack]<UL><LI>Max Depth = 44<LI>Call Chain = prv_send_can_message &rArr; HAL_CAN_AddTxMessage
+<P><STRONG><a name="[8b]"></a>prv_send_can_message</STRONG> (Thumb, 134 bytes, Stack size 48 bytes, co_driver_stm32.o(i.prv_send_can_message))
+<BR><BR>[Stack]<UL><LI>Max Depth = 72<LI>Call Chain = prv_send_can_message &rArr; __2printf
 </UL>
-<BR>[Calls]<UL><LI><a href="#[124]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_CAN_GetTxMailboxesFreeLevel
+<BR>[Calls]<UL><LI><a href="#[126]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_CAN_GetTxMailboxesFreeLevel
 <LI><a href="#[dd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_CAN_AddTxMessage
+<LI><a href="#[120]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__2printf
 </UL>
 <BR>[Called By]<UL><LI><a href="#[9b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CO_CANsend
 <LI><a href="#[8a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CO_CANinterrupt_TX
 </UL>
 
-<P><STRONG><a name="[11c]"></a>_printf_core</STRONG> (Thumb, 660 bytes, Stack size 104 bytes, printf5.o(i._printf_core), UNUSED)
+<P><STRONG><a name="[11c]"></a>_printf_core</STRONG> (Thumb, 984 bytes, Stack size 104 bytes, printf8.o(i._printf_core), UNUSED)
 <BR><BR>[Calls]<UL><LI><a href="#[7d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_uldivmod
+<LI><a href="#[11d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_printf_pre_padding
+<LI><a href="#[11e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_printf_post_padding
 </UL>
-<BR>[Called By]<UL><LI><a href="#[11b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__0printf$5
+<BR>[Called By]<UL><LI><a href="#[11b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__0printf$8
+</UL>
+
+<P><STRONG><a name="[11e]"></a>_printf_post_padding</STRONG> (Thumb, 36 bytes, Stack size 24 bytes, printf8.o(i._printf_post_padding), UNUSED)
+<BR><BR>[Called By]<UL><LI><a href="#[11c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_printf_core
+</UL>
+
+<P><STRONG><a name="[11d]"></a>_printf_pre_padding</STRONG> (Thumb, 46 bytes, Stack size 24 bytes, printf8.o(i._printf_pre_padding), UNUSED)
+<BR><BR>[Called By]<UL><LI><a href="#[11c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_printf_core
 </UL>
 <P>
 <H3>

@@ -439,9 +439,19 @@
               <FilePath>..\..\board\system\autoinit.c</FilePath>
             </File>
             <File>
+              <FileName>buildtime.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\board\system\buildtime.c</FilePath>
+            </File>
+            <File>
               <FileName>sleep.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\board\system\sleep.c</FilePath>
+            </File>
+            <File>
+              <FileName>swrst.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\board\system\swrst.c</FilePath>
             </File>
           </Files>
         </Group>

@@ -20,6 +20,9 @@
 /*******************************************************************************
     OD data initialization of all groups
 *******************************************************************************/
+
+// clang-format off
+
 OD_ATTR_PERSIST_COMM OD_PERSIST_COMM_t OD_PERSIST_COMM = {
     .x1000_deviceType = 0x00000000,
     .x1005_COB_ID_SYNCMessage = 0x00000080,
@@ -180,7 +183,7 @@ OD_ATTR_PERSIST_COMM OD_PERSIST_COMM_t OD_PERSIST_COMM = {
     },
     .x1A03_TPDOMappingParameter = {
         .numberOfMappedApplicationObjectsInPDO = 0x00,
-        .applicationObject_1 = 0x00000000,
+        .applicationObject_1 = 0x12345678,
         .applicationObject_2 = 0x00000000,
         .applicationObject_3 = 0x00000000,
         .applicationObject_4 = 0x00000000,
@@ -204,27 +207,27 @@ OD_ATTR_RAM OD_RAM_t OD_RAM = {
     }
 };
 
-
+// clang-format on
 
 /*******************************************************************************
     All OD objects (constant definitions)
 *******************************************************************************/
 typedef struct {
-    OD_obj_var_t o_1000_deviceType;
-    OD_obj_var_t o_1001_errorRegister;
-    OD_obj_array_t o_1003_pre_definedErrorField;
-    OD_obj_var_t o_1005_COB_ID_SYNCMessage;
-    OD_obj_var_t o_1006_communicationCyclePeriod;
-    OD_obj_var_t o_1007_synchronousWindowLength;
-    OD_obj_array_t o_1010_storeParameters;
-    OD_obj_array_t o_1011_restoreDefaultParameters;
-    OD_obj_var_t o_1012_COB_IDTimeStampObject;
-    OD_obj_var_t o_1014_COB_ID_EMCY;
-    OD_obj_var_t o_1015_inhibitTimeEMCY;
-    OD_obj_array_t o_1016_consumerHeartbeatTime;
-    OD_obj_var_t o_1017_producerHeartbeatTime;
+    OD_obj_var_t    o_1000_deviceType;
+    OD_obj_var_t    o_1001_errorRegister;
+    OD_obj_array_t  o_1003_pre_definedErrorField;
+    OD_obj_var_t    o_1005_COB_ID_SYNCMessage;
+    OD_obj_var_t    o_1006_communicationCyclePeriod;
+    OD_obj_var_t    o_1007_synchronousWindowLength;
+    OD_obj_array_t  o_1010_storeParameters;
+    OD_obj_array_t  o_1011_restoreDefaultParameters;
+    OD_obj_var_t    o_1012_COB_IDTimeStampObject;
+    OD_obj_var_t    o_1014_COB_ID_EMCY;
+    OD_obj_var_t    o_1015_inhibitTimeEMCY;
+    OD_obj_array_t  o_1016_consumerHeartbeatTime;
+    OD_obj_var_t    o_1017_producerHeartbeatTime;
     OD_obj_record_t o_1018_identity[5];
-    OD_obj_var_t o_1019_synchronousCounterOverflowValue;
+    OD_obj_var_t    o_1019_synchronousCounterOverflowValue;
     OD_obj_record_t o_1200_SDOServerParameter[3];
     OD_obj_record_t o_1280_SDOClientParameter[4];
     OD_obj_record_t o_1400_RPDOCommunicationParameter[4];
@@ -244,6 +247,8 @@ typedef struct {
     OD_obj_record_t o_1A02_TPDOMappingParameter[9];
     OD_obj_record_t o_1A03_TPDOMappingParameter[9];
 } ODObjs_t;
+
+// clang-format off
 
 static CO_PROGMEM ODObjs_t ODObjs = {
     .o_1000_deviceType = {
@@ -1112,10 +1117,7 @@ static CO_PROGMEM ODObjs_t ODObjs = {
     }
 };
 
-
-/*******************************************************************************
-    Object dictionary
-*******************************************************************************/
+// clang-format on
 
 extern uint16_t reg_tst;
 
@@ -1124,6 +1126,10 @@ const OD_obj_var_t obj_tst = {
     .attribute  = ODA_SDO_RW | ODA_MB,
     .dataLength = 2,
 };
+
+/*******************************************************************************
+    Object dictionary
+*******************************************************************************/
 
 static OD_ATTR_OD OD_entry_t ODList[] = {
     {0x1000, 0x01, ODT_VAR, &ODObjs.o_1000_deviceType,                      NULL},
@@ -1165,7 +1171,6 @@ static OD_ATTR_OD OD_entry_t ODList[] = {
 
 static OD_t _OD = {
     (sizeof(ODList) / sizeof(ODList[0])) - 1,
-    &ODList[0]
-};
+    &ODList[0]};
 
-OD_t *OD = &_OD;
+OD_t* OD = &_OD;

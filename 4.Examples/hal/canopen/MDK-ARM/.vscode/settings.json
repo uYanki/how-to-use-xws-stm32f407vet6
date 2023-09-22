@@ -1,6 +1,10 @@
 {
     "files.associations": {
         "co_odinterface.h": "c",
-        "stdarg.h": "c"
+        "stdarg.h": "c",
+        "canopen.h": "c",
+        "co_driver.h": "c",
+        "co_config.h": "c",
+        "co_app_stm32.h": "c"
     }
 }

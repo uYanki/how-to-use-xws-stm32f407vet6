@@ -21,6 +21,7 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
+#include <stdio.h>
 #include "CO_app_STM32.h"
 /* USER CODE END Includes */
 
@@ -64,30 +65,9 @@ static void MX_TIM6_Init(void);
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
 
-#include <stdio.h>
-#include <stdarg.h>
+static uint16_t m_timeout = 0;  // call CanTxMsg periodly
 
-uint16_t reg_tst = 0;
-
-#if 0
-
-#define UART_TXBUF_MAXSIZE 255
-
-void uart_printf(UART_HandleTypeDef* huart, const char* format, ...)
-{
-    va_list  args;
-    uint32_t length;
-    uint8_t  txbuf[UART_TXBUF_MAXSIZE] = {0};
-    va_start(args, format);
-    length = vsnprintf((char*)txbuf, sizeof(txbuf), (char*)format, args);
-    va_end(args);
-    HAL_UART_Transmit(huart, (uint8_t*)txbuf, length, HAL_MAX_DELAY);
-    memset(txbuf, 0, UART_TXBUF_MAXSIZE);
-}
-
-#define print(fmt, ...)    uart_printf(&huart1, fmt, ##__VA_ARGS__)
-
-#else
+uint16_t reg_tst = 0x1234;
 
 int fputc(int ch, FILE* f)
 {
@@ -95,17 +75,9 @@ int fputc(int ch, FILE* f)
     return ch;
 }
 
-#define print printf
-
-#endif
-
-/* Timer interrupt function executes every 1 ms */
-
-uint16_t timeout = 0;  // call CanTxMsg
-
-void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef* htim)
+void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef* htim)  // 1ms
 {
-    ++timeout;
+    ++m_timeout;
 
     if (htim == canopenNodeSTM32->timerHandle)
     {
@@ -126,15 +98,13 @@ void CanTxMsg(void)
     };
     // clang-format on
 
-    //
+    uint32_t mailbox;
 
-    uint32_t mailbox;  // output
+    uint8_t msg[8] = {0x2B, 0x00, 0x20, 0x00, 0x88, 0x11, 0x00, 0x00};  // WR 2000.01 (2 bytes)
+    // uint8_t msg[8] = {0x40, 0x00, 0x20, 0x00, 0x00, 0x00, 0x00, 0x00};  // RD 2000.01
+    // uint8_t msg[8] = {0x40, 0x03, 0x1A, 0x01, 0x00, 0x00, 0x00, 0x00};  // RD 1A03.01
 
-    // https://blog.csdn.net/qq_27620407/article/details/109214157
-    uint8_t msg[8] = {0x2F, 0x00, 0x20, 0x01, 0x88, 0x00, 0x00, 0x00};
-    HAL_CAN_AddTxMessage(&hcan1, &header, msg, &mailbox);
-
-    // printf("%s\n", __func__);
+    HAL_CAN_AddTxMessage(&hcan2, &header, msg, &mailbox);
 }
 
 /* USER CODE END 0 */
@@ -174,17 +144,23 @@ int main(void)
     /* USER CODE BEGIN 2 */
 
     CANopenNodeSTM32 canOpenNodeSTM32;
-    canOpenNodeSTM32.CANHandle      = &hcan2;
-    canOpenNodeSTM32.HWInitFunction = MX_CAN2_Init;
+    canOpenNodeSTM32.CANHandle      = &hcan1;
+    canOpenNodeSTM32.HWInitFunction = MX_CAN1_Init;
     canOpenNodeSTM32.timerHandle    = &htim6;
     canOpenNodeSTM32.desiredNodeID  = 1;
-    canOpenNodeSTM32.baudrate       = 125;
+    canOpenNodeSTM32.baudrate       = 125;  // 125Kbps
     canopen_app_init(&canOpenNodeSTM32);
 
+    // connect can1 to can2
+    HAL_CAN_Start(&hcan1);
+    HAL_CAN_Start(&hcan2);
+
     HAL_TIM_Base_Start_IT(&htim6);
+
     /* USER CODE END 2 */
 
     /* Infinite loop */
+
     /* USER CODE BEGIN WHILE */
 
     while (1)
@@ -193,13 +169,11 @@ int main(void)
         HAL_GPIO_WritePin(LED2_GPIO_Port, LED2_Pin, !canOpenNodeSTM32.outStatusLEDRed);
         canopen_app_process();
 
-        if (timeout == 1000)
+        if (m_timeout == 1000)
         {
-            timeout = 0;
-
-            print("%d\r\n", reg_tst);
-
-            CanTxMsg();
+            m_timeout = 0;
+            printf(" - 0x%02X\r\n", reg_tst);
+            CanTxMsg();  // send msg from can1 to can2
         }
         /* USER CODE END WHILE */
 
@@ -276,7 +250,7 @@ static void MX_CAN1_Init(void)
     hcan1.Init.TimeTriggeredMode    = DISABLE;
     hcan1.Init.AutoBusOff           = ENABLE;
     hcan1.Init.AutoWakeUp           = DISABLE;
-    hcan1.Init.AutoRetransmission   = DISABLE;
+    hcan1.Init.AutoRetransmission   = ENABLE;
     hcan1.Init.ReceiveFifoLocked    = ENABLE;
     hcan1.Init.TransmitFifoPriority = ENABLE;
     if (HAL_CAN_Init(&hcan1) != HAL_OK)
@@ -312,8 +286,8 @@ static void MX_CAN2_Init(void)
     hcan2.Init.AutoBusOff           = ENABLE;
     hcan2.Init.AutoWakeUp           = DISABLE;
     hcan2.Init.AutoRetransmission   = DISABLE;
-    hcan2.Init.ReceiveFifoLocked    = ENABLE;
-    hcan2.Init.TransmitFifoPriority = ENABLE;
+    hcan2.Init.ReceiveFifoLocked    = DISABLE;
+    hcan2.Init.TransmitFifoPriority = DISABLE;
     if (HAL_CAN_Init(&hcan2) != HAL_OK)
     {
         Error_Handler();

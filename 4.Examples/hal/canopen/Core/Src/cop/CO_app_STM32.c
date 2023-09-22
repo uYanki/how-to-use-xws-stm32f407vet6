@@ -37,12 +37,10 @@ CANopenNodeSTM32*
 
 /* Printf function of CanOpen app */
 
-#if 0
-extern UART_HandleTypeDef huart1;
-extern void uart_printf(UART_HandleTypeDef* huart, const char* format, ...);
-#define log_printf(macropar_message, ...) uart_printf(&huart1,macropar_message, ##__VA_ARGS__)
-#else
+#if 1
 #define log_printf(macropar_message, ...) printf(macropar_message, ##__VA_ARGS__)
+#else
+#define log_printf(macropar_message, ...) 
 #endif
 
 /* default values for CO_CANopenInit() */

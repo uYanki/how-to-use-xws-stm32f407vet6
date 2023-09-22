@@ -23,7 +23,6 @@
  * limitations under the License.
  */
 
-
 #ifndef CO_CONFIG_FLAGS_H
 #define CO_CONFIG_FLAGS_H
 
@@ -53,7 +52,6 @@ extern "C" {
  * configuration must match @ref CO_STACK_CONFIG.
  * @{
  */
-
 
 /**
  * @defgroup CO_STACK_CONFIG_COMMON Common definitions
@@ -86,7 +84,7 @@ extern "C" {
  *
  * This flag is common to multiple configuration macros.
  */
-#define CO_CONFIG_FLAG_TIMERNEXT 0x2000
+#define CO_CONFIG_FLAG_TIMERNEXT    0x2000
 
 /**
  * Enable dynamic behaviour of Object Dictionary variables
@@ -98,7 +96,7 @@ extern "C" {
  *
  * This flag is common to multiple configuration macros.
  */
-#define CO_CONFIG_FLAG_OD_DYNAMIC 0x4000
+#define CO_CONFIG_FLAG_OD_DYNAMIC   0x4000
 
 /** This flag may be set globally for mainline objects to
  * @ref CO_CONFIG_FLAG_CALLBACK_PRE */
@@ -123,7 +121,6 @@ extern "C" {
 #endif
 /** @} */ /* CO_STACK_CONFIG_COMMON */
 
-
 /**
  * @defgroup CO_STACK_CONFIG_NMT_HB NMT master/slave and HB producer/consumer
  * Specified in standard CiA 301
@@ -147,7 +144,7 @@ extern "C" {
 #define CO_CONFIG_NMT (CO_CONFIG_GLOBAL_FLAG_CALLBACK_PRE | CO_CONFIG_GLOBAL_FLAG_TIMERNEXT)
 #endif
 #define CO_CONFIG_NMT_CALLBACK_CHANGE 0x01
-#define CO_CONFIG_NMT_MASTER 0x02
+#define CO_CONFIG_NMT_MASTER          0x02
 
 /**
  * Configuration of @ref CO_HBconsumer
@@ -179,12 +176,11 @@ extern "C" {
 #ifdef CO_DOXYGEN
 #define CO_CONFIG_HB_CONS (CO_CONFIG_HB_CONS_ENABLE | CO_CONFIG_GLOBAL_FLAG_CALLBACK_PRE | CO_CONFIG_GLOBAL_FLAG_TIMERNEXT | CO_CONFIG_GLOBAL_FLAG_OD_DYNAMIC)
 #endif
-#define CO_CONFIG_HB_CONS_ENABLE 0x01
+#define CO_CONFIG_HB_CONS_ENABLE          0x01
 #define CO_CONFIG_HB_CONS_CALLBACK_CHANGE 0x02
-#define CO_CONFIG_HB_CONS_CALLBACK_MULTI 0x04
-#define CO_CONFIG_HB_CONS_QUERY_FUNCT 0x08
+#define CO_CONFIG_HB_CONS_CALLBACK_MULTI  0x04
+#define CO_CONFIG_HB_CONS_QUERY_FUNCT     0x08
 /** @} */ /* CO_STACK_CONFIG_NMT_HB */
-
 
 /**
  * @defgroup CO_STACK_CONFIG_EMERGENCY Emergency producer/consumer
@@ -214,12 +210,12 @@ extern "C" {
 #ifdef CO_DOXYGEN
 #define CO_CONFIG_EM (CO_CONFIG_EM_PRODUCER | CO_CONFIG_EM_HISTORY | CO_CONFIG_GLOBAL_FLAG_CALLBACK_PRE | CO_CONFIG_GLOBAL_FLAG_TIMERNEXT)
 #endif
-#define CO_CONFIG_EM_PRODUCER 0x01
+#define CO_CONFIG_EM_PRODUCER          0x01
 #define CO_CONFIG_EM_PROD_CONFIGURABLE 0x02
-#define CO_CONFIG_EM_PROD_INHIBIT 0x04
-#define CO_CONFIG_EM_HISTORY 0x08
-#define CO_CONFIG_EM_STATUS_BITS 0x10
-#define CO_CONFIG_EM_CONSUMER 0x20
+#define CO_CONFIG_EM_PROD_INHIBIT      0x04
+#define CO_CONFIG_EM_HISTORY           0x08
+#define CO_CONFIG_EM_STATUS_BITS       0x10
+#define CO_CONFIG_EM_CONSUMER          0x20
 
 /**
  * Maximum number of @ref CO_EM_errorStatusBits_t
@@ -229,7 +225,7 @@ extern "C" {
  * Default is 80.
  */
 #ifdef CO_DOXYGEN
-#define CO_CONFIG_EM_ERR_STATUS_BITS_COUNT (10*8)
+#define CO_CONFIG_EM_ERR_STATUS_BITS_COUNT (10 * 8)
 #endif
 
 /**
@@ -309,7 +305,6 @@ extern "C" {
 #endif
 /** @} */ /* CO_STACK_CONFIG_EMERGENCY */
 
-
 /**
  * @defgroup CO_STACK_CONFIG_SDO SDO server/client
  * Specified in standard CiA 301
@@ -334,7 +329,7 @@ extern "C" {
 #define CO_CONFIG_SDO_SRV (CO_CONFIG_SDO_SRV_SEGMENTED | CO_CONFIG_GLOBAL_FLAG_CALLBACK_PRE | CO_CONFIG_GLOBAL_FLAG_TIMERNEXT | CO_CONFIG_GLOBAL_FLAG_OD_DYNAMIC)
 #endif
 #define CO_CONFIG_SDO_SRV_SEGMENTED 0x02
-#define CO_CONFIG_SDO_SRV_BLOCK 0x04
+#define CO_CONFIG_SDO_SRV_BLOCK     0x04
 
 /**
  * Size of the internal data buffer for the SDO server.
@@ -371,10 +366,10 @@ extern "C" {
 #ifdef CO_DOXYGEN
 #define CO_CONFIG_SDO_CLI (0)
 #endif
-#define CO_CONFIG_SDO_CLI_ENABLE 0x01
+#define CO_CONFIG_SDO_CLI_ENABLE    0x01
 #define CO_CONFIG_SDO_CLI_SEGMENTED 0x02
-#define CO_CONFIG_SDO_CLI_BLOCK 0x04
-#define CO_CONFIG_SDO_CLI_LOCAL 0x08
+#define CO_CONFIG_SDO_CLI_BLOCK     0x04
+#define CO_CONFIG_SDO_CLI_LOCAL     0x08
 
 /**
  * Size of the internal data buffer for the SDO client.
@@ -391,7 +386,6 @@ extern "C" {
 #define CO_CONFIG_SDO_CLI_BUFFER_SIZE 32
 #endif
 /** @} */ /* CO_STACK_CONFIG_SDO */
-
 
 /**
  * @defgroup CO_STACK_CONFIG_TIME Time producer/consumer
@@ -413,10 +407,9 @@ extern "C" {
 #ifdef CO_DOXYGEN
 #define CO_CONFIG_TIME (CO_CONFIG_TIME_ENABLE | CO_CONFIG_GLOBAL_FLAG_CALLBACK_PRE | CO_CONFIG_GLOBAL_FLAG_OD_DYNAMIC)
 #endif
-#define CO_CONFIG_TIME_ENABLE 0x01
+#define CO_CONFIG_TIME_ENABLE   0x01
 #define CO_CONFIG_TIME_PRODUCER 0x02
 /** @} */ /* CO_STACK_CONFIG_TIME */
-
 
 /**
  * @defgroup CO_STACK_CONFIG_SYNC_PDO SYNC and PDO producer/consumer
@@ -439,7 +432,7 @@ extern "C" {
 #ifdef CO_DOXYGEN
 #define CO_CONFIG_SYNC (CO_CONFIG_SYNC_ENABLE | CO_CONFIG_SYNC_PRODUCER | CO_CONFIG_GLOBAL_RT_FLAG_CALLBACK_PRE | CO_CONFIG_GLOBAL_FLAG_TIMERNEXT | CO_CONFIG_GLOBAL_FLAG_OD_DYNAMIC)
 #endif
-#define CO_CONFIG_SYNC_ENABLE 0x01
+#define CO_CONFIG_SYNC_ENABLE   0x01
 #define CO_CONFIG_SYNC_PRODUCER 0x02
 
 /**
@@ -468,14 +461,13 @@ extern "C" {
 #ifdef CO_DOXYGEN
 #define CO_CONFIG_PDO (CO_CONFIG_RPDO_ENABLE | CO_CONFIG_TPDO_ENABLE | CO_CONFIG_RPDO_TIMERS_ENABLE | CO_CONFIG_TPDO_TIMERS_ENABLE | CO_CONFIG_PDO_SYNC_ENABLE | CO_CONFIG_PDO_OD_IO_ACCESS | CO_CONFIG_GLOBAL_RT_FLAG_CALLBACK_PRE | CO_CONFIG_GLOBAL_FLAG_TIMERNEXT | CO_CONFIG_GLOBAL_FLAG_OD_DYNAMIC)
 #endif
-#define CO_CONFIG_RPDO_ENABLE 0x01
-#define CO_CONFIG_TPDO_ENABLE 0x02
+#define CO_CONFIG_RPDO_ENABLE        0x01
+#define CO_CONFIG_TPDO_ENABLE        0x02
 #define CO_CONFIG_RPDO_TIMERS_ENABLE 0x04
 #define CO_CONFIG_TPDO_TIMERS_ENABLE 0x08
-#define CO_CONFIG_PDO_SYNC_ENABLE 0x10
-#define CO_CONFIG_PDO_OD_IO_ACCESS 0x20
+#define CO_CONFIG_PDO_SYNC_ENABLE    0x10
+#define CO_CONFIG_PDO_OD_IO_ACCESS   0x20
 /** @} */ /* CO_STACK_CONFIG_SYNC_PDO */
-
 
 /**
  * @defgroup CO_STACK_CONFIG_STORAGE Data storage
@@ -493,7 +485,6 @@ extern "C" {
 #endif
 #define CO_CONFIG_STORAGE_ENABLE 0x01
 /** @} */ /* CO_STACK_CONFIG_STORAGE */
-
 
 /**
  * @defgroup CO_STACK_CONFIG_LEDS CANopen LED diodes
@@ -514,7 +505,6 @@ extern "C" {
 #define CO_CONFIG_LEDS_ENABLE 0x01
 /** @} */ /* CO_STACK_CONFIG_LEDS */
 
-
 /**
  * @defgroup CO_STACK_CONFIG_SRDO Safety Related Data Objects (SRDO)
  * Specified in standard EN 50325-5 (CiA 304)
@@ -531,7 +521,7 @@ extern "C" {
 #ifdef CO_DOXYGEN
 #define CO_CONFIG_GFC (0)
 #endif
-#define CO_CONFIG_GFC_ENABLE 0x01
+#define CO_CONFIG_GFC_ENABLE   0x01
 #define CO_CONFIG_GFC_CONSUMER 0x02
 #define CO_CONFIG_GFC_PRODUCER 0x04
 
@@ -554,8 +544,8 @@ extern "C" {
 #ifdef CO_DOXYGEN
 #define CO_CONFIG_SRDO (0)
 #endif
-#define CO_CONFIG_SRDO_ENABLE 0x01
-#define CO_CONFIG_SRDO_CHECK_TX 0x02
+#define CO_CONFIG_SRDO_ENABLE           0x01
+#define CO_CONFIG_SRDO_CHECK_TX         0x02
 #define CO_CONFIG_RSRDO_CALLS_EXTENSION 0x04
 #define CO_CONFIG_TSRDO_CALLS_EXTENSION 0x08
 
@@ -569,7 +559,6 @@ extern "C" {
 #define CO_CONFIG_SRDO_MINIMUM_DELAY 0
 #endif
 /** @} */ /* CO_STACK_CONFIG_SRDO */
-
 
 /**
  * @defgroup CO_STACK_CONFIG_LSS LSS master/slave
@@ -591,11 +580,10 @@ extern "C" {
 #ifdef CO_DOXYGEN
 #define CO_CONFIG_LSS (CO_CONFIG_LSS_SLAVE | CO_CONFIG_GLOBAL_FLAG_CALLBACK_PRE)
 #endif
-#define CO_CONFIG_LSS_SLAVE 0x01
+#define CO_CONFIG_LSS_SLAVE                         0x01
 #define CO_CONFIG_LSS_SLAVE_FASTSCAN_DIRECT_RESPOND 0x02
-#define CO_CONFIG_LSS_MASTER 0x10
+#define CO_CONFIG_LSS_MASTER                        0x10
 /** @} */ /* CO_STACK_CONFIG_LSS */
-
 
 /**
  * @defgroup CO_STACK_CONFIG_GATEWAY CANopen gateway
@@ -629,12 +617,12 @@ extern "C" {
 #ifdef CO_DOXYGEN
 #define CO_CONFIG_GTW (0)
 #endif
-#define CO_CONFIG_GTW_MULTI_NET 0x01
-#define CO_CONFIG_GTW_ASCII 0x02
-#define CO_CONFIG_GTW_ASCII_SDO 0x04
-#define CO_CONFIG_GTW_ASCII_NMT 0x08
-#define CO_CONFIG_GTW_ASCII_LSS 0x10
-#define CO_CONFIG_GTW_ASCII_LOG 0x20
+#define CO_CONFIG_GTW_MULTI_NET        0x01
+#define CO_CONFIG_GTW_ASCII            0x02
+#define CO_CONFIG_GTW_ASCII_SDO        0x04
+#define CO_CONFIG_GTW_ASCII_NMT        0x08
+#define CO_CONFIG_GTW_ASCII_LSS        0x10
+#define CO_CONFIG_GTW_ASCII_LOG        0x20
 #define CO_CONFIG_GTW_ASCII_ERROR_DESC 0x40
 #define CO_CONFIG_GTW_ASCII_PRINT_HELP 0x80
 #define CO_CONFIG_GTW_ASCII_PRINT_LEDS 0x100
@@ -668,7 +656,6 @@ extern "C" {
 #endif
 /** @} */ /* CO_STACK_CONFIG_GATEWAY */
 
-
 /**
  * @defgroup CO_STACK_CONFIG_CRC16 CRC 16 calculation
  * Helper object for CRC-16 checksum
@@ -684,10 +671,9 @@ extern "C" {
 #ifdef CO_DOXYGEN
 #define CO_CONFIG_CRC16 (0)
 #endif
-#define CO_CONFIG_CRC16_ENABLE 0x01
+#define CO_CONFIG_CRC16_ENABLE   0x01
 #define CO_CONFIG_CRC16_EXTERNAL 0x02
 /** @} */ /* CO_STACK_CONFIG_CRC16 */
-
 
 /**
  * @defgroup CO_STACK_CONFIG_FIFO FIFO buffer
@@ -718,13 +704,12 @@ extern "C" {
 #ifdef CO_DOXYGEN
 #define CO_CONFIG_FIFO (0)
 #endif
-#define CO_CONFIG_FIFO_ENABLE 0x01
-#define CO_CONFIG_FIFO_ALT_READ 0x02
-#define CO_CONFIG_FIFO_CRC16_CCITT 0x04
-#define CO_CONFIG_FIFO_ASCII_COMMANDS 0x08
+#define CO_CONFIG_FIFO_ENABLE          0x01
+#define CO_CONFIG_FIFO_ALT_READ        0x02
+#define CO_CONFIG_FIFO_CRC16_CCITT     0x04
+#define CO_CONFIG_FIFO_ASCII_COMMANDS  0x08
 #define CO_CONFIG_FIFO_ASCII_DATATYPES 0x10
 /** @} */ /* CO_STACK_CONFIG_FIFO */
-
 
 /**
  * @defgroup CO_STACK_CONFIG_TRACE Trace recorder
@@ -742,10 +727,9 @@ extern "C" {
 #ifdef CO_DOXYGEN
 #define CO_CONFIG_TRACE (0)
 #endif
-#define CO_CONFIG_TRACE_ENABLE 0x01
+#define CO_CONFIG_TRACE_ENABLE       0x01
 #define CO_CONFIG_TRACE_OWN_INTTYPES 0x02
 /** @} */ /* CO_STACK_CONFIG_TRACE */
-
 
 /**
  * @defgroup CO_STACK_CONFIG_DEBUG Debug messages
@@ -766,7 +750,7 @@ extern "C" {
 #ifdef CO_DOXYGEN
 #define CO_CONFIG_DEBUG (0)
 #endif
-#define CO_CONFIG_DEBUG_COMMON 0x01
+#define CO_CONFIG_DEBUG_COMMON     0x01
 #define CO_CONFIG_DEBUG_SDO_CLIENT 0x02
 #define CO_CONFIG_DEBUG_SDO_SERVER 0x04
 /** @} */ /* CO_STACK_CONFIG_DEBUG */

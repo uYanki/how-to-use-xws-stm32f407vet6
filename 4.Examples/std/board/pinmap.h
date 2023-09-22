@@ -19,6 +19,14 @@
 #define LED_OFF(port, pin)        GPIO_WriteBit(port, pin, Bit_SET)
 #define LED_TGL(port, pin)        GPIO_WriteBit(port, pin, (BitAction)!GPIO_ReadInputDataBit(port, pin))
 
+#define __LED1  LED1_GPIO_PORT,LED1_GPIO_PIN
+#define __LED2  LED2_GPIO_PORT,LED2_GPIO_PIN
+#define __LED3  LED3_GPIO_PORT,LED3_GPIO_PIN
+#define __LED_ON(gpio)         GPIO_WriteBit(gpio, Bit_RESET)  // 低有效
+#define __LED_OFF(gpio)          GPIO_WriteBit(gpio, Bit_SET)
+#define __LED_TGL(gpio)          GPIO_WriteBit(gpio, (BitAction)!GPIO_ReadInputDataBit(gpio))
+
+
 //
 
 #define KEY1_GPIO_CLK             RCC_AHB1Periph_GPIOE
@@ -35,6 +43,13 @@
 
 #define KEY_IS_RELEASE(port, pin) ((BitAction)GPIO_ReadInputDataBit(port, pin) == Bit_SET)    // 默认上拉
 #define KEY_IS_PRESS(port, pin)   ((BitAction)GPIO_ReadInputDataBit(port, pin) == Bit_RESET)  // 低有效
+
+
+#define __KEY1  KEY1_GPIO_PORT,KEY1_GPIO_PIN
+#define __KEY2  KEY2_GPIO_PORT,KEY2_GPIO_PIN
+#define __KEY3  KEY3_GPIO_PORT,KEY3_GPIO_PIN
+#define __KEY_IS_RELEASE(gpio)  ((BitAction)GPIO_ReadInputDataBit(gpio) == Bit_SET)
+#define __KEY_IS_PRESS(gpio)  ((BitAction)GPIO_ReadInputDataBit(gpio) == Bit_RESET)
 
 //
 

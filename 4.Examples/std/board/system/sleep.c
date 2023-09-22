@@ -3,7 +3,17 @@
 //---------------------------------------------------------------
 //
 
-#define DWT_FREQ         (SystemCoreClock)
+u32 GetSysClk(void)
+{
+    RCC_ClocksTypeDef clocks;
+    RCC_GetClocksFreq(&clocks);
+    return clocks.SYSCLK_Frequency;
+}
+
+//---------------------------------------------------------------
+//
+
+#define DWT_FREQ         (SystemCoreClock) // GetSysClk()
 
 #define DWT_CR           *(vu32*)0xE0001000
 #define DWT_CYCCNT       *(vu32*)0xE0001004
@@ -50,13 +60,6 @@ void dwt_wait(u32 us)
     }
 }
 
-u32 GetSysClk(void)
-{
-    RCC_ClocksTypeDef clocks;
-    RCC_GetClocksFreq(&clocks);
-    return clocks.SYSCLK_Frequency;
-}
-
 u32 dwt_tick(void)
 {
     return DWT_CYCCNT;
@@ -64,6 +67,7 @@ u32 dwt_tick(void)
 
 //---------------------------------------------------------------
 //
+
 #define TIM_CLK  RCC_APB1Periph_TIM3
 #define TIM_PORT TIM3
 
