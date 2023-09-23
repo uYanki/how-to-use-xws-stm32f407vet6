@@ -3,17 +3,7 @@
 //---------------------------------------------------------------
 //
 
-u32 GetSysClk(void)
-{
-    RCC_ClocksTypeDef clocks;
-    RCC_GetClocksFreq(&clocks);
-    return clocks.SYSCLK_Frequency;
-}
-
-//---------------------------------------------------------------
-//
-
-#define DWT_FREQ         (SystemCoreClock) // GetSysClk()
+#define DWT_FREQ         (SystemCoreClock)  // GetSysClk()
 
 #define DWT_CR           *(vu32*)0xE0001000
 #define DWT_CYCCNT       *(vu32*)0xE0001004
@@ -110,4 +100,19 @@ void tim_wait(u32 us)
     }
 
     _tim_wait(lo);
+}
+
+//---------------------------------------------------------------
+//
+
+void FirewareDelay(u32 nWaitTime)
+{
+    u8 n;
+    while (nWaitTime--)
+    {
+        n = UINT8_MAX;
+        while (n--)
+        {
+        }
+    }
 }

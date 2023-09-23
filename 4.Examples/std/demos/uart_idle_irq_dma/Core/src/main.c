@@ -1,8 +1,14 @@
-#include "main.h"
-#include "system/sleep.h"
-
 #include <stdio.h>
 #include <stdbool.h>
+
+#include "stm32f4xx.h"
+
+#include "main.h"
+#include "pinmap.h"
+#include "system/sleep.h"
+
+#include "bsp/led.h"
+#include "bsp/key.h"
 
 ///
 
@@ -134,7 +140,7 @@ static u8 m_txbuf[64] = {0};
 
 ///
 
-void UART_Config(u32 baudrate)
+void UART_Config(USART_InitTypeDef* params)
 {
     // gpio
     {
@@ -173,18 +179,20 @@ void UART_Config(u32 baudrate)
 
     // uart
     {
-        USART_InitTypeDef USART_InitStructure;
+        // USART_InitTypeDef USART_InitStructure;
 
         USART_CLKEN(USART_CLK, ENABLE);
 
-        USART_InitStructure.USART_BaudRate            = baudrate;
-        USART_InitStructure.USART_HardwareFlowControl = USART_HardwareFlowControl_None;
-        USART_InitStructure.USART_Mode                = USART_Mode_Tx | USART_Mode_Rx;
-        USART_InitStructure.USART_Parity              = USART_Parity_No;
-        USART_InitStructure.USART_StopBits            = USART_StopBits_1;
-        USART_InitStructure.USART_WordLength          = USART_WordLength_8b;
+        // USART_InitStructure.USART_BaudRate            = baudrate;
+        // USART_InitStructure.USART_HardwareFlowControl = USART_HardwareFlowControl_None;
+        // USART_InitStructure.USART_Mode                = USART_Mode_Tx | USART_Mode_Rx;
+        // USART_InitStructure.USART_Parity              = USART_Parity_No;
+        // USART_InitStructure.USART_StopBits            = USART_StopBits_1;
+        // USART_InitStructure.USART_WordLength          = USART_WordLength_8b;
 
-        USART_Init(USART_PORT, &USART_InitStructure);
+        // USART_Init(USART_PORT, &USART_InitStructure);
+
+        USART_Init(USART_PORT, params);
     }
 
     // nvic
@@ -379,8 +387,6 @@ void USART_IRQHandler(void)
 
 int $Super$$__2printf(const char* fmt, ...);
 
-#if 1
-
 int $Sub$$__2printf(const char* fmt, ...)
 {
     int len;
@@ -404,29 +410,6 @@ int $Sub$$__2printf(const char* fmt, ...)
 
     return len;
 }
-
-#else
-
-int $Sub$$__2printf(const char* fmt, va_list args)
-{
-    int len;
-
-    // set tx dir
-    USART_SetTxDir();
-    sleep_us(40);
-
-    $Super$$__2printf("<*>");
-    len = $Super$$__2printf(fmt, args);  // print
-
-    // set rx dir
-    // @note: it is set in usart_irq
-    // sleep_us(40);
-    // USART_SetRxDir();
-
-    return len;
-}
-
-#endif
 
 #endif
 
@@ -464,20 +447,27 @@ int fgetc(FILE* f)
 
 #endif
 
+void usdk_hw_uart_init(void)
+{
+    USART_InitTypeDef USART_InitStructure;
+    USART_InitStructure.USART_BaudRate            = 115200;
+    USART_InitStructure.USART_HardwareFlowControl = USART_HardwareFlowControl_None;
+    USART_InitStructure.USART_Mode                = USART_Mode_Tx | USART_Mode_Rx;
+    USART_InitStructure.USART_Parity              = USART_Parity_No;
+    USART_InitStructure.USART_StopBits            = USART_StopBits_1;
+    USART_InitStructure.USART_WordLength          = USART_WordLength_8b;
+    UART_Config(&USART_InitStructure);
+}
+
 int main()
 {
     NVIC_PriorityGroupConfig(NVIC_PriorityGroup_0);
-		sleep_init();
-    UART_Config(115200);
-
-    Led_Init();
-    Key_Init();
 
     u16 t = 0;
 
     while (1)
     {
-        if (KEY_IS_PRESS(KEY1_GPIO_PORT, KEY1_GPIO_PIN))
+        if (key_is_press(KEY1))
         {
             if (++t == 0)
             {

@@ -28,6 +28,6 @@ void tim_wait(u32 us);
 #define sleep_ms(t) sleep((t) * (UNIT_MS))
 #define sleep_s(t)  sleep((t) * (UNIT_S))
 
-inline u32 GetSysClk(void);
+void FirewareDelay(u32 nWaitTime);
 
 #endif

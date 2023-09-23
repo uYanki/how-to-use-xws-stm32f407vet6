@@ -1,0 +1,10 @@
+{
+    "files.associations": {
+        "adc_filter.h": "c",
+        "bsp_led.h": "c",
+        "bsp_key.h": "c",
+        "autoinit.h": "c",
+        "bsp_rs232.h": "c",
+        "pinmap.h": "c"
+    }
+}

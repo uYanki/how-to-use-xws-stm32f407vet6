@@ -1,9 +1,7 @@
 #include "swrst.h"
 
-
 // NVIC_CoreReset:   复位内核, 不包含外设（寄存器内容保持不变）
 // NVIC_SystemReset: 复位芯片, 包含外设（寄存器被恢复为默认值）
-
 
 void NVIC_CoreReset_C(void)
 {

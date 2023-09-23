@@ -423,10 +423,25 @@
               <FileType>1</FileType>
               <FilePath>.\Core\src\stm32f4xx_it.c</FilePath>
             </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>bsp</GroupName>
+          <Files>
             <File>
-              <FileName>board.c</FileName>
+              <FileName>key.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\board\board.c</FilePath>
+              <FilePath>..\..\board\bsp\key.c</FilePath>
+            </File>
+            <File>
+              <FileName>led.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\board\bsp\led.c</FilePath>
+            </File>
+            <File>
+              <FileName>rs232.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\board\bsp\rs232.c</FilePath>
             </File>
           </Files>
         </Group>

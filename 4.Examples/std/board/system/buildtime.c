@@ -1,9 +1,10 @@
-#include "buildtime.h"
-#include "stm32f4xx.h"
 #include <string.h>
-#include "autoinit.h"
 
-#define nullptr (void*)0
+#include "stm32f4xx.h"
+
+#include "usdk.defs.h"
+#include "autoinit.h"
+#include "buildtime.h"
 
 const char* m_data = __DATE__;
 const char* m_time = __TIME__;
@@ -15,8 +16,8 @@ static int display_build_time()
     date_time_t buildTime;
     get_build_time(&(buildTime.date), &(buildTime.time));
 
-    printf("build data: %s (%04d/%02d/%02d)\n", m_data, buildTime.date.year, buildTime.date.month, buildTime.date.day);
-    printf("build time: %s (%02d:%02d:%02d)\n", m_time, buildTime.time.hour, buildTime.time.minute, buildTime.time.second);
+    printf("<*> build data: %s (%04d/%02d/%02d)\n", m_data, buildTime.date.year, buildTime.date.month, buildTime.date.day);
+    printf("<*> build time: %s (%02d:%02d:%02d)\n", m_time, buildTime.time.hour, buildTime.time.minute, buildTime.time.second);
 
     return INIT_RESULT_SUCCESS;
 }

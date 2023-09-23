@@ -1,86 +1,106 @@
-#include "main.h"
-
-#include <stdio.h>
+#include "stm32f4xx.h"
 
 #include "system/autoinit.h"
 #include "system/swrst.h"
 
-#define BV(n) (1u << (n))
+#include "bsp/key.h"
+#include "bsp/led.h"
+#include "bsp/rs232.h"
 
-void usdk_hw_uart_init()
-{
-    RS232_Init(115200);
-}
+#include "usdk.defs.h"
 
 int main()
 {
+    // This enables the floating point unit
+    // SCB->CPACR |= 0xF << 20;
+
     printf("\n");
-		
-		sleep_s(1);
+
+    sleep_s(2);
 
     while (1)
     {
-        GPIO_WriteBit(__LED1, (BitAction)GPIO_ReadInputDataBit(__KEY1));
+        key_is_press(KEY1) ? led_on(LED1) : led_off(LED1);
 
-        if (__KEY_IS_PRESS(__KEY2))
-        { 
+        if (key_is_press(KEY2))
+        {
             NVIC_CoreReset_C();
         }
-        if (__KEY_IS_PRESS(__KEY3))
+        if (key_is_press(KEY3))
         {
             NVIC_SystemReset_C();
         }
     }
 }
 
-int bsp_init(void)
-{
-    Led_Init();
-    Key_Init();
+//
 
-    return INIT_RESULT_SUCCESS;
+void usdk_hw_uart_init(void)
+{
+    USART_InitTypeDef USART_InitStructure;
+    USART_InitStructure.USART_BaudRate            = 115200;
+    USART_InitStructure.USART_HardwareFlowControl = USART_HardwareFlowControl_None;
+    USART_InitStructure.USART_Mode                = USART_Mode_Tx | USART_Mode_Rx;
+    USART_InitStructure.USART_Parity              = USART_Parity_No;
+    USART_InitStructure.USART_StopBits            = USART_StopBits_1;
+    USART_InitStructure.USART_WordLength          = USART_WordLength_8b;
+    rs232_init(&USART_InitStructure);
 }
 
-USDK_INIT_EXPORT(bsp_init, INIT_LEVEL_BOARD)
+//
 
 int display_reset_reason(void)
 {
-    printf("--------\n");
-
     // 上电打印寄存器值
-    printf("CSR = 0x%X\n", RCC->CSR);
+    printf("<*> CSR = 0x%X\n", RCC->CSR);
 
     if (RCC->CSR & BV(31))
     {  // 1.低功耗管理复位
-        printf("1.Low-power reset\n");
+        printf("<*> 1.Low-power reset\n");
     }
     if (RCC->CSR & BV(30))
     {  // 2.窗口看门狗复位
-        printf("2.Window watchdog reset\n");
+        printf("<*> 2.Window watchdog reset\n");
     }
     if (RCC->CSR & BV(29))
     {  // 3.独立看门狗复位
-        printf("3.(Independent watchdog reset\n");
+        printf("<*> 3.(Independent watchdog reset\n");
     }
     if (RCC->CSR & BV(28))
     {  // 4.软件复位
-        printf("4.Software reset\n");
+        printf("<*> 4.Software reset\n");
     }
     if (RCC->CSR & BV(27))
     {  // 5.上电/掉电复位
-        printf("5.POR/PDR reset\n");
+        printf("<*> 5.POR/PDR reset\n");
     }
     if (RCC->CSR & BV(26))
     {  // 6.PIN引脚复位
-        printf("6.PIN reset\n");
+        printf("<*> 6.PIN reset\n");
     }
 
     // 清除复位标志
     RCC->CSR = 0x01000000;
 
-    printf("--------\n");
-
     return INIT_RESULT_SUCCESS;
 }
 
 USDK_INIT_EXPORT(display_reset_reason, INIT_LEVEL_DEVICE)
+
+//
+
+static int display_system_clock(void)
+{
+    RCC_ClocksTypeDef RCC_Clocks;
+
+    RCC_GetClocksFreq(&RCC_Clocks);
+
+    printf("<*> SYSCLK:%luHz\n", RCC_Clocks.SYSCLK_Frequency);
+    printf("<*> HCLK:%luHz\n", RCC_Clocks.HCLK_Frequency);    // AHB
+    printf("<*> PCLK1:%luHz\n", RCC_Clocks.PCLK1_Frequency);  // APB1
+    printf("<*> PCLK2:%luHz\n", RCC_Clocks.PCLK2_Frequency);  // APB2
+
+    return INIT_RESULT_SUCCESS;
+}
+
+USDK_INIT_EXPORT(display_system_clock, INIT_LEVEL_DEVICE)

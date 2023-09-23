@@ -423,20 +423,25 @@
               <FileType>1</FileType>
               <FilePath>.\Core\src\stm32f4xx_it.c</FilePath>
             </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>bsp</GroupName>
+          <Files>
             <File>
-              <FileName>board.c</FileName>
+              <FileName>rs232.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\board\board.c</FilePath>
+              <FilePath>..\..\board\bsp\rs232.c</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>bsp/dwt</GroupName>
+          <GroupName>system</GroupName>
           <Files>
             <File>
-              <FileName>dwt.c</FileName>
+              <FileName>sleep.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\board\dwt\dwt.c</FilePath>
+              <FilePath>..\..\board\system\sleep.c</FilePath>
             </File>
           </Files>
         </Group>

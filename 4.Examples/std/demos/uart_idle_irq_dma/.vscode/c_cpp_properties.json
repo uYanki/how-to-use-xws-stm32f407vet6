@@ -3,15 +3,15 @@
         {
             "name": "Project",
             "includePath": [
-                "d:\\how-to-use-xws-stm32f407vet6\\4.Examples\\std\\demos\\fwlib\\Libraries\\STM32F4xx_StdPeriph_Driver\\inc",
-                "d:\\how-to-use-xws-stm32f407vet6\\4.Examples\\std\\demos\\fwlib\\Libraries\\CMSIS\\Include",
+                "d:\\how-to-use-xws-stm32f407vet6\\4.Examples\\std\\fwlib\\Libraries\\STM32F4xx_StdPeriph_Driver\\inc",
+                "d:\\how-to-use-xws-stm32f407vet6\\4.Examples\\std\\fwlib\\Libraries\\CMSIS\\Include",
+                "d:\\how-to-use-xws-stm32f407vet6\\4.Examples\\std\\board",
                 "d:\\how-to-use-xws-stm32f407vet6\\4.Examples\\std\\demos\\uart_idle_irq_dma\\Core\\inc",
-                "d:\\how-to-use-xws-stm32f407vet6\\4.Examples\\std\\demos\\board",
                 "C:\\Keil_v5\\ARM\\ARMCC\\include",
                 "C:\\Keil_v5\\ARM\\ARMCC\\include\\rw",
                 "d:\\how-to-use-xws-stm32f407vet6\\4.Examples\\std\\demos\\uart_idle_irq_dma\\Core\\src",
-                "d:\\how-to-use-xws-stm32f407vet6\\4.Examples\\std\\board",
-                "d:\\how-to-use-xws-stm32f407vet6\\4.Examples\\std\\board\\dwt",
+                "d:\\how-to-use-xws-stm32f407vet6\\4.Examples\\std\\board\\bsp",
+                "d:\\how-to-use-xws-stm32f407vet6\\4.Examples\\std\\board\\system",
                 "d:\\how-to-use-xws-stm32f407vet6\\4.Examples\\std\\fwlib\\Libraries\\STM32F4xx_StdPeriph_Driver\\src"
             ],
             "defines": [

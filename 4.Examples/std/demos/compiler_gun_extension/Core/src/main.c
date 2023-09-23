@@ -1,5 +1,9 @@
+#include "stm32f4xx.h"
+
+#include "system/sleep.h"
+#include "bsp/rs232.h"
+
 #include "main.h"
-#include "dwt/dwt.h"
 
 //  __attribute__((always_inline))
 //  __attribute__((noinline))
@@ -111,9 +115,21 @@ void switch_range_case()
     }
 }
 
+void usdk_hw_uart_init(void)
+{
+    USART_InitTypeDef USART_InitStructure;
+    USART_InitStructure.USART_BaudRate            = 115200;
+    USART_InitStructure.USART_HardwareFlowControl = USART_HardwareFlowControl_None;
+    USART_InitStructure.USART_Mode                = USART_Mode_Tx | USART_Mode_Rx;
+    USART_InitStructure.USART_Parity              = USART_Parity_No;
+    USART_InitStructure.USART_StopBits            = USART_StopBits_1;
+    USART_InitStructure.USART_WordLength          = USART_WordLength_8b;
+    rs232_init(&USART_InitStructure);
+}
+
 int main()
 {
-    RS232_Init(115200);
+    usdk_hw_uart_init();
 
     sayhello();
     get_minimum_value();

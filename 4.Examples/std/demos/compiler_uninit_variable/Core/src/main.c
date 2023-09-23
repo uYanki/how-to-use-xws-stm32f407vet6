@@ -1,5 +1,7 @@
 #include "main.h"
-#include "dwt/dwt.h"
+#include "stm32f4xx.h"               
+#include "system/sleep.h"
+#include "bsp/rs232.h"
 #include "core_cm4.h"
 
 #if (__ARMCC_VERSION >= 6000000)  // Arm Compiler 6
@@ -14,15 +16,27 @@
 u32 a __NOINIT;
 u32 b;
 
+void usdk_hw_uart_init(void)
+{
+    USART_InitTypeDef USART_InitStructure;
+    USART_InitStructure.USART_BaudRate            = 115200;
+    USART_InitStructure.USART_HardwareFlowControl = USART_HardwareFlowControl_None;
+    USART_InitStructure.USART_Mode                = USART_Mode_Tx | USART_Mode_Rx;
+    USART_InitStructure.USART_Parity              = USART_Parity_No;
+    USART_InitStructure.USART_StopBits            = USART_StopBits_1;
+    USART_InitStructure.USART_WordLength          = USART_WordLength_8b;
+    rs232_init(&USART_InitStructure);
+}
+
 int main()
 {
-    DWT_Init();
-    RS232_Init(115200);
+    sleep_init();
+    usdk_hw_uart_init();
 
     ++a, ++b;
-    printf("%x,%d\n", a, b);
+    printf("%d,%d\n", a, b);
 
-    DWT_Wait(1, UNIT_S);
+    sleep_s(1);
     NVIC_SystemReset();  // rst
 
     while (1)

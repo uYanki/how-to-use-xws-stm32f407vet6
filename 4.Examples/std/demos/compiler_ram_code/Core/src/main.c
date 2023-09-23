@@ -1,5 +1,7 @@
 #include "main.h"
-#include "dwt/dwt.h"
+#include "stm32f4xx.h"
+#include "system/sleep.h"
+#include "bsp/rs232.h"
 
 // clang-format off
 
@@ -79,9 +81,22 @@ __attribute__((section("RAMCODE"))) void ram_foo3()
     printf("* %s in 0x%x\n", __func__, addr - 6);
 }
 
+void usdk_hw_uart_init(void)
+{
+    USART_InitTypeDef USART_InitStructure;
+    USART_InitStructure.USART_BaudRate            = 115200;
+    USART_InitStructure.USART_HardwareFlowControl = USART_HardwareFlowControl_None;
+    USART_InitStructure.USART_Mode                = USART_Mode_Tx | USART_Mode_Rx;
+    USART_InitStructure.USART_Parity              = USART_Parity_No;
+    USART_InitStructure.USART_StopBits            = USART_StopBits_1;
+    USART_InitStructure.USART_WordLength          = USART_WordLength_8b;
+    rs232_init(&USART_InitStructure);
+}
+
+
 int main()
 {
-    RS232_Init(115200);
+    usdk_hw_uart_init();
 
     flash_foo1();
     flash_foo2();
@@ -92,12 +107,12 @@ int main()
 
     rxm_foo();
 
-    printf("- flash_foo1 = 0x%p\n", flash_foo1);
-    printf("- flash_foo2 = 0x%p\n", flash_foo2);
-    printf("- ram_foo1 = 0x%p\n", ram_foo1);
-    printf("- ram_foo2 = 0x%p\n", ram_foo2);
-    printf("- ram_foo3 = 0x%p\n", ram_foo3);
-    printf("- rxm_foo = 0x%p\n", rxm_foo);
+    printf("<-> flash_foo1 = 0x%p\n", flash_foo1);
+    printf("<-> flash_foo2 = 0x%p\n", flash_foo2);
+    printf("<-> ram_foo1 = 0x%p\n", ram_foo1);
+    printf("<+> ram_foo2 = 0x%p\n", ram_foo2);
+    printf("<+> ram_foo3 = 0x%p\n", ram_foo3);
+    printf("<*> rxm_foo = 0x%p\n", rxm_foo);
 
     while (1)
     {
