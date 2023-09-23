@@ -3,7 +3,7 @@
 
 #include "sleep.h"
 
-#define CONFIG_USDK_INIT_DEBUG 1
+#include "board_conf.h"
 
 #if defined(__ARMCC_VERSION) || defined(__GNUC__)
 /* ARM Compiler */

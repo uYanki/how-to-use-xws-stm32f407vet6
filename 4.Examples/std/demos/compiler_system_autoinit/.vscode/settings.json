@@ -12,6 +12,13 @@
         "bsp_led.h": "c",
         "swrst.h": "c",
         "usdk.defs.h": "c",
-        "bsp_key.h": "c"
+        "bsp_key.h": "c",
+        "xutility": "c",
+        "limits": "c",
+        "memory": "c",
+        "bit": "c",
+        "compare": "c",
+        "cstddef": "c",
+        "type_traits": "c"
     }
 }

@@ -10,7 +10,7 @@
                 "C:\\Keil_v5\\ARM\\ARMCC\\include",
                 "C:\\Keil_v5\\ARM\\ARMCC\\include\\rw",
                 "d:\\how-to-use-xws-stm32f407vet6\\4.Examples\\std\\demos\\compiler_system_autoinit\\Core\\src",
-                "d:\\how-to-use-xws-stm32f407vet6\\4.Examples\\std\\board\\board",
+                "d:\\how-to-use-xws-stm32f407vet6\\4.Examples\\std\\board\\bsp",
                 "d:\\how-to-use-xws-stm32f407vet6\\4.Examples\\std\\board\\system",
                 "d:\\how-to-use-xws-stm32f407vet6\\4.Examples\\std\\fwlib\\Libraries\\STM32F4xx_StdPeriph_Driver\\src"
             ],

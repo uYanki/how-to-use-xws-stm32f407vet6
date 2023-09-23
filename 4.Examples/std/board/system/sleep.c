@@ -50,56 +50,48 @@ void dwt_wait(u32 us)
     }
 }
 
-u32 dwt_tick(void)
-{
-    return DWT_CYCCNT;
-}
-
 //---------------------------------------------------------------
 //
 
-#define TIM_CLK  RCC_APB1Periph_TIM3
-#define TIM_PORT TIM3
+static vu32 m_ticks = 0;
 
-void tim_init(void)  // freq = SystemCoreClock/2 Hz
+void DelayInit(void)
 {
-    TIM_TimeBaseInitTypeDef TIM_TimeBaseStructure;
-
-    RCC_APB1PeriphClockCmd(TIM_CLK, ENABLE);
-
-    TIM_TimeBaseStructure.TIM_Prescaler     = (SystemCoreClock / 1e6) - 1;
-    TIM_TimeBaseStructure.TIM_Period        = 2 - 1;  // TIMx->ARR
-    TIM_TimeBaseStructure.TIM_CounterMode   = TIM_CounterMode_Down;
-    TIM_TimeBaseStructure.TIM_ClockDivision = TIM_CKD_DIV1;
-
-    TIM_TimeBaseInit(TIM_PORT, &TIM_TimeBaseStructure);
+    RCC_ClocksTypeDef RCC_Clocks;
+    RCC_GetClocksFreq(&RCC_Clocks);
+    SysTick_Config(RCC_Clocks.HCLK_Frequency / UNIT_MS);  // 1ms
 }
 
-void _tim_wait(u16 us)
+void DelayBlock(u32 nWaitTime)
 {
-    TIM_PORT->CNT = us - 1;
-    TIM_PORT->CR1 |= TIM_CR1_CEN;
-    while ((TIM_PORT->SR & TIM_FLAG_Update) != SET)
+    u32 nStartTick = HAL_GetTick();
+
+    while ((HAL_GetTick() - nStartTick) < nWaitTime)
         ;
-    TIM_PORT->CR1 &= (~TIM_CR1_CEN);
-    TIM_PORT->SR &= ~TIM_FLAG_Update;
 }
 
-void tim_wait(u32 us)
+uint32_t tickstart = 0;
+
+bool DelayNonBlock(u32 nStartTick, u32 nWaitTime)
 {
-    u16 hi, lo;
+    return HAL_GetTick() >= (nStartTick + nWaitTime);
+}
 
-    us >>= 1;
+u32 HAL_GetTick(void)
+{
+    return m_ticks;
+}
 
-    hi = us >> 16;
-    lo = us & 0xFFFF;
-
-    while (hi--)
-    {
-        _tim_wait(0xFFFF);
-    }
-
-    _tim_wait(lo);
+/**
+ * @note call HAL_IncTick() in SysTick_Handler()
+ *
+ *      extern void HAL_IncTick(void);
+ *      HAL_IncTick();
+ *
+ */
+__weak void HAL_IncTick(void)
+{
+    m_ticks += UNIT_MS;
 }
 
 //---------------------------------------------------------------

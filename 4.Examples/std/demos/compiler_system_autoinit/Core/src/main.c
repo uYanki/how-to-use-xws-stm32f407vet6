@@ -11,16 +11,20 @@
 
 int main()
 {
-    // This enables the floating point unit
-    // SCB->CPACR |= 0xF << 20;
+    u32 blink = 0;
 
     printf("\n");
 
+    DelayInit();
     sleep_s(2);
 
     while (1)
     {
-        key_is_press(KEY1) ? led_on(LED1) : led_off(LED1);
+        if (DelayNonBlockS(blink, 1))
+        {
+            led_tgl(LED1);
+            blink = HAL_GetTick();
+        }
 
         if (key_is_press(KEY2))
         {
@@ -32,6 +36,16 @@ int main()
         }
     }
 }
+
+#if 0
+
+void init_fpu()
+{
+    // This enables the floating point unit
+    SCB->CPACR |= 0xF << 20;
+}
+
+#endif
 
 //
 
