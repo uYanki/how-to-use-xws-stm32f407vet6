@@ -1,0 +1,9 @@
+#ignore
+build/*
+out/*
+Testing/*
+.vscode/*
+
+#allow
+!.vscode/settings.json
+!.vscode/extensions.json
