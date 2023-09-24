@@ -1,0 +1,445 @@
+<html>
+<body>
+<pre>
+<h1>µVision Build Log</h1>
+<h2>Tool Versions:</h2>
+IDE-Version: ¦ÌVision V5.35.0.0
+Copyright (C) 2021 ARM Ltd and ARM Germany GmbH. All rights reserved.
+License Information: Administrator,   , LIC=4ZLZX-HI4FE-4ADDE-5XYC1-37TG3-IBRMR
+ 
+Tool Versions:
+Toolchain:       MDK-ARM Professional  Version: 5.35.0.2
+Toolchain Path:  C:\Keil_v5\ARM\ARMCC\Bin
+C Compiler:      Armcc.exe V5.06 update 7 (build 960)
+Assembler:       Armasm.exe V5.06 update 7 (build 960)
+Linker/Locator:  ArmLink.exe V5.06 update 7 (build 960)
+Library Manager: ArmAr.exe V5.06 update 7 (build 960)
+Hex Converter:   FromElf.exe V5.06 update 7 (build 960)
+CPU DLL:         SARMCM3.DLL V5.35.0.2
+Dialog DLL:      DCM.DLL V1.17.3.0
+Target DLL:      CMSIS_AGDI.dll V1.33.0.0
+Dialog DLL:      TCM.DLL V1.53.0.0
+ 
+<h2>Project:</h2>
+D:\how-to-use-xws-stm32f407vet6\4.Examples\std\demos\canopen\demo.uvprojx
+Project File Date:  09/24/2023
+
+<h2>Output:</h2>
+*** Using Compiler 'V5.06 update 7 (build 960)', folder: 'C:\Keil_v5\ARM\ARMCC\Bin'
+Build target 'Project'
+compiling dcf.c...
+..\..\3rdparty\canfestival\src\dcf.c(106): warning:  #177-D: variable "node"  was declared but never referenced
+      UNS8 buf[4], match = 0, node;
+..\..\3rdparty\canfestival\src\dcf.c: 1 warning, 0 errors
+compiling emcy.c...
+compiling lifegrd.c...
+compiling lss.c...
+compiling nmtMaster.c...
+compiling autoinit.c...
+compiling buildtime.c...
+compiling led.c...
+compiling key.c...
+compiling nmtSlave.c...
+compiling rs232.c...
+compiling can.c...
+compiling main.c...
+compiling objacces.c...
+compiling states.c...
+compiling symbols.c...
+..\..\3rdparty\canfestival\src\symbols.c(11): warning:  #77-D: this declaration has no storage class or type specifier
+  EXPORT_SYMBOL (send_consise_dcf);
+..\..\3rdparty\canfestival\src\symbols.c(11): warning:  #92-D: identifier-list parameters may only be used in a function definition
+  EXPORT_SYMBOL (send_consise_dcf);
+..\..\3rdparty\canfestival\src\symbols.c(14): warning:  #77-D: this declaration has no storage class or type specifier
+  EXPORT_SYMBOL (_post_emcy);
+..\..\3rdparty\canfestival\src\symbols.c(14): warning:  #92-D: identifier-list parameters may only be used in a function definition
+  EXPORT_SYMBOL (_post_emcy);
+..\..\3rdparty\canfestival\src\symbols.c(15): warning:  #77-D: this declaration has no storage class or type specifier
+  EXPORT_SYMBOL (EMCY_setError);
+..\..\3rdparty\canfestival\src\symbols.c(15): warning:  #92-D: identifier-list parameters may only be used in a function definition
+  EXPORT_SYMBOL (EMCY_setError);
+..\..\3rdparty\canfestival\src\symbols.c(16): warning:  #77-D: this declaration has no storage class or type specifier
+  EXPORT_SYMBOL (EMCY_errorRecovered);
+..\..\3rdparty\canfestival\src\symbols.c(16): warning:  #92-D: identifier-list parameters may only be used in a function definition
+  EXPORT_SYMBOL (EMCY_errorRecovered);
+..\..\3rdparty\canfestival\src\symbols.c(17): warning:  #77-D: this declaration has no storage class or type specifier
+  EXPORT_SYMBOL (emergencyInit);
+..\..\3rdparty\canfestival\src\symbols.c(17): warning:  #92-D: identifier-list parameters may only be used in a function definition
+  EXPORT_SYMBOL (emergencyInit);
+..\..\3rdparty\canfestival\src\symbols.c(18): warning:  #77-D: this declaration has no storage class or type specifier
+  EXPORT_SYMBOL (emergencyStop);
+..\..\3rdparty\canfestival\src\symbols.c(18): warning:  #92-D: identifier-list parameters may only be used in a function definition
+  EXPORT_SYMBOL (emergencyStop);
+..\..\3rdparty\canfestival\src\symbols.c(19): warning:  #77-D: this declaration has no storage class or type specifier
+  EXPORT_SYMBOL (proceedEMCY);
+..\..\3rdparty\canfestival\src\symbols.c(19): warning:  #92-D: identifier-list parameters may only be used in a function definition
+  EXPORT_SYMBOL (proceedEMCY);
+..\..\3rdparty\canfestival\src\symbols.c(22): warning:  #77-D: this declaration has no storage class or type specifier
+  EXPORT_SYMBOL (_heartbeatError);
+..\..\3rdparty\canfestival\src\symbols.c(22): warning:  #92-D: identifier-list parameters may only be used in a function definition
+  EXPORT_SYMBOL (_heartbeatError);
+..\..\3rdparty\canfestival\src\symbols.c(23): warning:  #77-D: this declaration has no storage class or type specifier
+  EXPORT_SYMBOL (_post_SlaveBootup);
+..\..\3rdparty\canfestival\src\symbols.c(23): warning:  #92-D: identifier-list parameters may only be used in a function definition
+  EXPORT_SYMBOL (_post_SlaveBootup);
+..\..\3rdparty\canfestival\src\symbols.c(24): warning:  #77-D: this declaration has no storage class or type specifier
+  EXPORT_SYMBOL (getNodeState);
+..\..\3rdparty\canfestival\src\symbols.c(24): warning:  #92-D: identifier-list parameters may only be used in a function definition
+  EXPORT_SYMBOL (getNodeState);
+..\..\3rdparty\canfestival\src\symbols.c(25): warning:  #77-D: this declaration has no storage class or type specifier
+  EXPORT_SYMBOL (heartbeatInit);
+..\..\3rdparty\canfestival\src\symbols.c(25): warning:  #92-D: identifier-list parameters may only be used in a function definition
+  EXPORT_SYMBOL (heartbeatInit);
+..\..\3rdparty\canfestival\src\symbols.c(26): warning:  #77-D: this declaration has no storage class or type specifier
+  EXPORT_SYMBOL (heartbeatStop);
+..\..\3rdparty\canfestival\src\symbols.c(26): warning:  #92-D: identifier-list parameters may only be used in a function definition
+  EXPORT_SYMBOL (heartbeatStop);
+..\..\3rdparty\canfestival\src\symbols.c(27): warning:  #77-D: this declaration has no storage class or type specifier
+  EXPORT_SYMBOL (proceedNODE_GUARD);
+..\..\3rdparty\canfestival\src\symbols.c(27): warning:  #92-D: identifier-list parameters may only be used in a function definition
+  EXPORT_SYMBOL (proceedNODE_GUARD);
+..\..\3rdparty\canfestival\src\symbols.c(43): warning:  #77-D: this declaration has no storage class or type specifier
+  EXPORT_SYMBOL (masterSendNMTstateChange);
+..\..\3rdparty\canfestival\src\symbols.c(43): warning:  #92-D: identifier-list parameters may only be used in a function definition
+  EXPORT_SYMBOL (masterSendNMTstateChange);
+..\..\3rdparty\canfestival\src\symbols.c(44): warning:  #77-D: this declaration has no storage class or type specifier
+  EXPORT_SYMBOL (masterSendNMTnodeguard);
+..\..\3rdparty\canfestival\src\symbols.c(44): warning:  #92-D: identifier-list parameters may only be used in a function definition
+  EXPORT_SYMBOL (masterSendNMTnodeguard);
+..\..\3rdparty\canfestival\src\symbols.c(45): warning:  #77-D: this declaration has no storage class or type specifier
+  EXPORT_SYMBOL (masterRequestNodeState);
+..\..\3rdparty\canfestival\src\symbols.c(45): warning:  #92-D: identifier-list parameters may only be used in a function definition
+  EXPORT_SYMBOL (masterRequestNodeState);
+..\..\3rdparty\canfestival\src\symbols.c(48): warning:  #77-D: this declaration has no storage class or type specifier
+  EXPORT_SYMBOL (proceedNMTstateChange);
+..\..\3rdparty\canfestival\src\symbols.c(48): warning:  #92-D: identifier-list parameters may only be used in a function definition
+  EXPORT_SYMBOL (proceedNMTstateChange);
+..\..\3rdparty\canfestival\src\symbols.c(49): warning:  #77-D: this declaration has no storage class or type specifier
+  EXPORT_SYMBOL (slaveSendBootUp);
+..\..\3rdparty\canfestival\src\symbols.c(49): warning:  #92-D: identifier-list parameters may only be used in a function definition
+  EXPORT_SYMBOL (slaveSendBootUp);
+..\..\3rdparty\canfestival\src\symbols.c(52): warning:  #77-D: this declaration has no storage class or type specifier
+  EXPORT_SYMBOL (_storeODSubIndex);
+..\..\3rdparty\canfestival\src\symbols.c(52): warning:  #92-D: identifier-list parameters may only be used in a function definition
+  EXPORT_SYMBOL (_storeODSubIndex);
+..\..\3rdparty\canfestival\src\symbols.c(56): warning:  #77-D: this declaration has no storage class or type specifier
+  EXPORT_SYMBOL (_getODentry);
+..\..\3rdparty\canfestival\src\symbols.c(56): warning:  #92-D: identifier-list parameters may only be used in a function definition
+  EXPORT_SYMBOL (_getODentry);
+..\..\3rdparty\canfestival\src\symbols.c(57): warning:  #77-D: this declaration has no storage class or type specifier
+  EXPORT_SYMBOL (_setODentry);
+..\..\3rdparty\canfestival\src\symbols.c(57): warning:  #92-D: identifier-list parameters may only be used in a function definition
+  EXPORT_SYMBOL (_setODentry);
+..\..\3rdparty\canfestival\src\symbols.c(59): warning:  #77-D: this declaration has no storage class or type specifier
+  EXPORT_SYMBOL (scanIndexOD);
+..\..\3rdparty\canfestival\src\symbols.c(59): warning:  #92-D: identifier-list parameters may only be used in a function definition
+  EXPORT_SYMBOL (scanIndexOD);
+..\..\3rdparty\canfestival\src\symbols.c(60): warning:  #77-D: this declaration has no storage class or type specifier
+  EXPORT_SYMBOL (RegisterSetODentryCallBack);
+..\..\3rdparty\canfestival\src\symbols.c(60): warning:  #92-D: identifier-list parameters may only be used in a function definition
+  EXPORT_SYMBOL (RegisterSetODentryCallBack);
+..\..\3rdparty\canfestival\src\symbols.c(63): warning:  #77-D: this declaration has no storage class or type specifier
+  EXPORT_SYMBOL (buildPDO);
+..\..\3rdparty\canfestival\src\symbols.c(63): warning:  #92-D: identifier-list parameters may only be used in a function definition
+  EXPORT_SYMBOL (buildPDO);
+..\..\3rdparty\canfestival\src\symbols.c(64): warning:  #77-D: this declaration has no storage class or type specifier
+  EXPORT_SYMBOL (sendPDOrequest);
+..\..\3rdparty\canfestival\src\symbols.c(64): warning:  #92-D: identifier-list parameters may only be used in a function definition
+  EXPORT_SYMBOL (sendPDOrequest);
+..\..\3rdparty\canfestival\src\symbols.c(65): warning:  #77-D: this declaration has no storage class or type specifier
+  EXPORT_SYMBOL (proceedPDO);
+..\..\3rdparty\canfestival\src\symbols.c(65): warning:  #92-D: identifier-list parameters may only be used in a function definition
+  EXPORT_SYMBOL (proceedPDO);
+..\..\3rdparty\canfestival\src\symbols.c(66): warning:  #77-D: this declaration has no storage class or type specifier
+  EXPORT_SYMBOL (sendPDOevent);
+..\..\3rdparty\canfestival\src\symbols.c(66): warning:  #92-D: identifier-list parameters may only be used in a function definition
+  EXPORT_SYMBOL (sendPDOevent);
+..\..\3rdparty\canfestival\src\symbols.c(67): warning:  #77-D: this declaration has no storage class or type specifier
+  EXPORT_SYMBOL (sendOnePDOevent);
+..\..\3rdparty\canfestival\src\symbols.c(67): warning:  #92-D: identifier-list parameters may only be used in a function definition
+  EXPORT_SYMBOL (sendOnePDOevent);
+..\..\3rdparty\canfestival\src\symbols.c(68): warning:  #77-D: this declaration has no storage class or type specifier
+  EXPORT_SYMBOL (_sendPDOevent);
+..\..\3rdparty\canfestival\src\symbols.c(68): warning:  #92-D: identifier-list parameters may only be used in a function definition
+  EXPORT_SYMBOL (_sendPDOevent);
+..\..\3rdparty\canfestival\src\symbols.c(69): warning:  #77-D: this declaration has no storage class or type specifier
+  EXPORT_SYMBOL (PDOInit);
+..\..\3rdparty\canfestival\src\symbols.c(69): warning:  #92-D: identifier-list parameters may only be used in a function definition
+  EXPORT_SYMBOL (PDOInit);
+..\..\3rdparty\canfestival\src\symbols.c(70): warning:  #77-D: this declaration has no storage class or type specifier
+  EXPORT_SYMBOL (PDOStop);
+..\..\3rdparty\canfestival\src\symbols.c(70): warning:  #92-D: identifier-list parameters may only be used in a function definition
+  EXPORT_SYMBOL (PDOStop);
+..\..\3rdparty\canfestival\src\symbols.c(71): warning:  #77-D: this declaration has no storage class or type specifier
+  EXPORT_SYMBOL (PDOEventTimerAlarm);
+..\..\3rdparty\canfestival\src\symbols.c(71): warning:  #92-D: identifier-list parameters may only be used in a function definition
+  EXPORT_SYMBOL (PDOEventTimerAlarm);
+..\..\3rdparty\canfestival\src\symbols.c(72): warning:  #77-D: this declaration has no storage class or type specifier
+  EXPORT_SYMBOL (PDOInhibitTimerAlarm);
+..\..\3rdparty\canfestival\src\symbols.c(72): warning:  #92-D: identifier-list parameters may only be used in a function definition
+  EXPORT_SYMBOL (PDOInhibitTimerAlarm);
+..\..\3rdparty\canfestival\src\symbols.c(73): warning:  #77-D: this declaration has no storage class or type specifier
+  EXPORT_SYMBOL (CopyBits);
+..\..\3rdparty\canfestival\src\symbols.c(73): warning:  #92-D: identifier-list parameters may only be used in a function definition
+  EXPORT_SYMBOL (CopyBits);
+..\..\3rdparty\canfestival\src\symbols.c(76): warning:  #77-D: this declaration has no storage class or type specifier
+  EXPORT_SYMBOL (SDOTimeoutAlarm);
+..\..\3rdparty\canfestival\src\symbols.c(76): warning:  #92-D: identifier-list parameters may only be used in a function definition
+  EXPORT_SYMBOL (SDOTimeoutAlarm);
+..\..\3rdparty\canfestival\src\symbols.c(77): warning:  #77-D: this declaration has no storage class or type specifier
+  EXPORT_SYMBOL (resetSDO);
+..\..\3rdparty\canfestival\src\symbols.c(77): warning:  #92-D: identifier-list parameters may only be used in a function definition
+  EXPORT_SYMBOL (resetSDO);
+..\..\3rdparty\canfestival\src\symbols.c(78): warning:  #77-D: this declaration has no storage class or type specifier
+  EXPORT_SYMBOL (SDOlineToObjdict);
+..\..\3rdparty\canfestival\src\symbols.c(78): warning:  #92-D: identifier-list parameters may only be used in a function definition
+  EXPORT_SYMBOL (SDOlineToObjdict);
+..\..\3rdparty\canfestival\src\symbols.c(79): warning:  #77-D: this declaration has no storage class or type specifier
+  EXPORT_SYMBOL (objdictToSDOline);
+..\..\3rdparty\canfestival\src\symbols.c(79): warning:  #92-D: identifier-list parameters may only be used in a function definition
+  EXPORT_SYMBOL (objdictToSDOline);
+..\..\3rdparty\canfestival\src\symbols.c(80): warning:  #77-D: this declaration has no storage class or type specifier
+  EXPORT_SYMBOL (lineToSDO);
+..\..\3rdparty\canfestival\src\symbols.c(80): warning:  #92-D: identifier-list parameters may only be used in a function definition
+  EXPORT_SYMBOL (lineToSDO);
+..\..\3rdparty\canfestival\src\symbols.c(81): warning:  #77-D: this declaration has no storage class or type specifier
+  EXPORT_SYMBOL (SDOtoLine);
+..\..\3rdparty\canfestival\src\symbols.c(81): warning:  #92-D: identifier-list parameters may only be used in a function definition
+  EXPORT_SYMBOL (SDOtoLine);
+..\..\3rdparty\canfestival\src\symbols.c(82): warning:  #77-D: this declaration has no storage class or type specifier
+  EXPORT_SYMBOL (failedSDO);
+..\..\3rdparty\canfestival\src\symbols.c(82): warning:  #92-D: identifier-list parameters may only be used in a function definition
+  EXPORT_SYMBOL (failedSDO);
+..\..\3rdparty\canfestival\src\symbols.c(83): warning:  #77-D: this declaration has no storage class or type specifier
+  EXPORT_SYMBOL (resetSDOline);
+..\..\3rdparty\canfestival\src\symbols.c(83): warning:  #92-D: identifier-list parameters may only be used in a function definition
+  EXPORT_SYMBOL (resetSDOline);
+..\..\3rdparty\canfestival\src\symbols.c(84): warning:  #77-D: this declaration has no storage class or type specifier
+  EXPORT_SYMBOL (initSDOline);
+..\..\3rdparty\canfestival\src\symbols.c(84): warning:  #92-D: identifier-list parameters may only be used in a function definition
+  EXPORT_SYMBOL (initSDOline);
+..\..\3rdparty\canfestival\src\symbols.c(85): warning:  #77-D: this declaration has no storage class or type specifier
+  EXPORT_SYMBOL (getSDOfreeLine);
+..\..\3rdparty\canfestival\src\symbols.c(85): warning:  #92-D: identifier-list parameters may only be used in a function definition
+  EXPORT_SYMBOL (getSDOfreeLine);
+..\..\3rdparty\canfestival\src\symbols.c(86): warning:  #77-D: this declaration has no storage class or type specifier
+  EXPORT_SYMBOL (getSDOlineOnUse);
+..\..\3rdparty\canfestival\src\symbols.c(86): warning:  #92-D: identifier-list parameters may only be used in a function definition
+  EXPORT_SYMBOL (getSDOlineOnUse);
+..\..\3rdparty\canfestival\src\symbols.c(87): warning:  #77-D: this declaration has no storage class or type specifier
+  EXPORT_SYMBOL (closeSDOtransfer);
+..\..\3rdparty\canfestival\src\symbols.c(87): warning:  #92-D: identifier-list parameters may only be used in a function definition
+  EXPORT_SYMBOL (closeSDOtransfer);
+..\..\3rdparty\canfestival\src\symbols.c(88): warning:  #77-D: this declaration has no storage class or type specifier
+  EXPORT_SYMBOL (getSDOlineRestBytes);
+..\..\3rdparty\canfestival\src\symbols.c(88): warning:  #92-D: identifier-list parameters may only be used in a function definition
+  EXPORT_SYMBOL (getSDOlineRestBytes);
+..\..\3rdparty\canfestival\src\symbols.c(89): warning:  #77-D: this declaration has no storage class or type specifier
+  EXPORT_SYMBOL (setSDOlineRestBytes);
+..\..\3rdparty\canfestival\src\symbols.c(89): warning:  #92-D: identifier-list parameters may only be used in a function definition
+  EXPORT_SYMBOL (setSDOlineRestBytes);
+..\..\3rdparty\canfestival\src\symbols.c(90): warning:  #77-D: this declaration has no storage class or type specifier
+  EXPORT_SYMBOL (sendSDO);
+..\..\3rdparty\canfestival\src\symbols.c(90): warning:  #92-D: identifier-list parameters may only be used in a function definition
+  EXPORT_SYMBOL (sendSDO);
+..\..\3rdparty\canfestival\src\symbols.c(91): warning:  #77-D: this declaration has no storage class or type specifier
+  EXPORT_SYMBOL (sendSDOabort);
+..\..\3rdparty\canfestival\src\symbols.c(91): warning:  #92-D: identifier-list parameters may only be used in a function definition
+  EXPORT_SYMBOL (sendSDOabort);
+..\..\3rdparty\canfestival\src\symbols.c(92): warning:  #77-D: this declaration has no storage class or type specifier
+  EXPORT_SYMBOL (proceedSDO);
+..\..\3rdparty\canfestival\src\symbols.c(92): warning:  #92-D: identifier-list parameters may only be used in a function definition
+  EXPORT_SYMBOL (proceedSDO);
+..\..\3rdparty\canfestival\src\symbols.c(93): warning:  #77-D: this declaration has no storage class or type specifier
+  EXPORT_SYMBOL (writeNetworkDict);
+..\..\3rdparty\canfestival\src\symbols.c(93): warning:  #92-D: identifier-list parameters may only be used in a function definition
+  EXPORT_SYMBOL (writeNetworkDict);
+..\..\3rdparty\canfestival\src\symbols.c(94): warning:  #77-D: this declaration has no storage class or type specifier
+  EXPORT_SYMBOL (writeNetworkDictCallBack);
+..\..\3rdparty\canfestival\src\symbols.c(94): warning:  #92-D: identifier-list parameters may only be used in a function definition
+  EXPORT_SYMBOL (writeNetworkDictCallBack);
+..\..\3rdparty\canfestival\src\symbols.c(95): warning:  #77-D: this declaration has no storage class or type specifier
+  EXPORT_SYMBOL (readNetworkDict);
+..\..\3rdparty\canfestival\src\symbols.c(95): warning:  #92-D: identifier-list parameters may only be used in a function definition
+  EXPORT_SYMBOL (readNetworkDict);
+..\..\3rdparty\canfestival\src\symbols.c(96): warning:  #77-D: this declaration has no storage class or type specifier
+  EXPORT_SYMBOL (readNetworkDictCallback);
+..\..\3rdparty\canfestival\src\symbols.c(96): warning:  #92-D: identifier-list parameters may only be used in a function definition
+  EXPORT_SYMBOL (readNetworkDictCallback);
+..\..\3rdparty\canfestival\src\symbols.c(97): warning:  #77-D: this declaration has no storage class or type specifier
+  EXPORT_SYMBOL (getReadResultNetworkDict);
+..\..\3rdparty\canfestival\src\symbols.c(97): warning:  #92-D: identifier-list parameters may only be used in a function definition
+  EXPORT_SYMBOL (getReadResultNetworkDict);
+..\..\3rdparty\canfestival\src\symbols.c(98): warning:  #77-D: this declaration has no storage class or type specifier
+  EXPORT_SYMBOL (getWriteResultNetworkDict);
+..\..\3rdparty\canfestival\src\symbols.c(98): warning:  #92-D: identifier-list parameters may only be used in a function definition
+  EXPORT_SYMBOL (getWriteResultNetworkDict);
+..\..\3rdparty\canfestival\src\symbols.c(101): warning:  #77-D: this declaration has no storage class or type specifier
+  EXPORT_SYMBOL (_initialisation);
+..\..\3rdparty\canfestival\src\symbols.c(101): warning:  #92-D: identifier-list parameters may only be used in a function definition
+  EXPORT_SYMBOL (_initialisation);
+..\..\3rdparty\canfestival\src\symbols.c(102): warning:  #77-D: this declaration has no storage class or type specifier
+  EXPORT_SYMBOL (_preOperational);
+..\..\3rdparty\canfestival\src\symbols.c(102): warning:  #92-D: identifier-list parameters may only be used in a function definition
+  EXPORT_SYMBOL (_preOperational);
+..\..\3rdparty\canfestival\src\symbols.c(103): warning:  #77-D: this declaration has no storage class or type specifier
+  EXPORT_SYMBOL (_operational);
+..\..\3rdparty\canfestival\src\symbols.c(103): warning:  #92-D: identifier-list parameters may only be used in a function definition
+  EXPORT_SYMBOL (_operational);
+..\..\3rdparty\canfestival\src\symbols.c(104): warning:  #77-D: this declaration has no storage class or type specifier
+  EXPORT_SYMBOL (_stopped);
+..\..\3rdparty\canfestival\src\symbols.c(104): warning:  #92-D: identifier-list parameters may only be used in a function definition
+  EXPORT_SYMBOL (_stopped);
+..\..\3rdparty\canfestival\src\symbols.c(105): warning:  #77-D: this declaration has no storage class or type specifier
+  EXPORT_SYMBOL (canDispatch);
+..\..\3rdparty\canfestival\src\symbols.c(105): warning:  #92-D: identifier-list parameters may only be used in a function definition
+  EXPORT_SYMBOL (canDispatch);
+..\..\3rdparty\canfestival\src\symbols.c(106): warning:  #77-D: this declaration has no storage class or type specifier
+  EXPORT_SYMBOL (getState);
+..\..\3rdparty\canfestival\src\symbols.c(106): warning:  #92-D: identifier-list parameters may only be used in a function definition
+  EXPORT_SYMBOL (getState);
+..\..\3rdparty\canfestival\src\symbols.c(107): warning:  #77-D: this declaration has no storage class or type specifier
+  EXPORT_SYMBOL (setState);
+..\..\3rdparty\canfestival\src\symbols.c(107): warning:  #92-D: identifier-list parameters may only be used in a function definition
+  EXPORT_SYMBOL (setState);
+..\..\3rdparty\canfestival\src\symbols.c(108): warning:  #77-D: this declaration has no storage class or type specifier
+  EXPORT_SYMBOL (getNodeId);
+..\..\3rdparty\canfestival\src\symbols.c(108): warning:  #92-D: identifier-list parameters may only be used in a function definition
+  EXPORT_SYMBOL (getNodeId);
+..\..\3rdparty\canfestival\src\symbols.c(109): warning:  #77-D: this declaration has no storage class or type specifier
+  EXPORT_SYMBOL (setNodeId);
+..\..\3rdparty\canfestival\src\symbols.c(109): warning:  #92-D: identifier-list parameters may only be used in a function definition
+  EXPORT_SYMBOL (setNodeId);
+..\..\3rdparty\canfestival\src\symbols.c(112): warning:  #77-D: this declaration has no storage class or type specifier
+  EXPORT_SYMBOL (startSYNC);
+..\..\3rdparty\canfestival\src\symbols.c(112): warning:  #92-D: identifier-list parameters may only be used in a function definition
+  EXPORT_SYMBOL (startSYNC);
+..\..\3rdparty\canfestival\src\symbols.c(113): warning:  #77-D: this declaration has no storage class or type specifier
+  EXPORT_SYMBOL (stopSYNC);
+..\..\3rdparty\canfestival\src\symbols.c(113): warning:  #92-D: identifier-list parameters may only be used in a function definition
+  EXPORT_SYMBOL (stopSYNC);
+..\..\3rdparty\canfestival\src\symbols.c(114): warning:  #77-D: this declaration has no storage class or type specifier
+  EXPORT_SYMBOL (_post_sync);
+..\..\3rdparty\canfestival\src\symbols.c(114): warning:  #92-D: identifier-list parameters may only be used in a function definition
+  EXPORT_SYMBOL (_post_sync);
+..\..\3rdparty\canfestival\src\symbols.c(115): warning:  #77-D: this declaration has no storage class or type specifier
+  EXPORT_SYMBOL (_post_TPDO);
+..\..\3rdparty\canfestival\src\symbols.c(115): warning:  #92-D: identifier-list parameters may only be used in a function definition
+  EXPORT_SYMBOL (_post_TPDO);
+..\..\3rdparty\canfestival\src\symbols.c(116): warning:  #77-D: this declaration has no storage class or type specifier
+  EXPORT_SYMBOL (sendSYNC);
+..\..\3rdparty\canfestival\src\symbols.c(116): warning:  #92-D: identifier-list parameters may only be used in a function definition
+  EXPORT_SYMBOL (sendSYNC);
+..\..\3rdparty\canfestival\src\symbols.c(117): warning:  #77-D: this declaration has no storage class or type specifier
+  EXPORT_SYMBOL (sendSYNCMessage);
+..\..\3rdparty\canfestival\src\symbols.c(117): warning:  #92-D: identifier-list parameters may only be used in a function definition
+  EXPORT_SYMBOL (sendSYNCMessage);
+..\..\3rdparty\canfestival\src\symbols.c(118): warning:  #77-D: this declaration has no storage class or type specifier
+  EXPORT_SYMBOL (proceedSYNC);
+..\..\3rdparty\canfestival\src\symbols.c(118): warning:  #92-D: identifier-list parameters may only be used in a function definition
+  EXPORT_SYMBOL (proceedSYNC);
+..\..\3rdparty\canfestival\src\symbols.c(121): warning:  #77-D: this declaration has no storage class or type specifier
+  EXPORT_SYMBOL (SetAlarm);
+..\..\3rdparty\canfestival\src\symbols.c(121): warning:  #92-D: identifier-list parameters may only be used in a function definition
+  EXPORT_SYMBOL (SetAlarm);
+..\..\3rdparty\canfestival\src\symbols.c(122): warning:  #77-D: this declaration has no storage class or type specifier
+  EXPORT_SYMBOL (DelAlarm);
+..\..\3rdparty\canfestival\src\symbols.c(122): warning:  #92-D: identifier-list parameters may only be used in a function definition
+  EXPORT_SYMBOL (DelAlarm);
+..\..\3rdparty\canfestival\src\symbols.c(123): warning:  #77-D: this declaration has no storage class or type specifier
+  EXPORT_SYMBOL (TimeDispatch);
+..\..\3rdparty\canfestival\src\symbols.c(123): warning:  #92-D: identifier-list parameters may only be used in a function definition
+  EXPORT_SYMBOL (TimeDispatch);
+..\..\3rdparty\canfestival\src\symbols.c(124): warning:  #77-D: this declaration has no storage class or type specifier
+  EXPORT_SYMBOL (setTimer);
+..\..\3rdparty\canfestival\src\symbols.c(124): warning:  #92-D: identifier-list parameters may only be used in a function definition
+  EXPORT_SYMBOL (setTimer);
+..\..\3rdparty\canfestival\src\symbols.c(125): warning:  #77-D: this declaration has no storage class or type specifier
+  EXPORT_SYMBOL (getElapsedTime);
+..\..\3rdparty\canfestival\src\symbols.c(125): warning:  #92-D: identifier-list parameters may only be used in a function definition
+  EXPORT_SYMBOL (getElapsedTime);
+..\..\3rdparty\canfestival\src\symbols.c(128): warning:  #77-D: this declaration has no storage class or type specifier
+  EXPORT_SYMBOL (EnterMutex);
+..\..\3rdparty\canfestival\src\symbols.c(128): warning:  #92-D: identifier-list parameters may only be used in a function definition
+  EXPORT_SYMBOL (EnterMutex);
+..\..\3rdparty\canfestival\src\symbols.c(129): warning:  #77-D: this declaration has no storage class or type specifier
+  EXPORT_SYMBOL (LeaveMutex);
+..\..\3rdparty\canfestival\src\symbols.c(129): warning:  #92-D: identifier-list parameters may only be used in a function definition
+  EXPORT_SYMBOL (LeaveMutex);
+..\..\3rdparty\canfestival\src\symbols.c(130): warning:  #77-D: this declaration has no storage class or type specifier
+  EXPORT_SYMBOL (TimerInit);
+..\..\3rdparty\canfestival\src\symbols.c(130): warning:  #92-D: identifier-list parameters may only be used in a function definition
+  EXPORT_SYMBOL (TimerInit);
+..\..\3rdparty\canfestival\src\symbols.c(131): warning:  #77-D: this declaration has no storage class or type specifier
+  EXPORT_SYMBOL (TimerCleanup);
+..\..\3rdparty\canfestival\src\symbols.c(131): warning:  #92-D: identifier-list parameters may only be used in a function definition
+  EXPORT_SYMBOL (TimerCleanup);
+..\..\3rdparty\canfestival\src\symbols.c(132): warning:  #77-D: this declaration has no storage class or type specifier
+  EXPORT_SYMBOL (StartTimerLoop);
+..\..\3rdparty\canfestival\src\symbols.c(132): warning:  #92-D: identifier-list parameters may only be used in a function definition
+  EXPORT_SYMBOL (StartTimerLoop);
+..\..\3rdparty\canfestival\src\symbols.c(133): warning:  #77-D: this declaration has no storage class or type specifier
+  EXPORT_SYMBOL (StopTimerLoop);
+..\..\3rdparty\canfestival\src\symbols.c(133): warning:  #92-D: identifier-list parameters may only be used in a function definition
+  EXPORT_SYMBOL (StopTimerLoop);
+..\..\3rdparty\canfestival\src\symbols.c(134): warning:  #77-D: this declaration has no storage class or type specifier
+  EXPORT_SYMBOL (CreateReceiveTask);
+..\..\3rdparty\canfestival\src\symbols.c(134): warning:  #92-D: identifier-list parameters may only be used in a function definition
+  EXPORT_SYMBOL (CreateReceiveTask);
+..\..\3rdparty\canfestival\src\symbols.c(135): warning:  #77-D: this declaration has no storage class or type specifier
+  EXPORT_SYMBOL (WaitReceiveTaskEnd);
+..\..\3rdparty\canfestival\src\symbols.c(135): warning:  #92-D: identifier-list parameters may only be used in a function definition
+  EXPORT_SYMBOL (WaitReceiveTaskEnd);
+..\..\3rdparty\canfestival\src\symbols.c: 172 warnings, 0 errors
+compiling sync.c...
+compiling timer.c...
+compiling pdo.c...
+compiling Master.c...
+Core\inc\canopen\dictionary\Master.c(54): warning:  #1278-D: excess initializers are ignored
+                         { RO, uint32, sizeof (UNS32), (void*)&Master_obj1000, NULL }
+Core\inc\canopen\dictionary\Master.c(61): warning:  #1278-D: excess initializers are ignored
+                         { RO, uint8, sizeof (UNS8), (void*)&Master_obj1001, NULL }
+Core\inc\canopen\dictionary\Master.c(72): warning:  #1278-D: excess initializers are ignored
+                         { RW, valueRange_EMC, sizeof (UNS8), (void*)&Master_highestSubIndex_obj1003, NULL },
+Core\inc\canopen\dictionary\Master.c(73): warning:  #1278-D: excess initializers are ignored
+                         { RO, uint32, sizeof (UNS32), (void*)&Master_obj1003[0], NULL }
+Core\inc\canopen\dictionary\Master.c(99): warning:  #1278-D: excess initializers are ignored
+                         { RW, uint16, sizeof (UNS16), (void*)&Master_obj1017, NULL }
+Core\inc\canopen\dictionary\Master.c(110): warning:  #1278-D: excess initializers are ignored
+                         { RO, uint8, sizeof (UNS8), (void*)&Master_highestSubIndex_obj1018, NULL },
+Core\inc\canopen\dictionary\Master.c(111): warning:  #1278-D: excess initializers are ignored
+                         { RO, uint32, sizeof (UNS32), (void*)&Master_obj1018_Vendor_ID, NULL },
+Core\inc\canopen\dictionary\Master.c(112): warning:  #1278-D: excess initializers are ignored
+                         { RO, uint32, sizeof (UNS32), (void*)&Master_obj1018_Product_Code, NULL },
+Core\inc\canopen\dictionary\Master.c(113): warning:  #1278-D: excess initializers are ignored
+                         { RO, uint32, sizeof (UNS32), (void*)&Master_obj1018_Revision_Number, NULL },
+Core\inc\canopen\dictionary\Master.c(114): warning:  #1278-D: excess initializers are ignored
+                         { RO, uint32, sizeof (UNS32), (void*)&Master_obj1018_Serial_Number, NULL }
+Core\inc\canopen\dictionary\Master.c(173): warning:  #144-D: a value of type "const indextable *(*)(CO_Data *, unsigned short, unsigned int *)" cannot be used to initialize an entity of type "scanIndexOD_t"
+  CO_Data Master_Data = CANOPEN_NODE_DATA_INITIALIZER(Master);
+Core\inc\canopen\dictionary\Master.c: 11 warnings, 0 errors
+compiling sdo.c...
+..\..\3rdparty\canfestival\src\sdo.c(2033): warning:  #550-D: variable "i"  was set but never used
+  	UNS8 i;
+..\..\3rdparty\canfestival\src\sdo.c(2195): warning:  #550-D: variable "i"  was set but never used
+  	UNS8 i;
+..\..\3rdparty\canfestival\src\sdo.c: 2 warnings, 0 errors
+linking...
+Program Size: Code=25668 RO-data=784 RW-data=836 ZI-data=1220  
+".\Objects\demo.axf" - 0 Error(s), 186 Warning(s).
+
+<h2>Software Packages used:</h2>
+
+Package Vendor: Keil
+                http://www.keil.com/pack/Keil.STM32F4xx_DFP.2.11.0.pack
+                Keil.STM32F4xx_DFP.2.11.0
+                STMicroelectronics STM32F4 Series Device Support, Drivers and Examples
+
+<h2>Collection of Component include folders:</h2>
+  C:\Users\Administrator\AppData\Local\Arm\Packs\Keil\STM32F4xx_DFP\2.11.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include
+
+<h2>Collection of Component Files used:</h2>
+Build Time Elapsed:  00:00:03
+</pre>
+</body>
+</html>

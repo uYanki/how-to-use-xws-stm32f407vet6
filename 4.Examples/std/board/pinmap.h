@@ -79,15 +79,35 @@
 
 //
 
+#define CAN1_GPIO_CLK           RCC_AHB1Periph_GPIOD
+#define CAN1_GPIO_AF            GPIO_AF_CAN1
+
 #define CAN1_TX_GPIO_PORT       GPIOD
 #define CAN1_TX_GPIO_PIN        GPIO_Pin_1
+#define CAN1_TX_GPIO_PINSRC     GPIO_PinSource1
+
 #define CAN1_RX_GPIO_PORT       GPIOD
 #define CAN1_RX_GPIO_PIN        GPIO_Pin_0
+#define CAN1_RX_GPIO_PINSRC     GPIO_PinSource0
+
+#define CAN1_CLK                RCC_APB1Periph_CAN1
+#define CAN1_PORT               CAN1
+
+//
+
+#define CAN2_GPIO_CLK           RCC_AHB1Periph_GPIOB
+#define CAN2_GPIO_AF            GPIO_AF_CAN2
 
 #define CAN2_TX_GPIO_PORT       GPIOB
 #define CAN2_TX_GPIO_PIN        GPIO_Pin_6
+#define CAN2_TX_GPIO_PINSRC     GPIO_PinSource6
+
 #define CAN2_RX_GPIO_PORT       GPIOB
 #define CAN2_RX_GPIO_PIN        GPIO_Pin_5
+#define CAN2_RX_GPIO_PINSRC     GPIO_PinSource5
+
+#define CAN2_CLK                RCC_APB1Periph_CAN2
+#define CAN2_PORT               CAN2
 
 //
 

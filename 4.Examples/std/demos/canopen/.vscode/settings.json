@@ -1,0 +1,31 @@
+{
+    "files.associations": {
+        "stm32f4xx.h": "c",
+        "main.h": "c",
+        "board.h": "c",
+        "pinmap.h": "c",
+        "dwt.h": "c",
+        "autoinit.h": "c",
+        "sleep.h": "c",
+        "board_conf.h": "c",
+        "bsp_rs232.h": "c",
+        "bsp_led.h": "c",
+        "swrst.h": "c",
+        "usdk.defs.h": "c",
+        "bsp_key.h": "c",
+        "xutility": "c",
+        "limits": "c",
+        "memory": "c",
+        "bit": "c",
+        "compare": "c",
+        "cstddef": "c",
+        "type_traits": "c",
+        "can.h": "c",
+        "can_driver.h": "c",
+        "stm32f4xx_gpio.h": "c",
+        "master.h": "c",
+        "stm32f4xx_can.h": "c",
+        "canfestival.h": "c",
+        "xtr1common": "c"
+    }
+}
