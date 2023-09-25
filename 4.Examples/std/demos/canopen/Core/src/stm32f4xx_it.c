@@ -139,6 +139,8 @@ void SysTick_Handler(void)
 {
   extern void HAL_IncTick(void);
   HAL_IncTick();
+  // extern void COP_IRQHandler(void);
+  // COP_IRQHandler();
 }
 
 /******************************************************************************/

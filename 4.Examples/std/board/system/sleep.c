@@ -53,33 +53,43 @@ void dwt_wait(u32 us)
 //---------------------------------------------------------------
 //
 
-static vu32 m_ticks = 0;
+static volatile tick_t m_ticks = 0;
 
 void DelayInit(void)
 {
     RCC_ClocksTypeDef RCC_Clocks;
     RCC_GetClocksFreq(&RCC_Clocks);
-    SysTick_Config(RCC_Clocks.HCLK_Frequency / UNIT_MS);  // 1ms
+    SysTick_Config(RCC_Clocks.HCLK_Frequency / TICK_PSC);
 }
 
-void DelayBlock(u32 nWaitTime)
+void DelayBlock(tick_t nWaitTime)
 {
-    u32 nStartTick = HAL_GetTick();
+    tick_t nStartTick = HAL_GetTick();
 
     while ((HAL_GetTick() - nStartTick) < nWaitTime)
         ;
 }
 
-uint32_t tickstart = 0;
-
-bool DelayNonBlock(u32 nStartTick, u32 nWaitTime)
+bool DelayNonBlock(tick_t nStartTick, tick_t nWaitTime)
 {
     return HAL_GetTick() >= (nStartTick + nWaitTime);
 }
 
-u32 HAL_GetTick(void)
+tick_t HAL_GetTick(void)
 {
     return m_ticks;
+}
+
+tick_t HAL_DeltaTick(tick_t nStartTick, tick_t nEndTick)
+{
+    if (nEndTick >= nStartTick)
+    {
+        return nEndTick - nStartTick;
+    }
+    else
+    {
+        return TICK_MAX - nStartTick + nEndTick;
+    }
 }
 
 /**
@@ -91,7 +101,7 @@ u32 HAL_GetTick(void)
  */
 __weak void HAL_IncTick(void)
 {
-    m_ticks += UNIT_MS;
+    m_ticks += TICK_INC;
 }
 
 //---------------------------------------------------------------

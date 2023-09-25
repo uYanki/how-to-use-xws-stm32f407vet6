@@ -43,7 +43,7 @@ bool can_init(CAN_TypeDef* CANx, u32 bitrate)
 
         if (CANx == CAN1)
         {
-            RCC_AHB1PeriphClockCmd(CAN1_GPIO_CLK, ENABLE);
+            RCC_AHB1PeriphClockCmd(CAN1_TX_GPIO_CLK | CAN1_RX_GPIO_CLK, ENABLE);
 
             GPIO_PinAFConfig(CAN1_TX_GPIO_PORT, CAN1_TX_GPIO_PINSRC, CAN1_GPIO_AF);
             GPIO_PinAFConfig(CAN1_RX_GPIO_PORT, CAN1_RX_GPIO_PINSRC, CAN1_GPIO_AF);
@@ -58,7 +58,7 @@ bool can_init(CAN_TypeDef* CANx, u32 bitrate)
         }
         else if (CANx == CAN2)
         {
-            RCC_AHB1PeriphClockCmd(CAN2_GPIO_CLK, ENABLE);
+            RCC_AHB1PeriphClockCmd(CAN2_TX_GPIO_CLK | CAN2_RX_GPIO_CLK, ENABLE);
 
             GPIO_PinAFConfig(CAN2_TX_GPIO_PORT, CAN2_TX_GPIO_PINSRC, CAN2_GPIO_AF);
             GPIO_PinAFConfig(CAN2_RX_GPIO_PORT, CAN2_RX_GPIO_PINSRC, CAN2_GPIO_AF);
