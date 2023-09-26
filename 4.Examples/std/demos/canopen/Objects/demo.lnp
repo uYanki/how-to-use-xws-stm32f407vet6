@@ -66,7 +66,8 @@
 ".\objects\symbols.o"
 ".\objects\sync.o"
 ".\objects\timer.o"
-".\objects\objdict.o"
+".\objects\master.o"
+".\objects\slave.o"
 --library_type=microlib --strict --scatter ".\Objects\demo.sct"
 --summary_stderr --info summarysizes --map --load_addr_map_info --xref --callgraph --symbols
 --info sizes --info totals --info unused --info veneers

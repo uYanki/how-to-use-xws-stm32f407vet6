@@ -973,5 +973,5 @@
 <attr name="ProfileName" type="string" value="None" />
 <attr name="Type" type="string" value="slave" />
 <attr name="ID" type="numeric" value="0" />
-<attr name="Name" type="string">Servo</attr>
+<attr name="Name" type="string">slave</attr>
 </PyObject>

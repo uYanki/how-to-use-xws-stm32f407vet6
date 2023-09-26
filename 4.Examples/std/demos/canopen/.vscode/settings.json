@@ -26,6 +26,10 @@
         "master.h": "c",
         "stm32f4xx_can.h": "c",
         "canfestival.h": "c",
-        "xtr1common": "c"
+        "xtr1common": "c",
+        "objdict.h": "c",
+        "objdictdef.h": "c",
+        "key.h": "c",
+        "slave.h": "c"
     }
 }

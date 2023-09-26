@@ -994,9 +994,14 @@
               <FilePath>.\Core\inc\canopen\timerscfg.h</FilePath>
             </File>
             <File>
-              <FileName>objdict.c</FileName>
+              <FileName>master.c</FileName>
               <FileType>1</FileType>
-              <FilePath>.\Core\inc\canopen\dictionary\objdict.c</FilePath>
+              <FilePath>.\Core\inc\canopen\dictionary\master.c</FilePath>
+            </File>
+            <File>
+              <FileName>slave.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Core\inc\canopen\dictionary\slave.c</FilePath>
             </File>
           </Files>
         </Group>
