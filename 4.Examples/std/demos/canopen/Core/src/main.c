@@ -147,11 +147,13 @@ void usdk_hw_uart_init(void)
 
 TIMEVAL m_cop_timeout = 0;
 
+// Set the timer for the next alarm.
 void setTimer(TIMEVAL value)
 {
     m_cop_timeout = HAL_GetTick() + value;
 }
 
+// Return the elapsed time to tell the Stack how much time is spent since last call.
 TIMEVAL getElapsedTime(void)
 {
     // clang-format off
