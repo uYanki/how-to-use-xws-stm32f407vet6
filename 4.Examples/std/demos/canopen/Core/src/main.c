@@ -25,9 +25,8 @@
 #define cop_mst (&master_Data)
 #define cop_slv (&Servo_Data)
 
-// ＴＯＤＯ 芯片ＩＤ、编译日期　设置到０ｘ１０１８
-
-extern void cbkSDORead(CO_Data* d, UNS8 nodeId);
+void cbkSDORead(CO_Data* d, UNS8 nodeId);
+void CopSlv_SetIdFltr(CO_Data* d);
 
 int main()
 {
@@ -42,9 +41,10 @@ int main()
     can_init(CAN2, 1e6);
 
     cop_slv->canHandle = CAN1;
-    setNodeId(cop_slv, 0x05);
+    setNodeId(cop_slv, 0x03);
     setState(cop_slv, Initialisation);  // 节点初始化
     setState(cop_slv, Operational);
+    CopSlv_SetIdFltr(cop_slv);
 
     cop_mst->canHandle = CAN2;
     setNodeId(cop_mst, 0x00);
@@ -72,7 +72,7 @@ int main()
             u8 slvid = *(cop_slv->bDeviceNodeId);
 
             // 以下两种方式等效
-#if 1
+#if 0
             u32 var, size;
 
             var = 0x600 + slvid, size = sizeof(UNS32);
@@ -101,6 +101,7 @@ int main()
 #else  // read
             spd_s16SpdTgt = counter;
             readNetworkDictCallbackAI(cop_mst, slvid, 0x2000, 2, int16, cbkSDORead, 0);
+            readNetworkDictCallbackAI(cop_mst, slvid + 1, 0x2000, 2, int16, cbkSDORead, 0);  // 设置了过滤的从机不会接收到该帧
 #endif
 
 #endif
@@ -153,15 +154,13 @@ void setTimer(TIMEVAL value)
 
 TIMEVAL getElapsedTime(void)
 {
+    // clang-format off
     static TIMEVAL last = TICK_MAX;
-
     TIMEVAL cur = HAL_GetTick();
-
     TIMEVAL ret = HAL_DeltaTick(last, cur);
-
     last = cur;
-
     return ret;
+    // clang-format on
 }
 
 void $Sub$$SysTick_Handler(void)
@@ -224,19 +223,27 @@ UNS8 canChangeBaudRate(CAN_PORT port, char* baud)
 
 void cop_isr(CO_Data* d)
 {
+    CAN_TypeDef* can = (CAN_TypeDef*)(d->canHandle);
+
     CanRxMsg RxMessage;
-    Message  rxm;
 
-    CAN_Receive(d->canHandle, CAN_FIFO0, &RxMessage);
+    //------------------------------------------------------
 
-    if (d->canHandle == CAN1)
+    // message pending Interrupt
+    if (CAN_GetITStatus(can, CAN_IT_FMP0))
     {
-        can_display_msg("<*> CAN1 RX0", &RxMessage);
+        CAN_Receive(can, CAN_FIFO0, &RxMessage);  // fifo0
+        CAN_ClearITPendingBit(can, CAN_IT_FMP0);
     }
-    else  // if (d->canHandle == CAN2)
+    else
     {
-        can_display_msg("<*> CAN2 RX0", &RxMessage);
+        CAN_Receive(can, CAN_FIFO1, &RxMessage);  // fifo1
+        CAN_ClearITPendingBit(can, CAN_IT_FMP1);
     }
+
+    can_display_msg("", &RxMessage);
+
+    //------------------------------------------------------
 
     if (RxMessage.IDE == CAN_ID_EXT)
     {
@@ -244,9 +251,12 @@ void cop_isr(CO_Data* d)
         return;
     }
 
-    rxm.cob_id = RxMessage.StdId;
-    rxm.rtr    = RxMessage.RTR == CAN_RTR_REMOTE;
-    rxm.len    = RxMessage.DLC;
+    Message rxm = {
+        .cob_id = RxMessage.StdId,
+        .rtr    = RxMessage.RTR == CAN_RTR_REMOTE,
+        .len    = RxMessage.DLC,
+    };
+
     memcpy(rxm.data, RxMessage.Data, rxm.len);
 
     if ((rxm.cob_id >> 7) == 0xB)
@@ -282,10 +292,78 @@ void cop_isr(CO_Data* d)
 
 void CAN1_RX0_IRQHandler(void)
 {
+    printf("<*> CAN1 RX0");
+    cop_isr(cop_slv);
+}
+
+void CAN1_RX1_IRQHandler(void)
+{
+    printf("<*> CAN1 RX1");
     cop_isr(cop_slv);
 }
 
 void CAN2_RX0_IRQHandler(void)
 {
+    printf("<*> CAN2 RX0");
     cop_isr(cop_mst);
+}
+
+//------------------------------------------------------------------------------
+// can fltr
+
+void CopSlv_SetIdFltr(CO_Data* d)
+{
+    uint8_t      id  = *(d->bDeviceNodeId);
+    CAN_TypeDef* can = (CAN_TypeDef*)(d->canHandle);
+
+    CAN_FilterInitTypeDef fltr;
+
+    fltr.CAN_FilterMode       = CAN_FilterMode_IdList;
+    fltr.CAN_FilterActivation = ENABLE;
+
+    {
+        fltr.CAN_FilterScale      = CAN_FilterScale_16bit;
+        fltr.CAN_FilterIdHigh     = (0x200 + id) << 5;
+        fltr.CAN_FilterIdLow      = (0x300 + id) << 5;
+        fltr.CAN_FilterMaskIdHigh = (0x400 + id) << 5;
+        fltr.CAN_FilterMaskIdLow  = (0x500 + id) << 5;
+
+        fltr.CAN_FilterFIFOAssignment = CAN_FIFO0;
+        fltr.CAN_FilterNumber         = (can == CAN1) ? 0 : GETBITS(CAN1->FMR, 8, 6);
+        CAN_FilterInit(&fltr);
+
+        fltr.CAN_FilterFIFOAssignment = CAN_FIFO1;
+        fltr.CAN_FilterNumber += 1;
+        CAN_FilterInit(&fltr);
+    }
+    {
+        fltr.CAN_FilterScale      = CAN_FilterScale_16bit;
+        fltr.CAN_FilterIdHigh     = (0x600 + id) << 5;
+        fltr.CAN_FilterIdLow      = (0x700 + id) << 5;
+        fltr.CAN_FilterMaskIdHigh = (0x000) << 5;  // nmt
+        fltr.CAN_FilterMaskIdLow  = (0x7E5) << 5;  // lss
+
+        // fltr.CAN_FilterFIFOAssignment = CAN_FIFO0;
+        // fltr.CAN_FilterNumber += 1;
+        // CAN_FilterInit(&fltr);
+
+        fltr.CAN_FilterFIFOAssignment = CAN_FIFO1;
+        fltr.CAN_FilterNumber += 1;
+        CAN_FilterInit(&fltr);
+    }
+    {
+        fltr.CAN_FilterScale      = CAN_FilterScale_16bit;
+        fltr.CAN_FilterIdHigh     = (0x77F) << 5;
+        fltr.CAN_FilterIdLow      = 0;
+        fltr.CAN_FilterMaskIdHigh = 0;
+        fltr.CAN_FilterMaskIdLow  = 0;
+
+        fltr.CAN_FilterFIFOAssignment = CAN_FIFO0;
+        fltr.CAN_FilterNumber += 1;
+        CAN_FilterInit(&fltr);
+
+        fltr.CAN_FilterFIFOAssignment = CAN_FIFO1;
+        fltr.CAN_FilterNumber += 1;
+        CAN_FilterInit(&fltr);
+    }
 }

@@ -217,19 +217,32 @@ bool can_init(CAN_TypeDef* CANx, u32 bitrate)
 
         if (CANx == CAN1)
         {
-            NVIC_InitStructure.NVIC_IRQChannel                   = CAN1_RX0_IRQn;
+            NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
+
             NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0;
             NVIC_InitStructure.NVIC_IRQChannelSubPriority        = 0;
+            NVIC_InitStructure.NVIC_IRQChannel                   = CAN1_RX0_IRQn;
+            NVIC_Init(&NVIC_InitStructure);
+
+            NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0;
+            NVIC_InitStructure.NVIC_IRQChannelSubPriority        = 1;
+            NVIC_InitStructure.NVIC_IRQChannel                   = CAN1_RX1_IRQn;
+            NVIC_Init(&NVIC_InitStructure);
         }
         else  // if (CANx == CAN2)
         {
-            NVIC_InitStructure.NVIC_IRQChannel                   = CAN2_RX0_IRQn;
+            NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
+
             NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0;
             NVIC_InitStructure.NVIC_IRQChannelSubPriority        = 1;
-        }
+            NVIC_InitStructure.NVIC_IRQChannel                   = CAN2_RX0_IRQn;
+            NVIC_Init(&NVIC_InitStructure);
 
-        NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
-        NVIC_Init(&NVIC_InitStructure);
+            NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0;
+            NVIC_InitStructure.NVIC_IRQChannelSubPriority        = 0;
+            NVIC_InitStructure.NVIC_IRQChannel                   = CAN2_RX1_IRQn;
+            NVIC_Init(&NVIC_InitStructure);
+        }
 
         // Enable FIFO message pending Interrupt
         CAN_ITConfig(CANx, CAN_IT_FMP0, ENABLE);
