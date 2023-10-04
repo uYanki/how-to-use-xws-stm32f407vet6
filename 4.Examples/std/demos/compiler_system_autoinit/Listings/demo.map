@@ -1661,41 +1661,41 @@ Image Symbol Table
     i.led_off                                0x08001220   Section        0  led.o(i.led_off)
     i.led_tgl                                0x08001260   Section        0  led.o(i.led_tgl)
     i.main                                   0x080012e0   Section        0  main.o(i.main)
-    i.rs232_init                             0x08001330   Section        0  rs232.o(i.rs232_init)
-    i.system_begin                           0x080013a4   Section        0  autoinit.o(i.system_begin)
-    system_begin                             0x080013a5   Thumb Code     4  autoinit.o(i.system_begin)
-    i.system_end                             0x080013a8   Section        0  autoinit.o(i.system_end)
-    system_end                               0x080013a9   Thumb Code     4  autoinit.o(i.system_end)
-    i.usdk_postinit                          0x080013ac   Section        0  autoinit.o(i.usdk_postinit)
-    i.usdk_preinit                           0x080013ae   Section        0  main.o(i.usdk_preinit)
-    i.usdk_startup                           0x080013dc   Section        0  autoinit.o(i.usdk_startup)
-    .constdata                               0x08001414   Section       48  buildtime.o(.constdata)
-    .conststring                             0x08001444   Section       72  buildtime.o(.conststring)
-    .conststrlit                             0x0800148c   Section       45  main.o(.conststrlit)
-    .conststrlit                             0x080014bc   Section        9  key.o(.conststrlit)
-    .conststrlit                             0x080014c8   Section        9  led.o(.conststrlit)
-    .conststrlit                             0x080014d4   Section       27  autoinit.o(.conststrlit)
-    .conststrlit                             0x080014f0   Section       19  buildtime.o(.conststrlit)
-    .usdk.initcall.0                         0x08001504   Section        8  autoinit.o(.usdk.initcall.0)
-    __tagsym$$used                           0x08001504   Number         0  autoinit.o(.usdk.initcall.0)
-    __usdk_init_system_begin                 0x08001504   Data           8  autoinit.o(.usdk.initcall.0)
-    .usdk.initcall.1                         0x0800150c   Section        8  key.o(.usdk.initcall.1)
-    __tagsym$$used                           0x0800150c   Number         0  key.o(.usdk.initcall.1)
-    __usdk_init_key_init                     0x0800150c   Data           8  key.o(.usdk.initcall.1)
-    .usdk.initcall.1                         0x08001514   Section        8  led.o(.usdk.initcall.1)
-    __tagsym$$used                           0x08001514   Number         0  led.o(.usdk.initcall.1)
-    __usdk_init_led_init                     0x08001514   Data           8  led.o(.usdk.initcall.1)
-    .usdk.initcall.2                         0x0800151c   Section       16  main.o(.usdk.initcall.2)
-    __tagsym$$used                           0x0800151c   Number         0  main.o(.usdk.initcall.2)
-    __usdk_init_display_reset_reason         0x0800151c   Data           8  main.o(.usdk.initcall.2)
-    __tagsym$$used                           0x08001524   Number         0  main.o(.usdk.initcall.2)
-    __usdk_init_display_system_clock         0x08001524   Data           8  main.o(.usdk.initcall.2)
-    .usdk.initcall.2                         0x0800152c   Section        8  buildtime.o(.usdk.initcall.2)
-    __tagsym$$used                           0x0800152c   Number         0  buildtime.o(.usdk.initcall.2)
-    __usdk_init_display_build_time           0x0800152c   Data           8  buildtime.o(.usdk.initcall.2)
-    .usdk.initcall.9                         0x08001534   Section        8  autoinit.o(.usdk.initcall.9)
-    __tagsym$$used                           0x08001534   Number         0  autoinit.o(.usdk.initcall.9)
-    __usdk_init_system_end                   0x08001534   Data           8  autoinit.o(.usdk.initcall.9)
+    i.rs232_init                             0x0800135c   Section        0  rs232.o(i.rs232_init)
+    i.system_begin                           0x080013d0   Section        0  autoinit.o(i.system_begin)
+    system_begin                             0x080013d1   Thumb Code     4  autoinit.o(i.system_begin)
+    i.system_end                             0x080013d4   Section        0  autoinit.o(i.system_end)
+    system_end                               0x080013d5   Thumb Code     4  autoinit.o(i.system_end)
+    i.usdk_postinit                          0x080013d8   Section        0  autoinit.o(i.usdk_postinit)
+    i.usdk_preinit                           0x080013da   Section        0  main.o(i.usdk_preinit)
+    i.usdk_startup                           0x08001408   Section        0  autoinit.o(i.usdk_startup)
+    .constdata                               0x08001440   Section       48  buildtime.o(.constdata)
+    .conststring                             0x08001470   Section       72  buildtime.o(.conststring)
+    .conststrlit                             0x080014b8   Section       45  main.o(.conststrlit)
+    .conststrlit                             0x080014e8   Section        9  key.o(.conststrlit)
+    .conststrlit                             0x080014f4   Section        9  led.o(.conststrlit)
+    .conststrlit                             0x08001500   Section       27  autoinit.o(.conststrlit)
+    .conststrlit                             0x0800151c   Section       19  buildtime.o(.conststrlit)
+    .usdk.initcall.0                         0x08001530   Section        8  autoinit.o(.usdk.initcall.0)
+    __tagsym$$used                           0x08001530   Number         0  autoinit.o(.usdk.initcall.0)
+    __usdk_init_system_begin                 0x08001530   Data           8  autoinit.o(.usdk.initcall.0)
+    .usdk.initcall.1                         0x08001538   Section        8  key.o(.usdk.initcall.1)
+    __tagsym$$used                           0x08001538   Number         0  key.o(.usdk.initcall.1)
+    __usdk_init_key_init                     0x08001538   Data           8  key.o(.usdk.initcall.1)
+    .usdk.initcall.1                         0x08001540   Section        8  led.o(.usdk.initcall.1)
+    __tagsym$$used                           0x08001540   Number         0  led.o(.usdk.initcall.1)
+    __usdk_init_led_init                     0x08001540   Data           8  led.o(.usdk.initcall.1)
+    .usdk.initcall.2                         0x08001548   Section       16  main.o(.usdk.initcall.2)
+    __tagsym$$used                           0x08001548   Number         0  main.o(.usdk.initcall.2)
+    __usdk_init_display_reset_reason         0x08001548   Data           8  main.o(.usdk.initcall.2)
+    __tagsym$$used                           0x08001550   Number         0  main.o(.usdk.initcall.2)
+    __usdk_init_display_system_clock         0x08001550   Data           8  main.o(.usdk.initcall.2)
+    .usdk.initcall.2                         0x08001558   Section        8  buildtime.o(.usdk.initcall.2)
+    __tagsym$$used                           0x08001558   Number         0  buildtime.o(.usdk.initcall.2)
+    __usdk_init_display_build_time           0x08001558   Data           8  buildtime.o(.usdk.initcall.2)
+    .usdk.initcall.9                         0x08001560   Section        8  autoinit.o(.usdk.initcall.9)
+    __tagsym$$used                           0x08001560   Number         0  autoinit.o(.usdk.initcall.9)
+    __usdk_init_system_end                   0x08001560   Data           8  autoinit.o(.usdk.initcall.9)
     .data                                    0x20000000   Section       20  system_stm32f4xx.o(.data)
     .data                                    0x20000014   Section        8  buildtime.o(.data)
     .data                                    0x2000001c   Section        4  sleep.o(.data)
@@ -1907,13 +1907,13 @@ Image Symbol Table
     key_is_press                             0x08001169   Thumb Code    80  key.o(i.key_is_press)
     led_off                                  0x08001221   Thumb Code    58  led.o(i.led_off)
     led_tgl                                  0x08001261   Thumb Code   124  led.o(i.led_tgl)
-    $Super$$main                             0x080012e1   Thumb Code    68  main.o(i.main)
-    rs232_init                               0x08001331   Thumb Code   108  rs232.o(i.rs232_init)
-    usdk_postinit                            0x080013ad   Thumb Code     2  autoinit.o(i.usdk_postinit)
-    usdk_preinit                             0x080013af   Thumb Code    46  main.o(i.usdk_preinit)
-    usdk_startup                             0x080013dd   Thumb Code    40  autoinit.o(i.usdk_startup)
-    Region$$Table$$Base                      0x0800153c   Number         0  anon$$obj.o(Region$$Table)
-    Region$$Table$$Limit                     0x0800155c   Number         0  anon$$obj.o(Region$$Table)
+    $Super$$main                             0x080012e1   Thumb Code    74  main.o(i.main)
+    rs232_init                               0x0800135d   Thumb Code   108  rs232.o(i.rs232_init)
+    usdk_postinit                            0x080013d9   Thumb Code     2  autoinit.o(i.usdk_postinit)
+    usdk_preinit                             0x080013db   Thumb Code    46  main.o(i.usdk_preinit)
+    usdk_startup                             0x08001409   Thumb Code    40  autoinit.o(i.usdk_startup)
+    Region$$Table$$Base                      0x08001568   Number         0  anon$$obj.o(Region$$Table)
+    Region$$Table$$Limit                     0x08001588   Number         0  anon$$obj.o(Region$$Table)
     SystemCoreClock                          0x20000000   Data           4  system_stm32f4xx.o(.data)
     AHBPrescTable                            0x20000004   Data          16  system_stm32f4xx.o(.data)
     m_data                                   0x20000014   Data           4  buildtime.o(.data)
@@ -1929,9 +1929,9 @@ Memory Map of the image
 
   Image Entry point : 0x08000189
 
-  Load Region LR_IROM1 (Base: 0x08000000, Size: 0x00001590, Max: 0x00080000, ABSOLUTE)
+  Load Region LR_IROM1 (Base: 0x08000000, Size: 0x000015bc, Max: 0x00080000, ABSOLUTE)
 
-    Execution Region ER_IROM1 (Exec base: 0x08000000, Load base: 0x08000000, Size: 0x0000155c, Max: 0x00080000, ABSOLUTE)
+    Execution Region ER_IROM1 (Exec base: 0x08000000, Load base: 0x08000000, Size: 0x00001588, Max: 0x00080000, ABSOLUTE)
 
     Exec Addr    Load Addr    Size         Type   Attr      Idx    E Section Name        Object
 
@@ -2008,44 +2008,44 @@ Memory Map of the image
     0x080011bc   0x080011bc   0x00000064   Code   RO          348    i.led_init          led.o
     0x08001220   0x08001220   0x00000040   Code   RO          368    i.led_off           led.o
     0x08001260   0x08001260   0x00000080   Code   RO          380    i.led_tgl           led.o
-    0x080012e0   0x080012e0   0x00000050   Code   RO          157    i.main              main.o
-    0x08001330   0x08001330   0x00000074   Code   RO          400    i.rs232_init        rs232.o
-    0x080013a4   0x080013a4   0x00000004   Code   RO          437    i.system_begin      autoinit.o
-    0x080013a8   0x080013a8   0x00000004   Code   RO          438    i.system_end        autoinit.o
-    0x080013ac   0x080013ac   0x00000002   Code   RO          439    i.usdk_postinit     autoinit.o
-    0x080013ae   0x080013ae   0x0000002e   Code   RO          158    i.usdk_preinit      main.o
-    0x080013dc   0x080013dc   0x00000038   Code   RO          441    i.usdk_startup      autoinit.o
-    0x08001414   0x08001414   0x00000030   Data   RO          504    .constdata          buildtime.o
-    0x08001444   0x08001444   0x00000048   Data   RO          505    .conststring        buildtime.o
-    0x0800148c   0x0800148c   0x0000002d   Data   RO          159    .conststrlit        main.o
-    0x080014b9   0x080014b9   0x00000003   PAD
-    0x080014bc   0x080014bc   0x00000009   Data   RO          301    .conststrlit        key.o
-    0x080014c5   0x080014c5   0x00000003   PAD
-    0x080014c8   0x080014c8   0x00000009   Data   RO          349    .conststrlit        led.o
-    0x080014d1   0x080014d1   0x00000003   PAD
-    0x080014d4   0x080014d4   0x0000001b   Data   RO          442    .conststrlit        autoinit.o
-    0x080014ef   0x080014ef   0x00000001   PAD
-    0x080014f0   0x080014f0   0x00000013   Data   RO          506    .conststrlit        buildtime.o
-    0x08001503   0x08001503   0x00000001   PAD
-    0x08001504   0x08001504   0x00000008   Data   RO          443    .usdk.initcall.0    autoinit.o
-    0x0800150c   0x0800150c   0x00000008   Data   RO          302    .usdk.initcall.1    key.o
-    0x08001514   0x08001514   0x00000008   Data   RO          350    .usdk.initcall.1    led.o
-    0x0800151c   0x0800151c   0x00000010   Data   RO          160    .usdk.initcall.2    main.o
-    0x0800152c   0x0800152c   0x00000008   Data   RO          508    .usdk.initcall.2    buildtime.o
-    0x08001534   0x08001534   0x00000008   Data   RO          444    .usdk.initcall.9    autoinit.o
-    0x0800153c   0x0800153c   0x00000020   Data   RO         5979    Region$$Table       anon$$obj.o
+    0x080012e0   0x080012e0   0x0000007c   Code   RO          157    i.main              main.o
+    0x0800135c   0x0800135c   0x00000074   Code   RO          400    i.rs232_init        rs232.o
+    0x080013d0   0x080013d0   0x00000004   Code   RO          437    i.system_begin      autoinit.o
+    0x080013d4   0x080013d4   0x00000004   Code   RO          438    i.system_end        autoinit.o
+    0x080013d8   0x080013d8   0x00000002   Code   RO          439    i.usdk_postinit     autoinit.o
+    0x080013da   0x080013da   0x0000002e   Code   RO          158    i.usdk_preinit      main.o
+    0x08001408   0x08001408   0x00000038   Code   RO          441    i.usdk_startup      autoinit.o
+    0x08001440   0x08001440   0x00000030   Data   RO          504    .constdata          buildtime.o
+    0x08001470   0x08001470   0x00000048   Data   RO          505    .conststring        buildtime.o
+    0x080014b8   0x080014b8   0x0000002d   Data   RO          159    .conststrlit        main.o
+    0x080014e5   0x080014e5   0x00000003   PAD
+    0x080014e8   0x080014e8   0x00000009   Data   RO          301    .conststrlit        key.o
+    0x080014f1   0x080014f1   0x00000003   PAD
+    0x080014f4   0x080014f4   0x00000009   Data   RO          349    .conststrlit        led.o
+    0x080014fd   0x080014fd   0x00000003   PAD
+    0x08001500   0x08001500   0x0000001b   Data   RO          442    .conststrlit        autoinit.o
+    0x0800151b   0x0800151b   0x00000001   PAD
+    0x0800151c   0x0800151c   0x00000013   Data   RO          506    .conststrlit        buildtime.o
+    0x0800152f   0x0800152f   0x00000001   PAD
+    0x08001530   0x08001530   0x00000008   Data   RO          443    .usdk.initcall.0    autoinit.o
+    0x08001538   0x08001538   0x00000008   Data   RO          302    .usdk.initcall.1    key.o
+    0x08001540   0x08001540   0x00000008   Data   RO          350    .usdk.initcall.1    led.o
+    0x08001548   0x08001548   0x00000010   Data   RO          160    .usdk.initcall.2    main.o
+    0x08001558   0x08001558   0x00000008   Data   RO          508    .usdk.initcall.2    buildtime.o
+    0x08001560   0x08001560   0x00000008   Data   RO          444    .usdk.initcall.9    autoinit.o
+    0x08001568   0x08001568   0x00000020   Data   RO         5979    Region$$Table       anon$$obj.o
 
 
-    Execution Region RW_IRAM1 (Exec base: 0x20000000, Load base: 0x0800155c, Size: 0x00000438, Max: 0x00020000, ABSOLUTE)
+    Execution Region RW_IRAM1 (Exec base: 0x20000000, Load base: 0x08001588, Size: 0x00000438, Max: 0x00020000, ABSOLUTE)
 
     Exec Addr    Load Addr    Size         Type   Attr      Idx    E Section Name        Object
 
-    0x20000000   0x0800155c   0x00000014   Data   RW           16    .data               system_stm32f4xx.o
-    0x20000014   0x08001570   0x00000008   Data   RW          507    .data               buildtime.o
-    0x2000001c   0x08001578   0x00000004   Data   RW          549    .data               sleep.o
-    0x20000020   0x0800157c   0x00000010   Data   RW         3519    .data               stm32f4xx_rcc.o
-    0x20000030   0x0800158c   0x00000004   Data   RW         5953    .data               mc_w.l(stdout.o)
-    0x20000034   0x08001590   0x00000004   PAD
+    0x20000000   0x08001588   0x00000014   Data   RW           16    .data               system_stm32f4xx.o
+    0x20000014   0x0800159c   0x00000008   Data   RW          507    .data               buildtime.o
+    0x2000001c   0x080015a4   0x00000004   Data   RW          549    .data               sleep.o
+    0x20000020   0x080015a8   0x00000010   Data   RW         3519    .data               stm32f4xx_rcc.o
+    0x20000030   0x080015b8   0x00000004   Data   RW         5953    .data               mc_w.l(stdout.o)
+    0x20000034   0x080015bc   0x00000004   PAD
     0x20000038        -       0x00000400   Zero   RW            1    STACK               startup_stm32f40_41xxx.o
 
 
@@ -2060,7 +2060,7 @@ Image component sizes
        396        102        147          8          0       2977   buildtime.o
        168         10         17          0          0       2035   key.o
        292         14         17          0          0       2576   led.o
-       550        270         61          0          0       4165   main.o
+       594        308         61          0          0       4169   main.o
        180         14          0          0          0       3149   rs232.o
        268         52          0          4          0      30949   sleep.o
         36          8        392          0       1024        896   startup_stm32f40_41xxx.o
@@ -2072,7 +2072,7 @@ Image component sizes
        340         32          0         20          0     272033   system_stm32f4xx.o
 
     ----------------------------------------------------------------------
-      3286        576        720         48       1024     341835   Object Totals
+      3330        614        720         48       1024     341839   Object Totals
          0          0         32          0          0          0   (incl. Generated)
          8          0         11          0          0          0   (incl. Padding)
 
@@ -2119,15 +2119,15 @@ Image component sizes
 
       Code (inc. data)   RO Data    RW Data    ZI Data      Debug   
 
-      4748        646        720         52       1028     338167   Grand Totals
-      4748        646        720         52       1028     338167   ELF Image Totals
-      4748        646        720         52          0          0   ROM Totals
+      4792        684        720         52       1028     338171   Grand Totals
+      4792        684        720         52       1028     338171   ELF Image Totals
+      4792        684        720         52          0          0   ROM Totals
 
 ==============================================================================
 
-    Total RO  Size (Code + RO Data)                 5468 (   5.34kB)
+    Total RO  Size (Code + RO Data)                 5512 (   5.38kB)
     Total RW  Size (RW Data + ZI Data)              1080 (   1.05kB)
-    Total ROM Size (Code + RO Data + RW Data)       5520 (   5.39kB)
+    Total ROM Size (Code + RO Data + RW Data)       5564 (   5.43kB)
 
 ==============================================================================
 
