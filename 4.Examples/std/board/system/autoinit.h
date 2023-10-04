@@ -5,6 +5,8 @@
 
 #include "board_conf.h"
 
+//-----------------------------------------------------------------------------
+
 #if defined(__ARMCC_VERSION) || defined(__GNUC__)
 /* ARM Compiler */
 /* GCC Compiler */
@@ -24,34 +26,43 @@
 #define __ALIGN(n)
 #define __WEAK __attribute__((weak))
 #else
-#error "not supported tool chain..."
+#error "unsupported toolchain..."
 #endif
 
-typedef int (*lpfn_init_t)(void);
+//-----------------------------------------------------------------------------
+
+typedef int (*initcall_t)(void);
+typedef void (*exitcall_t)(void);
 
 // the compiler automatically sorts based on the to of ascii codes:
 // small ones have higher priority, while large ones have lower priority.
+
+#define __autoinit(func, level)        \
+    __SECTION(".usdk.initcall." level) \
+    __USED static const autoinit_t __usdk_init_##func
 
 #if CONFIG_USDK_INIT_DEBUG
 
 #include <stdio.h>
 
 typedef struct {
-    lpfn_init_t func;
+    initcall_t  func;
     const char* name;
-} usdk_init_t;
+} autoinit_t;
 
 #define USDK_INIT_EXPORT(func, level) \
-    __SECTION(".usdk.init" level)     \
-    __USED const usdk_init_t __usdk_init_##func = {func, #func};
+    __autoinit(func, level) = {func, #func};
 
 #else
 
+typedef initcall_t autoinit_t;
+
 #define USDK_INIT_EXPORT(func, level) \
-    __SECTION(".usdk.init" level)     \
-    __USED const lpfn_init_t __usdk_init_##func = func;
+    __autoinit(func, level) = func;
 
 #endif
+
+//-----------------------------------------------------------------------------
 
 #define INIT_LEVEL_BOARD       "1"  // board support package
 #define INIT_LEVEL_DEVICE      "2"  // device
@@ -62,6 +73,9 @@ typedef struct {
 #define INIT_RESULT_SUCCESS    0
 #define INIT_RESULT_FAILURE    1
 
-extern void usdk_hw_uart_init(void);
+//-----------------------------------------------------------------------------
+
+extern void usdk_preinit(void);
+extern void usdk_postinit(void);
 
 #endif

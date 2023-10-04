@@ -16,13 +16,11 @@ USDK_INIT_EXPORT(system_end, "9")  // last
 
 void usdk_startup(void)
 {
-    sleep_init();
-
-    usdk_hw_uart_init();
+    usdk_preinit();
 
 #if CONFIG_USDK_INIT_DEBUG
 
-    volatile const usdk_init_t* ptr;
+    volatile const autoinit_t* ptr;
 
     for (ptr = &__usdk_init_system_begin; ptr <= &__usdk_init_system_end; ptr++)
     {
@@ -31,7 +29,7 @@ void usdk_startup(void)
 
 #else
 
-    volatile const lpfn_init_t* ptr;
+    volatile const autoinit_t* ptr;
 
     for (ptr = &__usdk_init_system_begin; ptr <= &__usdk_init_system_end; ptr++)
     {
@@ -39,6 +37,8 @@ void usdk_startup(void)
     }
 
 #endif
+
+    usdk_postinit();
 }
 
 //
@@ -73,10 +73,15 @@ int entry(void)
 #pragma INIT_SECTION(usdk_startup)
 #endif
 
-__WEAK void usdk_hw_uart_init()
+__WEAK void usdk_preinit(void)
 {
+    // sysclk、hw uart ...
 #if CONFIG_USDK_INIT_DEBUG
     while (1)
         ;
 #endif
+}
+
+__WEAK void usdk_postinit(void)
+{
 }

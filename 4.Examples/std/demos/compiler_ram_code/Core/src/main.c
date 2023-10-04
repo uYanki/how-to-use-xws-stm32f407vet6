@@ -81,8 +81,11 @@ __attribute__((section("RAMCODE"))) void ram_foo3()
     printf("* %s in 0x%x\n", __func__, addr - 6);
 }
 
-void usdk_hw_uart_init(void)
+void usdk_preinit(void)
 {
+    // sleep
+    sleep_init();
+    // hw_uart
     USART_InitTypeDef USART_InitStructure;
     USART_InitStructure.USART_BaudRate            = 115200;
     USART_InitStructure.USART_HardwareFlowControl = USART_HardwareFlowControl_None;
@@ -93,10 +96,9 @@ void usdk_hw_uart_init(void)
     rs232_init(&USART_InitStructure);
 }
 
-
 int main()
 {
-    usdk_hw_uart_init();
+    usdk_preinit();
 
     flash_foo1();
     flash_foo2();

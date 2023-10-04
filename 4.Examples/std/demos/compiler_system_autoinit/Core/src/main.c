@@ -49,8 +49,11 @@ void init_fpu()
 
 //
 
-void usdk_hw_uart_init(void)
+void usdk_preinit(void)
 {
+    // sleep
+    sleep_init();
+    // hw_uart
     USART_InitTypeDef USART_InitStructure;
     USART_InitStructure.USART_BaudRate            = 115200;
     USART_InitStructure.USART_HardwareFlowControl = USART_HardwareFlowControl_None;
