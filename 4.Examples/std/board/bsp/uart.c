@@ -10,18 +10,17 @@
 //-----------------------------------------------------------------------------
 // configurations
 
-#if 0
+#if 0  // template
 
-#define UART_MODE_RS232             2
-#define UART_MODE_RS485             4
-
-// #define CONFIG_UART_MODE            UART_MODE_RS232
 #define CONFIG_UART_MODE            UART_MODE_RS485
 
 #define CONFIG_UART_REDIRECT_PRINTF 1
 #define CONFIG_UART_REDIRECT_SCANF  1
 
 #endif
+
+#define UART_MODE_RS232 1
+#define UART_MODE_RS485 2
 
 #ifndef CONFIG_UART_MODE
 #define CONFIG_UART_MODE UART_MODE_RS232
@@ -30,7 +29,50 @@
 //-----------------------------------------------------------------------------
 // ports
 
-#if CONFIG_UART_MODE == UART_MODE_RS485
+#if CONFIG_UART_MODE == UART_MODE_RS232
+
+// usart
+
+#define UART_PORT              RS232_UART_PORT
+#define UART_CLK               RS232_UART_CLK
+#define UART_CLKEN             RS232_UART_CLKEN
+#define UART_IRQn              USART1_IRQn
+#define UART_IRQHandler        USART1_IRQHandler
+
+// gpio
+
+#define UART_TX_GPIO_CLK       RS232_TX_GPIO_CLK
+#define UART_TX_GPIO_PORT      RS232_TX_GPIO_PORT
+#define UART_TX_GPIO_PIN       RS232_TX_GPIO_PIN
+#define UART_TX_GPIO_PINSRC    RS232_TX_GPIO_PINSRC
+#define UART_TX_GPIO_AF        RS232_GPIO_AF
+
+#define UART_RX_GPIO_CLK       RS232_RX_GPIO_CLK
+#define UART_RX_GPIO_PORT      RS232_RX_GPIO_PORT
+#define UART_RX_GPIO_PIN       RS232_RX_GPIO_PIN
+#define UART_RX_GPIO_PINSRC    RS232_RX_GPIO_PINSRC
+#define UART_RX_GPIO_AF        RS232_GPIO_AF
+
+// dma
+
+// 不同外设不同的 Stream 和 Channel, 详看数据手册
+
+#define UART_TX_DMA_CLKEN      RCC_AHB1PeriphClockCmd
+#define UART_TX_DMA_CLK        RCC_AHB1Periph_DMA2
+#define UART_TX_DMA_CHANNEL    DMA_Channel_4
+#define UART_TX_DMA_STREAM     DMA2_Stream7
+#define UART_TX_DMA_FLAG       DMA_FLAG_TCIF7
+#define UART_TX_DMA_IT         DMA_IT_TCIF7
+#define UART_TX_DMA_IRQn       DMA2_Stream7_IRQn
+#define UART_TX_DMA_IRQHandler DMA2_Stream7_IRQHandler
+
+#define UART_RX_DMA_CLKEN      RCC_AHB1PeriphClockCmd
+#define UART_RX_DMA_CLK        RCC_AHB1Periph_DMA2
+#define UART_RX_DMA_CHANNEL    DMA_Channel_4
+#define UART_RX_DMA_STREAM     DMA2_Stream5  // or DMA2_Stream2
+#define UART_RX_DMA_FLAG       DMA_FLAG_TCIF5
+
+#elif CONFIG_UART_MODE == UART_MODE_RS485
 
 // uart
 
@@ -76,49 +118,6 @@
 #define UART_RX_DMA_CLK        RCC_AHB1Periph_DMA1
 #define UART_RX_DMA_CHANNEL    DMA_Channel_4
 #define UART_RX_DMA_STREAM     DMA1_Stream5
-#define UART_RX_DMA_FLAG       DMA_FLAG_TCIF5
-
-#elif CONFIG_UART_MODE == UART_MODE_RS232
-
-// usart
-
-#define UART_PORT              RS232_UART_PORT
-#define UART_CLK               RS232_UART_CLK
-#define UART_CLKEN             RS232_UART_CLKEN
-#define UART_IRQn              USART1_IRQn
-#define UART_IRQHandler        USART1_IRQHandler
-
-// gpio
-
-#define UART_TX_GPIO_CLK       RS232_TX_GPIO_CLK
-#define UART_TX_GPIO_PORT      RS232_TX_GPIO_PORT
-#define UART_TX_GPIO_PIN       RS232_TX_GPIO_PIN
-#define UART_TX_GPIO_PINSRC    RS232_TX_GPIO_PINSRC
-#define UART_TX_GPIO_AF        RS232_GPIO_AF
-
-#define UART_RX_GPIO_CLK       RS232_RX_GPIO_CLK
-#define UART_RX_GPIO_PORT      RS232_RX_GPIO_PORT
-#define UART_RX_GPIO_PIN       RS232_RX_GPIO_PIN
-#define UART_RX_GPIO_PINSRC    RS232_RX_GPIO_PINSRC
-#define UART_RX_GPIO_AF        RS232_GPIO_AF
-
-// dma
-
-// 不同外设不同的 Stream 和 Channel, 详看数据手册
-
-#define UART_TX_DMA_CLKEN      RCC_AHB1PeriphClockCmd
-#define UART_TX_DMA_CLK        RCC_AHB1Periph_DMA2
-#define UART_TX_DMA_CHANNEL    DMA_Channel_4
-#define UART_TX_DMA_STREAM     DMA2_Stream7
-#define UART_TX_DMA_FLAG       DMA_FLAG_TCIF7
-#define UART_TX_DMA_IT         DMA_IT_TCIF7
-#define UART_TX_DMA_IRQn       DMA2_Stream7_IRQn
-#define UART_TX_DMA_IRQHandler DMA2_Stream7_IRQHandler
-
-#define UART_RX_DMA_CLKEN      RCC_AHB1PeriphClockCmd
-#define UART_RX_DMA_CLK        RCC_AHB1Periph_DMA2
-#define UART_RX_DMA_CHANNEL    DMA_Channel_4
-#define UART_RX_DMA_STREAM     DMA2_Stream5  // or DMA2_Stream2
 #define UART_RX_DMA_FLAG       DMA_FLAG_TCIF5
 
 #endif
@@ -417,6 +416,10 @@ void UART_IRQHandler(void)
         USART_ClearFlag(UART_PORT, USART_FLAG_TC);
         USART_ClearITPendingBit(UART_PORT, USART_IT_TC);
 
+#ifdef CONFIG_UART_TXCBK
+        CONFIG_UART_TXCBK();
+#endif
+
 #if CONFIG_UART_MODE == UART_MODE_RS485
         // set rx mode
         sleep_us(160);
@@ -454,6 +457,12 @@ int $Sub$$__2printf(const char* fmt, ...)
     va_start(args, fmt);
     len = vprintf(fmt, args);  // print
     va_end(args);
+
+#if (CONFIG_UART_MODE == UART_MODE_RS485)
+    // set tx dir
+    sleep_us(150);
+    UART_SetRxDir();
+#endif
 
     return len;
 }

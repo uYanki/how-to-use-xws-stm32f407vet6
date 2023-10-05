@@ -10,6 +10,20 @@
         "xstring": "c",
         "rs232.h": "c",
         "led.h": "c",
-        "uart.h": "c"
+        "uart.h": "c",
+        "key.h": "c",
+        "stdio.h": "c",
+        "type_traits": "c",
+        "xtr1common": "c",
+        "memory": "c",
+        "xutility": "c",
+        "ctype.h": "c",
+        "string.h": "c",
+        "mbport.h": "c",
+        "mbrtu.h": "c",
+        "limits": "c",
+        "bit": "c",
+        "compare": "c",
+        "cstddef": "c"
     }
 }

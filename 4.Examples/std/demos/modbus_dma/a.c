@@ -1,42 +1,9 @@
-#include <stdio.h>
-#include <stdbool.h>
+#include "stdio.h"
+#include "stdint.h"
+#include "stdbool.h"
 #include <string.h>
 
-#include "stm32f4xx.h"
-
-#include "main.h"
-#include "pinmap.h"
-#include "system/sleep.h"
-
-#include "bsp/led.h"
-#include "bsp/key.h"
-#include "bsp/uart.h"
-
-
 typedef float float32_t;
-
-#define nullptr NULL
-
-//-----------------------------------------------------------------------------
-//
-
-void usdk_preinit(void)
-{
-    // sleep
-    sleep_init();
-    // hw_uart
-    USART_InitTypeDef USART_InitStructure;
-    USART_InitStructure.USART_BaudRate            = 115200;
-    USART_InitStructure.USART_HardwareFlowControl = USART_HardwareFlowControl_None;
-    USART_InitStructure.USART_Mode                = USART_Mode_Tx | USART_Mode_Rx;
-    USART_InitStructure.USART_Parity              = USART_Parity_No;
-    USART_InitStructure.USART_StopBits            = USART_StopBits_1;
-    USART_InitStructure.USART_WordLength          = USART_WordLength_8b;
-    UART_Config(&USART_InitStructure);
-    UART_DMA_Config();
-}
-
-//
 
 #define INOPEN(val, lo, hi)  (((lo) < (val)) && ((val) < (hi)))    ///< check if the val is within the open range
 #define INCLOSE(val, lo, hi) (((lo) <= (val)) && ((val) <= (hi)))  ///< check if the val is within the closed range
@@ -220,8 +187,6 @@ bool getNumber(const uint8_t** buffer, int32_t* integer, float32_t* decimal)
 
 exit:
 
-#if 0
-
     if (decimal == NULL)
     {
         printf("%d\n", *integer);
@@ -231,68 +196,17 @@ exit:
         printf("%f\n", *integer + *decimal);
     }
 
-#endif
-
-    *buffer = ptr;
-
     return true;
 }
 
-#include "mbslave.h"
+#define STR(x) #x
+
 int main()
 {
-    NVIC_PriorityGroupConfig(NVIC_PriorityGroup_0);
+    int32_t   i;
+    float32_t d;
 
-    u16 t = 0;
+    const uint8_t* p = STR(-0b1000 #5432);
 
-    eMBInit(MB_RTU, 0x01, 2, 115200, MB_PAR_NONE);
-    // eMBInit(MB_RTU, 0x0A, 2, 115200, MB_PAR_NONE);
-
-    // const UCHAR ucSlaveID[] = {0xAA, 0xBB, 0xCC};
-    // eMBSetSlaveID(0x33, FALSE, ucSlaveID, 3);
-
-    // test data
-
-    usRegInputBuf[0] = 0x1234;
-    usRegInputBuf[1] = 0x2345;
-    usRegInputBuf[2] = 0x3456;
-    usRegInputBuf[3] = 0x4567;
-    usRegInputBuf[4] = 0x0000;
-    usRegInputBuf[5] = 0x0000;
-
-    usRegHoldingBuf[0] = 0x0000;
-    usRegHoldingBuf[1] = 0xFFFF;
-    usRegHoldingBuf[2] = 0x0000;
-    usRegHoldingBuf[3] = 0xFFFF;
-    usRegHoldingBuf[4] = 0x0000;
-    usRegHoldingBuf[5] = 0xFFFF;
-    usRegHoldingBuf[6] = 0x0000;
-    usRegHoldingBuf[7] = 0xFFFF;
-
-    ucDiscInBuf[0] = 0b11001100;
-    ucDiscInBuf[1] = 0b00110011;
-
-    ucCoilBuf[0] = 0b10101010;
-    ucCoilBuf[1] = 0b01010101;
-    ucCoilBuf[2] = 0b11001100;
-    ucCoilBuf[3] = 0b00110011;
-
-    eMBEnable();
-
-    while (1)
-    {
-        eMBPoll();
-
-        if (key_is_press(KEY1))
-        {
-            if (++t == 0)
-            {
-                UART_Transmit_DMA("hello\r\n", 7, false);
-            }
-        }
-        else
-        {
-            t = 0;
-        }
-    }
+    getNumber(&p, &i, &d);
 }

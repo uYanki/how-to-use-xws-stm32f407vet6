@@ -6,13 +6,18 @@
                 "d:\\how-to-use-xws-stm32f407vet6\\4.Examples\\std\\fwlib\\Libraries\\STM32F4xx_StdPeriph_Driver\\inc",
                 "d:\\how-to-use-xws-stm32f407vet6\\4.Examples\\std\\fwlib\\Libraries\\CMSIS\\Include",
                 "d:\\how-to-use-xws-stm32f407vet6\\4.Examples\\std\\board",
-                "d:\\how-to-use-xws-stm32f407vet6\\4.Examples\\std\\demos\\uart_rs485_dma\\Core\\inc",
+                "d:\\how-to-use-xws-stm32f407vet6\\4.Examples\\std\\demos\\modbus_dma\\Core\\inc",
+                "d:\\how-to-use-xws-stm32f407vet6\\4.Examples\\std\\3rdparty\\freemodbus\\modbus\\include",
+                "d:\\how-to-use-xws-stm32f407vet6\\4.Examples\\std\\demos\\modbus_dma\\Core\\src\\mbslave",
+                "d:\\how-to-use-xws-stm32f407vet6\\4.Examples\\std\\3rdparty\\freemodbus\\modbus\\rtu",
                 "C:\\Keil_v5\\ARM\\ARMCC\\include",
                 "C:\\Keil_v5\\ARM\\ARMCC\\include\\rw",
-                "d:\\how-to-use-xws-stm32f407vet6\\4.Examples\\std\\demos\\uart_rs485_dma\\Core\\src",
+                "d:\\how-to-use-xws-stm32f407vet6\\4.Examples\\std\\demos\\modbus_dma\\Core\\src",
                 "d:\\how-to-use-xws-stm32f407vet6\\4.Examples\\std\\board\\bsp",
                 "d:\\how-to-use-xws-stm32f407vet6\\4.Examples\\std\\board\\system",
-                "d:\\how-to-use-xws-stm32f407vet6\\4.Examples\\std\\fwlib\\Libraries\\STM32F4xx_StdPeriph_Driver\\src"
+                "d:\\how-to-use-xws-stm32f407vet6\\4.Examples\\std\\fwlib\\Libraries\\STM32F4xx_StdPeriph_Driver\\src",
+                "d:\\how-to-use-xws-stm32f407vet6\\4.Examples\\std\\3rdparty\\freemodbus\\modbus\\functions",
+                "d:\\how-to-use-xws-stm32f407vet6\\4.Examples\\std\\3rdparty\\freemodbus\\modbus"
             ],
             "defines": [
                 "STM32F40_41xxx",

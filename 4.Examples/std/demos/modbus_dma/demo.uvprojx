@@ -339,7 +339,7 @@
               <MiscControls></MiscControls>
               <Define>STM32F40_41xxx,USE_STDPERIPH_DRIVER,HSE_VALUE=25000000</Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\fwlib\Libraries\STM32F4xx_StdPeriph_Driver\inc;..\..\fwlib\Libraries\CMSIS\Include;..\..\board;.\Core\inc</IncludePath>
+              <IncludePath>..\..\fwlib\Libraries\STM32F4xx_StdPeriph_Driver\inc;..\..\fwlib\Libraries\CMSIS\Include;..\..\board;.\Core\inc;..\..\3rdparty\freemodbus\modbus\include;.\Core\src\mbslave;..\..\3rdparty\freemodbus\modbus\rtu</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -679,7 +679,89 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>3rdparty</GroupName>
+          <GroupName>3rdparty/modbus/core</GroupName>
+          <Files>
+            <File>
+              <FileName>mbfunccoils.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\3rdparty\freemodbus\modbus\functions\mbfunccoils.c</FilePath>
+            </File>
+            <File>
+              <FileName>mbfuncdiag.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\3rdparty\freemodbus\modbus\functions\mbfuncdiag.c</FilePath>
+            </File>
+            <File>
+              <FileName>mbfuncdisc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\3rdparty\freemodbus\modbus\functions\mbfuncdisc.c</FilePath>
+            </File>
+            <File>
+              <FileName>mbfuncholding.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\3rdparty\freemodbus\modbus\functions\mbfuncholding.c</FilePath>
+            </File>
+            <File>
+              <FileName>mbfuncinput.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\3rdparty\freemodbus\modbus\functions\mbfuncinput.c</FilePath>
+            </File>
+            <File>
+              <FileName>mbfuncother.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\3rdparty\freemodbus\modbus\functions\mbfuncother.c</FilePath>
+            </File>
+            <File>
+              <FileName>mbutils.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\3rdparty\freemodbus\modbus\functions\mbutils.c</FilePath>
+            </File>
+            <File>
+              <FileName>mb.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\3rdparty\freemodbus\modbus\mb.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>3rdparty/modbus/rtu</GroupName>
+          <Files>
+            <File>
+              <FileName>mbcrc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\3rdparty\freemodbus\modbus\rtu\mbcrc.c</FilePath>
+            </File>
+            <File>
+              <FileName>mbrtu.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\3rdparty\freemodbus\modbus\rtu\mbrtu.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>3rdparty/modbus/port</GroupName>
+          <Files>
+            <File>
+              <FileName>mbslave.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Core\src\mbslave\mbslave.c</FilePath>
+            </File>
+            <File>
+              <FileName>portevent.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Core\src\mbslave\portevent.c</FilePath>
+            </File>
+            <File>
+              <FileName>portserial.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Core\src\mbslave\portserial.c</FilePath>
+            </File>
+            <File>
+              <FileName>porttimer.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Core\src\mbslave\porttimer.c</FilePath>
+            </File>
+          </Files>
         </Group>
         <Group>
           <GroupName>docs</GroupName>
