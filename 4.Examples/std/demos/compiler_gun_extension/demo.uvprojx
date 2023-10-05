@@ -429,9 +429,9 @@
           <GroupName>bsp</GroupName>
           <Files>
             <File>
-              <FileName>rs232.c</FileName>
+              <FileName>uart.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\board\bsp\rs232.c</FilePath>
+              <FilePath>..\..\board\bsp\uart.c</FilePath>
             </File>
           </Files>
         </Group>

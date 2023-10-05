@@ -5,7 +5,7 @@
 ".\objects\stm32f4xx_it.o"
 ".\objects\key.o"
 ".\objects\led.o"
-".\objects\rs232.o"
+".\objects\uart.o"
 ".\objects\autoinit.o"
 ".\objects\buildtime.o"
 ".\objects\sleep.o"

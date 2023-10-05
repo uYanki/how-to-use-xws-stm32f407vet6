@@ -25,15 +25,15 @@ Section Cross References
     main.o(i.main) refers to sleep.o(i.dwt_wait) for dwt_wait
     main.o(i.main) refers to main.o(.swrst_keep) for a
     main.o(i.main) refers to main.o(.data) for b
-    main.o(i.usdk_hw_uart_init) refers to rs232.o(i.rs232_init) for rs232_init
+    main.o(i.usdk_hw_uart_init) refers to rs232.o(i.UART_Config) for UART_Config
     rs232.o(i.fputc) refers to stm32f4xx_usart.o(i.USART_SendData) for USART_SendData
     rs232.o(i.fputc) refers to stm32f4xx_usart.o(i.USART_GetFlagStatus) for USART_GetFlagStatus
-    rs232.o(i.rs232_init) refers to stm32f4xx_rcc.o(i.RCC_AHB1PeriphClockCmd) for RCC_AHB1PeriphClockCmd
-    rs232.o(i.rs232_init) refers to stm32f4xx_gpio.o(i.GPIO_PinAFConfig) for GPIO_PinAFConfig
-    rs232.o(i.rs232_init) refers to stm32f4xx_gpio.o(i.GPIO_Init) for GPIO_Init
-    rs232.o(i.rs232_init) refers to stm32f4xx_rcc.o(i.RCC_APB2PeriphClockCmd) for RCC_APB2PeriphClockCmd
-    rs232.o(i.rs232_init) refers to stm32f4xx_usart.o(i.USART_Init) for USART_Init
-    rs232.o(i.rs232_init) refers to stm32f4xx_usart.o(i.USART_Cmd) for USART_Cmd
+    rs232.o(i.UART_Config) refers to stm32f4xx_rcc.o(i.RCC_AHB1PeriphClockCmd) for RCC_AHB1PeriphClockCmd
+    rs232.o(i.UART_Config) refers to stm32f4xx_gpio.o(i.GPIO_PinAFConfig) for GPIO_PinAFConfig
+    rs232.o(i.UART_Config) refers to stm32f4xx_gpio.o(i.GPIO_Init) for GPIO_Init
+    rs232.o(i.UART_Config) refers to stm32f4xx_rcc.o(i.RCC_APB2PeriphClockCmd) for RCC_APB2PeriphClockCmd
+    rs232.o(i.UART_Config) refers to stm32f4xx_usart.o(i.USART_Init) for USART_Init
+    rs232.o(i.UART_Config) refers to stm32f4xx_usart.o(i.USART_Cmd) for USART_Cmd
     sleep.o(i.dwt_wait) refers to system_stm32f4xx.o(.data) for SystemCoreClock
     sleep.o(i.tim_init) refers to stm32f4xx_rcc.o(i.RCC_APB1PeriphClockCmd) for RCC_APB1PeriphClockCmd
     sleep.o(i.tim_init) refers to dfltui.o(.text) for __aeabi_ui2d
@@ -1423,7 +1423,7 @@ Image Symbol Table
     ../fplib/microlib/fpfix.c                0x00000000   Number         0  dfixui.o ABSOLUTE
     ../fplib/microlib/fpflt.c                0x00000000   Number         0  dfltui.o ABSOLUTE
     ../fplib/microlib/fpmul.c                0x00000000   Number         0  dmul.o ABSOLUTE
-    ..\..\board\bsp\rs232.c                  0x00000000   Number         0  rs232.o ABSOLUTE
+    ..\..\board\bsp\uart.c                  0x00000000   Number         0  rs232.o ABSOLUTE
     ..\..\board\system\sleep.c               0x00000000   Number         0  sleep.o ABSOLUTE
     ..\..\fwlib\Libraries\STM32F4xx_StdPeriph_Driver\src\misc.c 0x00000000   Number         0  misc.o ABSOLUTE
     ..\..\fwlib\Libraries\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_adc.c 0x00000000   Number         0  stm32f4xx_adc.o ABSOLUTE
@@ -1467,7 +1467,7 @@ Image Symbol Table
     ..\..\fwlib\Libraries\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_tim.c 0x00000000   Number         0  stm32f4xx_tim.o ABSOLUTE
     ..\..\fwlib\Libraries\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_usart.c 0x00000000   Number         0  stm32f4xx_usart.o ABSOLUTE
     ..\..\fwlib\Libraries\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_wwdg.c 0x00000000   Number         0  stm32f4xx_wwdg.o ABSOLUTE
-    ..\\..\\board\\bsp\\rs232.c              0x00000000   Number         0  rs232.o ABSOLUTE
+    ..\\..\\board\\bsp\\uart.c              0x00000000   Number         0  rs232.o ABSOLUTE
     ..\\..\\board\\system\\sleep.c           0x00000000   Number         0  sleep.o ABSOLUTE
     ..\\..\\fwlib\\Libraries\\STM32F4xx_StdPeriph_Driver\\src\\misc.c 0x00000000   Number         0  misc.o ABSOLUTE
     ..\\..\\fwlib\\Libraries\\STM32F4xx_StdPeriph_Driver\\src\\stm32f4xx_adc.c 0x00000000   Number         0  stm32f4xx_adc.o ABSOLUTE
@@ -1568,7 +1568,7 @@ Image Symbol Table
     i.dwt_wait                               0x08000850   Section        0  sleep.o(i.dwt_wait)
     i.fputc                                  0x08000898   Section        0  rs232.o(i.fputc)
     i.main                                   0x080008d8   Section        0  main.o(i.main)
-    i.rs232_init                             0x08000960   Section        0  rs232.o(i.rs232_init)
+    i.UART_Config                             0x08000960   Section        0  rs232.o(i.UART_Config)
     i.usdk_hw_uart_init                      0x080009d4   Section        0  main.o(i.usdk_hw_uart_init)
     .data                                    0x20000000   Section       20  system_stm32f4xx.o(.data)
     .data                                    0x20000014   Section        4  main.o(.data)
@@ -1761,7 +1761,7 @@ Image Symbol Table
     dwt_wait                                 0x08000851   Thumb Code    58  sleep.o(i.dwt_wait)
     fputc                                    0x08000899   Thumb Code    58  rs232.o(i.fputc)
     main                                     0x080008d9   Thumb Code   108  main.o(i.main)
-    rs232_init                               0x08000961   Thumb Code   108  rs232.o(i.rs232_init)
+    UART_Config                               0x08000961   Thumb Code   108  rs232.o(i.UART_Config)
     usdk_hw_uart_init                        0x080009d5   Thumb Code    42  main.o(i.usdk_hw_uart_init)
     Region$$Table$$Base                      0x08000a00   Number         0  anon$$obj.o(Region$$Table)
     Region$$Table$$Limit                     0x08000a20   Number         0  anon$$obj.o(Region$$Table)
@@ -1833,7 +1833,7 @@ Memory Map of the image
     0x08000850   0x08000850   0x00000048   Code   RO          326    i.dwt_wait          sleep.o
     0x08000898   0x08000898   0x00000040   Code   RO          276    i.fputc             rs232.o
     0x080008d8   0x080008d8   0x00000088   Code   RO          155    i.main              main.o
-    0x08000960   0x08000960   0x00000074   Code   RO          277    i.rs232_init        rs232.o
+    0x08000960   0x08000960   0x00000074   Code   RO          277    i.UART_Config        rs232.o
     0x080009d4   0x080009d4   0x0000002a   Code   RO          156    i.usdk_hw_uart_init  main.o
     0x080009fe   0x080009fe   0x00000002   PAD
     0x08000a00   0x08000a00   0x00000020   Data   RO         5697    Region$$Table       anon$$obj.o

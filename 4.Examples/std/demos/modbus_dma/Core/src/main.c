@@ -1,20 +1,17 @@
-#include "main.h"
+#include <stdio.h>
+#include <stdbool.h>
+
 #include "stm32f4xx.h"
+
+#include "main.h"
+#include "pinmap.h"
 #include "system/sleep.h"
-#include "bsp/uart.h"
-#include "core_cm4.h"
 
-#if (__ARMCC_VERSION >= 6000000)  // Arm Compiler 6
-#define __NOINIT __attribute__((section(".bss.ARM.__at_0x2001FF00")))
-#elif (__ARMCC_VERSION >= 5000000)  // Arm Compiler 5
-// #define __NOINIT __attribute__((at(0x2001FF00)));
-#define __NOINIT __attribute__((zero_init, used, section(".swrst_keep")))
-#else
-#error "unsupported version"
-#endif
+#include "bsp/led.h"
+#include "bsp/key.h"
 
-u32 a __NOINIT;
-u32   b;
+//-----------------------------------------------------------------------------
+//
 
 void usdk_preinit(void)
 {
@@ -29,19 +26,27 @@ void usdk_preinit(void)
     USART_InitStructure.USART_StopBits            = USART_StopBits_1;
     USART_InitStructure.USART_WordLength          = USART_WordLength_8b;
     UART_Config(&USART_InitStructure);
+    UART_DMA_Config();
 }
 
 int main()
 {
-    usdk_preinit();
+    NVIC_PriorityGroupConfig(NVIC_PriorityGroup_0);
 
-    ++a, ++b;
-    printf("%d,%d\n", a, b);
-
-    sleep_s(1);
-    NVIC_SystemReset();  // rst
+    u16 t = 0;
 
     while (1)
     {
+        if (key_is_press(KEY1))
+        {
+            if (++t == 0)
+            {
+                UART_Transmit_DMA("hello\r\n", 7, false);
+            }
+        }
+        else
+        {
+            t = 0;
+        }
     }
 }

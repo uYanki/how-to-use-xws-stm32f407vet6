@@ -42,7 +42,12 @@ void get_build_time(date_t* date, time_t* time)
 
         date->month = month;
 
-        date->day = (m_data[4] - '0') * 10 + (m_data[5] - '0');
+        date->day = m_data[5] - '0';
+
+        if (m_data[4] != ' ')
+        {
+            date->day += (m_data[4] - '0') * 10;
+        }
 
         date->year = ((m_data[7] - '0') * 1000 +
                       (m_data[8] - '0') * 100 +

@@ -69,7 +69,7 @@ Section Cross References
     main.o(i.main) refers to main.o(i.cbkSDORead) for cbkSDORead
     main.o(i.setTimer) refers to sleep.o(i.HAL_GetTick) for HAL_GetTick
     main.o(i.setTimer) refers to main.o(.data) for m_cop_timeout
-    main.o(i.usdk_hw_uart_init) refers to rs232.o(i.rs232_init) for rs232_init
+    main.o(i.usdk_hw_uart_init) refers to rs232.o(i.UART_Config) for UART_Config
     stm32f4xx_it.o(i.SysTick_Handler) refers to sleep.o(i.HAL_IncTick) for HAL_IncTick
     key.o(i.key_init) refers to stm32f4xx_rcc.o(i.RCC_AHB1PeriphClockCmd) for RCC_AHB1PeriphClockCmd
     key.o(i.key_init) refers to stm32f4xx_gpio.o(i.GPIO_Init) for GPIO_Init
@@ -82,12 +82,12 @@ Section Cross References
     led.o(.usdk.init1) refers to led.o(.conststrlit) for .conststrlit
     rs232.o(i.fputc) refers to stm32f4xx_usart.o(i.USART_SendData) for USART_SendData
     rs232.o(i.fputc) refers to stm32f4xx_usart.o(i.USART_GetFlagStatus) for USART_GetFlagStatus
-    rs232.o(i.rs232_init) refers to stm32f4xx_rcc.o(i.RCC_AHB1PeriphClockCmd) for RCC_AHB1PeriphClockCmd
-    rs232.o(i.rs232_init) refers to stm32f4xx_gpio.o(i.GPIO_PinAFConfig) for GPIO_PinAFConfig
-    rs232.o(i.rs232_init) refers to stm32f4xx_gpio.o(i.GPIO_Init) for GPIO_Init
-    rs232.o(i.rs232_init) refers to stm32f4xx_rcc.o(i.RCC_APB2PeriphClockCmd) for RCC_APB2PeriphClockCmd
-    rs232.o(i.rs232_init) refers to stm32f4xx_usart.o(i.USART_Init) for USART_Init
-    rs232.o(i.rs232_init) refers to stm32f4xx_usart.o(i.USART_Cmd) for USART_Cmd
+    rs232.o(i.UART_Config) refers to stm32f4xx_rcc.o(i.RCC_AHB1PeriphClockCmd) for RCC_AHB1PeriphClockCmd
+    rs232.o(i.UART_Config) refers to stm32f4xx_gpio.o(i.GPIO_PinAFConfig) for GPIO_PinAFConfig
+    rs232.o(i.UART_Config) refers to stm32f4xx_gpio.o(i.GPIO_Init) for GPIO_Init
+    rs232.o(i.UART_Config) refers to stm32f4xx_rcc.o(i.RCC_APB2PeriphClockCmd) for RCC_APB2PeriphClockCmd
+    rs232.o(i.UART_Config) refers to stm32f4xx_usart.o(i.USART_Init) for USART_Init
+    rs232.o(i.UART_Config) refers to stm32f4xx_usart.o(i.USART_Cmd) for USART_Cmd
     can.o(i.can_display_msg) refers to printf8.o(i.__0printf$8) for __2printf
     can.o(i.can_init) refers to stm32f4xx_rcc.o(i.RCC_AHB1PeriphClockCmd) for RCC_AHB1PeriphClockCmd
     can.o(i.can_init) refers to stm32f4xx_gpio.o(i.GPIO_PinAFConfig) for GPIO_PinAFConfig
@@ -1843,7 +1843,7 @@ Image Symbol Table
     ..\..\board\bsp\can.c                    0x00000000   Number         0  can.o ABSOLUTE
     ..\..\board\bsp\key.c                    0x00000000   Number         0  key.o ABSOLUTE
     ..\..\board\bsp\led.c                    0x00000000   Number         0  led.o ABSOLUTE
-    ..\..\board\bsp\rs232.c                  0x00000000   Number         0  rs232.o ABSOLUTE
+    ..\..\board\bsp\uart.c                  0x00000000   Number         0  rs232.o ABSOLUTE
     ..\..\board\system\autoinit.c            0x00000000   Number         0  autoinit.o ABSOLUTE
     ..\..\board\system\buildtime.c           0x00000000   Number         0  buildtime.o ABSOLUTE
     ..\..\board\system\sleep.c               0x00000000   Number         0  sleep.o ABSOLUTE
@@ -1906,7 +1906,7 @@ Image Symbol Table
     ..\\..\\board\\bsp\\can.c                0x00000000   Number         0  can.o ABSOLUTE
     ..\\..\\board\\bsp\\key.c                0x00000000   Number         0  key.o ABSOLUTE
     ..\\..\\board\\bsp\\led.c                0x00000000   Number         0  led.o ABSOLUTE
-    ..\\..\\board\\bsp\\rs232.c              0x00000000   Number         0  rs232.o ABSOLUTE
+    ..\\..\\board\\bsp\\uart.c              0x00000000   Number         0  rs232.o ABSOLUTE
     ..\\..\\board\\system\\autoinit.c        0x00000000   Number         0  autoinit.o ABSOLUTE
     ..\\..\\board\\system\\buildtime.c       0x00000000   Number         0  buildtime.o ABSOLUTE
     ..\\..\\board\\system\\sleep.c           0x00000000   Number         0  sleep.o ABSOLUTE
@@ -2136,7 +2136,7 @@ Image Symbol Table
     i.readNetworkDictCallbackAI              0x080063b8   Section        0  sdo.o(i.readNetworkDictCallbackAI)
     i.resetSDO                               0x0800646a   Section        0  sdo.o(i.resetSDO)
     i.resetSDOline                           0x08006484   Section        0  sdo.o(i.resetSDOline)
-    i.rs232_init                             0x080064d8   Section        0  rs232.o(i.rs232_init)
+    i.UART_Config                             0x080064d8   Section        0  rs232.o(i.UART_Config)
     i.scanIndexOD                            0x0800654c   Section        0  objacces.o(i.scanIndexOD)
     i.sendOnePDOevent                        0x08006568   Section        0  pdo.o(i.sendOnePDOevent)
     i.sendPdo                                0x080066a8   Section        0  pdo.o(i.sendPdo)
@@ -2486,7 +2486,7 @@ Image Symbol Table
     readNetworkDictCallbackAI                0x080063b9   Thumb Code   178  sdo.o(i.readNetworkDictCallbackAI)
     resetSDO                                 0x0800646b   Thumb Code    26  sdo.o(i.resetSDO)
     resetSDOline                             0x08006485   Thumb Code    84  sdo.o(i.resetSDOline)
-    rs232_init                               0x080064d9   Thumb Code   108  rs232.o(i.rs232_init)
+    UART_Config                               0x080064d9   Thumb Code   108  rs232.o(i.UART_Config)
     scanIndexOD                              0x0800654d   Thumb Code    28  objacces.o(i.scanIndexOD)
     sendOnePDOevent                          0x08006569   Thumb Code   310  pdo.o(i.sendOnePDOevent)
     sendSDO                                  0x080066d5   Thumb Code   162  sdo.o(i.sendSDO)
@@ -2892,7 +2892,7 @@ Memory Map of the image
     0x080063b8   0x080063b8   0x000000b2   Code   RO         6433    i.readNetworkDictCallbackAI  sdo.o
     0x0800646a   0x0800646a   0x0000001a   Code   RO         6434    i.resetSDO          sdo.o
     0x08006484   0x08006484   0x00000054   Code   RO         6435    i.resetSDOline      sdo.o
-    0x080064d8   0x080064d8   0x00000074   Code   RO          531    i.rs232_init        rs232.o
+    0x080064d8   0x080064d8   0x00000074   Code   RO          531    i.UART_Config        rs232.o
     0x0800654c   0x0800654c   0x0000001c   Code   RO         6255    i.scanIndexOD       objacces.o
     0x08006568   0x08006568   0x00000140   Code   RO         6318    i.sendOnePDOevent   pdo.o
     0x080066a8   0x080066a8   0x0000002c   Code   RO         6321    i.sendPdo           pdo.o

@@ -37,15 +37,15 @@ Section Cross References
     main.o(i.main) refers to main.o(RAMCODE) for ram_foo1
     main.o(i.main) refers to main.o(ROMCODE) for rxm_foo
     main.o(i.main) refers to printf5.o(i.__0printf$5) for __2printf
-    main.o(i.usdk_hw_uart_init) refers to rs232.o(i.rs232_init) for rs232_init
+    main.o(i.usdk_hw_uart_init) refers to rs232.o(i.UART_Config) for UART_Config
     rs232.o(i.fputc) refers to stm32f4xx_usart.o(i.USART_SendData) for USART_SendData
     rs232.o(i.fputc) refers to stm32f4xx_usart.o(i.USART_GetFlagStatus) for USART_GetFlagStatus
-    rs232.o(i.rs232_init) refers to stm32f4xx_rcc.o(i.RCC_AHB1PeriphClockCmd) for RCC_AHB1PeriphClockCmd
-    rs232.o(i.rs232_init) refers to stm32f4xx_gpio.o(i.GPIO_PinAFConfig) for GPIO_PinAFConfig
-    rs232.o(i.rs232_init) refers to stm32f4xx_gpio.o(i.GPIO_Init) for GPIO_Init
-    rs232.o(i.rs232_init) refers to stm32f4xx_rcc.o(i.RCC_APB2PeriphClockCmd) for RCC_APB2PeriphClockCmd
-    rs232.o(i.rs232_init) refers to stm32f4xx_usart.o(i.USART_Init) for USART_Init
-    rs232.o(i.rs232_init) refers to stm32f4xx_usart.o(i.USART_Cmd) for USART_Cmd
+    rs232.o(i.UART_Config) refers to stm32f4xx_rcc.o(i.RCC_AHB1PeriphClockCmd) for RCC_AHB1PeriphClockCmd
+    rs232.o(i.UART_Config) refers to stm32f4xx_gpio.o(i.GPIO_PinAFConfig) for GPIO_PinAFConfig
+    rs232.o(i.UART_Config) refers to stm32f4xx_gpio.o(i.GPIO_Init) for GPIO_Init
+    rs232.o(i.UART_Config) refers to stm32f4xx_rcc.o(i.RCC_APB2PeriphClockCmd) for RCC_APB2PeriphClockCmd
+    rs232.o(i.UART_Config) refers to stm32f4xx_usart.o(i.USART_Init) for USART_Init
+    rs232.o(i.UART_Config) refers to stm32f4xx_usart.o(i.USART_Cmd) for USART_Cmd
     sleep.o(i.dwt_wait) refers to system_stm32f4xx.o(.data) for SystemCoreClock
     sleep.o(i.tim_init) refers to stm32f4xx_rcc.o(i.RCC_APB1PeriphClockCmd) for RCC_APB1PeriphClockCmd
     sleep.o(i.tim_init) refers to dfltui.o(.text) for __aeabi_ui2d
@@ -1398,12 +1398,12 @@ Adding Veneers to the image
     Adding TT veneer (10 bytes, Long) for call to 'ram_foo1' from main.o(i.main).
     Adding TT veneer (10 bytes, Long) for call to 'ram_foo2' from main.o(i.main).
     Adding TT veneer (10 bytes, Long) for call to 'ram_foo3' from main.o(i.main).
-    Adding TT veneer (10 bytes, Long) for call to 'RCC_AHB1PeriphClockCmd' from rs232.o(i.rs232_init).
-    Adding TT veneer (10 bytes, Long) for call to 'GPIO_PinAFConfig' from rs232.o(i.rs232_init).
-    Adding TT veneer (10 bytes, Long) for call to 'GPIO_Init' from rs232.o(i.rs232_init).
-    Adding TT veneer (10 bytes, Long) for call to 'RCC_APB2PeriphClockCmd' from rs232.o(i.rs232_init).
-    Adding TT veneer (10 bytes, Long) for call to 'USART_Init' from rs232.o(i.rs232_init).
-    Adding TT veneer (10 bytes, Long) for call to 'USART_Cmd' from rs232.o(i.rs232_init).
+    Adding TT veneer (10 bytes, Long) for call to 'RCC_AHB1PeriphClockCmd' from rs232.o(i.UART_Config).
+    Adding TT veneer (10 bytes, Long) for call to 'GPIO_PinAFConfig' from rs232.o(i.UART_Config).
+    Adding TT veneer (10 bytes, Long) for call to 'GPIO_Init' from rs232.o(i.UART_Config).
+    Adding TT veneer (10 bytes, Long) for call to 'RCC_APB2PeriphClockCmd' from rs232.o(i.UART_Config).
+    Adding TT veneer (10 bytes, Long) for call to 'USART_Init' from rs232.o(i.UART_Config).
+    Adding TT veneer (10 bytes, Long) for call to 'USART_Cmd' from rs232.o(i.UART_Config).
     Adding TT veneer (10 bytes, Long) for call to 'readlr' from main.o(RAMCODE).
     Adding TT veneer (10 bytes, Long) for call to '__2printf' from main.o(RAMCODE).
 
@@ -1458,7 +1458,7 @@ Image Symbol Table
     ../fplib/microlib/fpfix.c                0x00000000   Number         0  dfixui.o ABSOLUTE
     ../fplib/microlib/fpflt.c                0x00000000   Number         0  dfltui.o ABSOLUTE
     ../fplib/microlib/fpmul.c                0x00000000   Number         0  dmul.o ABSOLUTE
-    ..\..\board\bsp\rs232.c                  0x00000000   Number         0  rs232.o ABSOLUTE
+    ..\..\board\bsp\uart.c                  0x00000000   Number         0  rs232.o ABSOLUTE
     ..\..\board\system\sleep.c               0x00000000   Number         0  sleep.o ABSOLUTE
     ..\..\fwlib\Libraries\STM32F4xx_StdPeriph_Driver\src\misc.c 0x00000000   Number         0  misc.o ABSOLUTE
     ..\..\fwlib\Libraries\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_adc.c 0x00000000   Number         0  stm32f4xx_adc.o ABSOLUTE
@@ -1502,7 +1502,7 @@ Image Symbol Table
     ..\..\fwlib\Libraries\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_tim.c 0x00000000   Number         0  stm32f4xx_tim.o ABSOLUTE
     ..\..\fwlib\Libraries\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_usart.c 0x00000000   Number         0  stm32f4xx_usart.o ABSOLUTE
     ..\..\fwlib\Libraries\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_wwdg.c 0x00000000   Number         0  stm32f4xx_wwdg.o ABSOLUTE
-    ..\\..\\board\\bsp\\rs232.c              0x00000000   Number         0  rs232.o ABSOLUTE
+    ..\\..\\board\\bsp\\uart.c              0x00000000   Number         0  rs232.o ABSOLUTE
     ..\\..\\board\\system\\sleep.c           0x00000000   Number         0  sleep.o ABSOLUTE
     ..\\..\\fwlib\\Libraries\\STM32F4xx_StdPeriph_Driver\\src\\misc.c 0x00000000   Number         0  misc.o ABSOLUTE
     ..\\..\\fwlib\\Libraries\\STM32F4xx_StdPeriph_Driver\\src\\stm32f4xx_adc.c 0x00000000   Number         0  stm32f4xx_adc.o ABSOLUTE
@@ -1590,7 +1590,7 @@ Image Symbol Table
     i.flash_foo2                             0x08000774   Section        0  main.o(i.flash_foo2)
     i.fputc                                  0x0800079c   Section        0  rs232.o(i.fputc)
     i.main                                   0x080007d8   Section        0  main.o(i.main)
-    i.rs232_init                             0x080008cc   Section        0  rs232.o(i.rs232_init)
+    i.UART_Config                             0x080008cc   Section        0  rs232.o(i.UART_Config)
     i.usdk_hw_uart_init                      0x08000944   Section        0  main.o(i.usdk_hw_uart_init)
     .constdata                               0x0800096c   Section       57  main.o(.constdata)
     __func__                                 0x0800096c   Data           8  main.o(.constdata)
@@ -1808,7 +1808,7 @@ Image Symbol Table
     flash_foo2                               0x08000775   Thumb Code    20  main.o(i.flash_foo2)
     fputc                                    0x0800079d   Thumb Code    54  rs232.o(i.fputc)
     main                                     0x080007d9   Thumb Code    78  main.o(i.main)
-    rs232_init                               0x080008cd   Thumb Code   110  rs232.o(i.rs232_init)
+    UART_Config                               0x080008cd   Thumb Code   110  rs232.o(i.UART_Config)
     usdk_hw_uart_init                        0x08000945   Thumb Code    40  main.o(i.usdk_hw_uart_init)
     Region$$Table$$Base                      0x080009a8   Number         0  anon$$obj.o(Region$$Table)
     Region$$Table$$Limit                     0x080009d8   Number         0  anon$$obj.o(Region$$Table)
@@ -1895,7 +1895,7 @@ Memory Map of the image
     0x08000774   0x08000774   0x00000028   Code   RO          159    i.flash_foo2        main.o
     0x0800079c   0x0800079c   0x0000003c   Code   RO          297    i.fputc             rs232.o
     0x080007d8   0x080007d8   0x000000f4   Code   RO          160    i.main              main.o
-    0x080008cc   0x080008cc   0x00000078   Code   RO          298    i.rs232_init        rs232.o
+    0x080008cc   0x080008cc   0x00000078   Code   RO          298    i.UART_Config        rs232.o
     0x08000944   0x08000944   0x00000028   Code   RO          161    i.usdk_hw_uart_init  main.o
     0x0800096c   0x0800096c   0x00000039   Data   RO          162    .constdata          main.o
     0x080009a5   0x080009a5   0x00000003   PAD

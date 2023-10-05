@@ -5,6 +5,11 @@
         "board.h": "c",
         "pinmap.h": "c",
         "stm32f4xx_it.h": "c",
-        "dwt.h": "c"
+        "dwt.h": "c",
+        "string": "c",
+        "xstring": "c",
+        "rs232.h": "c",
+        "led.h": "c",
+        "uart.h": "c"
     }
 }

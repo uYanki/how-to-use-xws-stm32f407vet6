@@ -32,15 +32,15 @@ Section Cross References
     main.o(i.main) refers to printf1.o(i.__0printf$1) for __2printf
     main.o(i.sayhello) refers to printf1.o(i.__0printf$1) for __2printf
     main.o(i.switch_range_case) refers to printf1.o(i.__0printf$1) for __2printf
-    main.o(i.usdk_hw_uart_init) refers to rs232.o(i.rs232_init) for rs232_init
+    main.o(i.usdk_hw_uart_init) refers to rs232.o(i.UART_Config) for UART_Config
     rs232.o(i.fputc) refers to stm32f4xx_usart.o(i.USART_SendData) for USART_SendData
     rs232.o(i.fputc) refers to stm32f4xx_usart.o(i.USART_GetFlagStatus) for USART_GetFlagStatus
-    rs232.o(i.rs232_init) refers to stm32f4xx_rcc.o(i.RCC_AHB1PeriphClockCmd) for RCC_AHB1PeriphClockCmd
-    rs232.o(i.rs232_init) refers to stm32f4xx_gpio.o(i.GPIO_PinAFConfig) for GPIO_PinAFConfig
-    rs232.o(i.rs232_init) refers to stm32f4xx_gpio.o(i.GPIO_Init) for GPIO_Init
-    rs232.o(i.rs232_init) refers to stm32f4xx_rcc.o(i.RCC_APB2PeriphClockCmd) for RCC_APB2PeriphClockCmd
-    rs232.o(i.rs232_init) refers to stm32f4xx_usart.o(i.USART_Init) for USART_Init
-    rs232.o(i.rs232_init) refers to stm32f4xx_usart.o(i.USART_Cmd) for USART_Cmd
+    rs232.o(i.UART_Config) refers to stm32f4xx_rcc.o(i.RCC_AHB1PeriphClockCmd) for RCC_AHB1PeriphClockCmd
+    rs232.o(i.UART_Config) refers to stm32f4xx_gpio.o(i.GPIO_PinAFConfig) for GPIO_PinAFConfig
+    rs232.o(i.UART_Config) refers to stm32f4xx_gpio.o(i.GPIO_Init) for GPIO_Init
+    rs232.o(i.UART_Config) refers to stm32f4xx_rcc.o(i.RCC_APB2PeriphClockCmd) for RCC_APB2PeriphClockCmd
+    rs232.o(i.UART_Config) refers to stm32f4xx_usart.o(i.USART_Init) for USART_Init
+    rs232.o(i.UART_Config) refers to stm32f4xx_usart.o(i.USART_Cmd) for USART_Cmd
     sleep.o(i.dwt_wait) refers to system_stm32f4xx.o(.data) for SystemCoreClock
     sleep.o(i.tim_init) refers to stm32f4xx_rcc.o(i.RCC_APB1PeriphClockCmd) for RCC_APB1PeriphClockCmd
     sleep.o(i.tim_init) refers to dfltui.o(.text) for __aeabi_ui2d
@@ -1433,7 +1433,7 @@ Image Symbol Table
     ../fplib/microlib/fpfix.c                0x00000000   Number         0  dfixul.o ABSOLUTE
     ../fplib/microlib/fpflt.c                0x00000000   Number         0  dfltui.o ABSOLUTE
     ../fplib/microlib/fpmul.c                0x00000000   Number         0  dmul.o ABSOLUTE
-    ..\..\board\bsp\rs232.c                  0x00000000   Number         0  rs232.o ABSOLUTE
+    ..\..\board\bsp\uart.c                  0x00000000   Number         0  rs232.o ABSOLUTE
     ..\..\board\system\sleep.c               0x00000000   Number         0  sleep.o ABSOLUTE
     ..\..\fwlib\Libraries\STM32F4xx_StdPeriph_Driver\src\misc.c 0x00000000   Number         0  misc.o ABSOLUTE
     ..\..\fwlib\Libraries\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_adc.c 0x00000000   Number         0  stm32f4xx_adc.o ABSOLUTE
@@ -1477,7 +1477,7 @@ Image Symbol Table
     ..\..\fwlib\Libraries\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_tim.c 0x00000000   Number         0  stm32f4xx_tim.o ABSOLUTE
     ..\..\fwlib\Libraries\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_usart.c 0x00000000   Number         0  stm32f4xx_usart.o ABSOLUTE
     ..\..\fwlib\Libraries\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_wwdg.c 0x00000000   Number         0  stm32f4xx_wwdg.o ABSOLUTE
-    ..\\..\\board\\bsp\\rs232.c              0x00000000   Number         0  rs232.o ABSOLUTE
+    ..\\..\\board\\bsp\\uart.c              0x00000000   Number         0  rs232.o ABSOLUTE
     ..\\..\\board\\system\\sleep.c           0x00000000   Number         0  sleep.o ABSOLUTE
     ..\\..\\fwlib\\Libraries\\STM32F4xx_StdPeriph_Driver\\src\\misc.c 0x00000000   Number         0  misc.o ABSOLUTE
     ..\\..\\fwlib\\Libraries\\STM32F4xx_StdPeriph_Driver\\src\\stm32f4xx_adc.c 0x00000000   Number         0  stm32f4xx_adc.o ABSOLUTE
@@ -1579,7 +1579,7 @@ Image Symbol Table
     i.fputc                                  0x08000878   Section        0  rs232.o(i.fputc)
     i.get_minimum_value                      0x080008b8   Section        0  main.o(i.get_minimum_value)
     i.main                                   0x080008d0   Section        0  main.o(i.main)
-    i.rs232_init                             0x08000900   Section        0  rs232.o(i.rs232_init)
+    i.UART_Config                             0x08000900   Section        0  rs232.o(i.UART_Config)
     i.sayhello                               0x08000974   Section        0  main.o(i.sayhello)
     i.switch_range_case                      0x08000988   Section        0  main.o(i.switch_range_case)
     i.usdk_hw_uart_init                      0x080009e4   Section        0  main.o(i.usdk_hw_uart_init)
@@ -1772,7 +1772,7 @@ Image Symbol Table
     fputc                                    0x08000879   Thumb Code    58  rs232.o(i.fputc)
     get_minimum_value                        0x080008b9   Thumb Code    20  main.o(i.get_minimum_value)
     main                                     0x080008d1   Thumb Code    34  main.o(i.main)
-    rs232_init                               0x08000901   Thumb Code   108  rs232.o(i.rs232_init)
+    UART_Config                               0x08000901   Thumb Code   108  rs232.o(i.UART_Config)
     $Super$$sayhello                         0x08000975   Thumb Code    10  main.o(i.sayhello)
     switch_range_case                        0x08000989   Thumb Code    66  main.o(i.switch_range_case)
     usdk_hw_uart_init                        0x080009e5   Thumb Code    42  main.o(i.usdk_hw_uart_init)
@@ -1843,7 +1843,7 @@ Memory Map of the image
     0x08000878   0x08000878   0x00000040   Code   RO          299    i.fputc             rs232.o
     0x080008b8   0x080008b8   0x00000018   Code   RO          157    i.get_minimum_value  main.o
     0x080008d0   0x080008d0   0x00000030   Code   RO          158    i.main              main.o
-    0x08000900   0x08000900   0x00000074   Code   RO          300    i.rs232_init        rs232.o
+    0x08000900   0x08000900   0x00000074   Code   RO          300    i.UART_Config        rs232.o
     0x08000974   0x08000974   0x00000014   Code   RO          159    i.sayhello          main.o
     0x08000988   0x08000988   0x0000005c   Code   RO          160    i.switch_range_case  main.o
     0x080009e4   0x080009e4   0x0000002a   Code   RO          161    i.usdk_hw_uart_init  main.o

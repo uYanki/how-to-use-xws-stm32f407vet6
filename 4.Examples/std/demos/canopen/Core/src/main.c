@@ -6,7 +6,7 @@
 
 #include "bsp/key.h"
 #include "bsp/led.h"
-#include "bsp/rs232.h"
+#include "bsp/uart.h"
 #include "bsp/can.h"
 
 #include "usdk.defs.h"
@@ -142,7 +142,7 @@ void usdk_preinit(void)
     USART_InitStructure.USART_Parity              = USART_Parity_No;
     USART_InitStructure.USART_StopBits            = USART_StopBits_1;
     USART_InitStructure.USART_WordLength          = USART_WordLength_8b;
-    rs232_init(&USART_InitStructure);
+    UART_Config(&USART_InitStructure);
 }
 
 //------------------------------------------------------------------------------

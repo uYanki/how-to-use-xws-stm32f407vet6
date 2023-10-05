@@ -74,8 +74,8 @@
 #define RS485_UART_CLK          RCC_APB1Periph_USART2
 #define RS485_UART_CLKEN(...)   RCC_APB1PeriphClockCmd(__VA_ARGS__)
 
-#define RS485_SetTxDir()        GPIO_WriteBit(RS485_RTS_GPIO_PORT, RS485_RTS_GPIO_PIN, Bit_RESET)
-#define RS485_SetRxDir()        GPIO_WriteBit(RS485_RTS_GPIO_PORT, RS485_RTS_GPIO_PIN, Bit_SET)
+#define RS485_SetTxDir()        GPIO_WriteBit(RS485_RTS_GPIO_PORT, RS485_RTS_GPIO_PIN, Bit_SET)
+#define RS485_SetRxDir()        GPIO_WriteBit(RS485_RTS_GPIO_PORT, RS485_RTS_GPIO_PIN, Bit_RESET)
 
 //
 
