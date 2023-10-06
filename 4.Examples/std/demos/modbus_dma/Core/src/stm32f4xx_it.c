@@ -128,6 +128,7 @@ void DebugMon_Handler(void)
   */
 void PendSV_Handler(void)
 {
+	
 }
 
 /**
@@ -137,6 +138,8 @@ void PendSV_Handler(void)
   */
 void SysTick_Handler(void)
 {
+	 extern void HAL_IncTick(void);
+	 HAL_IncTick();
 }
 
 /******************************************************************************/

@@ -2,211 +2,82 @@
 #include "stdint.h"
 #include "stdbool.h"
 #include <string.h>
+#include "math.h"
 
-typedef float float32_t;
+typedef float    f32;
+typedef uint32_t u32;
+typedef uint16_t u16;
 
-#define INOPEN(val, lo, hi)  (((lo) < (val)) && ((val) < (hi)))    ///< check if the val is within the open range
-#define INCLOSE(val, lo, hi) (((lo) <= (val)) && ((val) <= (hi)))  ///< check if the val is within the closed range
-
-#define isBin(ch)            (INCLOSE(ch, '0', '1'))
-#define isDec(ch)            (INCLOSE(ch, '0', '9'))
-#define isHex(ch)            (INCLOSE(ch, '0', '9') && INCLOSE(ch, 'a', 'f') && INCLOSE(ch, 'A', 'F'))
-
-uint8_t ascii2number(const uint8_t* buffer, uint32_t* result, uint8_t base)
+bool PulseCalc(u32 clk, u32 freq, f32 duty, u16* prd, u16* psc, u16* ccr)
 {
-    uint8_t limits[3];
-    uint8_t length = 0;
-
-    if (base > 36)
+    if (freq > clk)
     {
-        goto exit;
+        return false;
     }
 
-    limits[0] = (base < 10) ? ('0' + base) : '9';
-    limits[1] = 'a' + base - 11;
-    limits[2] = 'A' + base - 11;
-
-    *result = 0;
-
-    while (*buffer)
+    if (duty <= 0.f || duty >= 1.f)
     {
-        if (INCLOSE(*buffer, '0', limits[0]))
-        {
-            *result *= base;
-            *result += *buffer - '0';
-        }
-        else if (INCLOSE(*buffer, 'a', limits[1]))
-        {
-            *result *= base;
-            *result += *buffer - 'a';
-        }
-        else if (INCLOSE(*buffer, 'A', limits[2]))
-        {
-            *result *= base;
-            *result += *buffer - 'A';
-        }
-        else
-        {
-            break;
-        }
-
-        ++length;
-        ++buffer;
+        return false;
     }
 
-exit:
+    u32 prescaler;
 
-    return length;
+    bool similar = false;
+
+    uint8_t i = 0;
+
+    for (prescaler = 1; prescaler <= 65536; ++prescaler)
+    {
+        f32 period = (f32)clk / (f32)freq / (f32)prescaler;
+
+        if (((u32)period == 0) || ((u32)period > 65536))
+        {
+            continue;
+        }
+
+        if ((period - (u32)period) > 0.5f)
+        {
+            continue;
+        }
+
+        // 寄存器值
+
+        *ccr = period * duty;
+
+        if (*ccr == 0)
+        {
+            continue;
+        }
+
+        *prd = period - 1;
+        *psc = prescaler - 1;
+        *ccr -= 1;
+
+        // 实际频率
+
+        u32 frq = clk / (*prd + 1) / (*psc + 1);
+
+        printf("%d,%d,%d,%d\n", frq, *prd + 1, *psc + 1, *ccr + 1);
+
+        // 频率相等
+
+        if ((u32)period == period)
+        {
+            return true;
+        }
+
+        // 频率相似
+
+        similar = true;
+    }
+
+    return similar;
 }
-
-bool getNumber(const uint8_t** buffer, int32_t* integer, float32_t* decimal)
-{
-    // https://www.sojson.com/hexconvert.html
-    // support format (e.g): 0b101,0777,-0xABCD,6#0101,16#5A5A,-0x10#5A5A,...
-
-    const uint8_t* ptr = *buffer;
-
-    uint8_t sign;
-    uint8_t base;
-    uint8_t len;
-
-    // 符号
-
-    switch (*ptr)
-    {
-        case '-':
-            ++ptr;
-            sign = 0;
-            break;
-        case '+':
-            ++ptr;
-        case '0' ... '9':
-            sign = 1;
-            break;
-        default:
-            return false;
-    }
-
-    // 进制
-
-    switch (*ptr)
-    {
-        default:
-        case '\0': {
-            return false;
-        }
-        case '0': {
-            switch (*++ptr)
-            {
-                default:
-                case '\0': {
-                    // dec
-                    *integer = 0;
-                    *decimal = 0;
-                    // base = 10;
-                    goto exit;
-                }
-                case 'b':
-                case 'B': {
-                    // bin
-                    ++ptr;
-                    base = isBin(*ptr) ? 2 : 10;
-                    break;
-                }
-                case 'x':
-                case 'X': {
-                    // hex
-                    ++ptr;
-                    base = isHex(*ptr) ? 16 : 10;
-                    break;
-                }
-                case '0' ... '7': {
-                    // oct
-                    base = 8;
-                    break;
-                }
-            }
-            break;
-        }
-        case '1' ... '9': {
-            // dec
-            base = 10;
-            break;
-        }
-    }
-
-    // 整数部分
-
-    {
-        ptr += ascii2number(ptr, (uint32_t*)integer, base);
-
-        if (*ptr == '#')
-        {
-            base = *integer;
-
-            if ((len = ascii2number(++ptr, (uint32_t*)integer, base)) == 0)
-            {
-                // error format
-                return false;
-            }
-
-            ptr += len;
-        }
-
-        if (sign == 0)  // neg
-        {
-            *integer = -*integer;
-        }
-    }
-
-    // 小数部分
-
-    {
-        if (decimal != NULL && *ptr == '.')
-        {
-            uint32_t tmp;
-
-            if ((len = ascii2number(++ptr, &tmp, base)) == 0)
-            {
-                // error format
-                return false;
-            }
-
-            ptr += len;
-
-            //
-
-            *decimal = tmp;
-
-            while (len--)
-            {
-                *decimal /= base;
-            }
-        }
-    }
-
-exit:
-
-    if (decimal == NULL)
-    {
-        printf("%d\n", *integer);
-    }
-    else
-    {
-        printf("%f\n", *integer + *decimal);
-    }
-
-    return true;
-}
-
-#define STR(x) #x
 
 int main()
 {
-    int32_t   i;
-    float32_t d;
+    u16 arr[3];
+    PulseCalc(84e6, 233, 0.5f, arr + 0, arr + 1, arr + 2);
 
-    const uint8_t* p = STR(-0b1000 #5432);
-
-    getNumber(&p, &i, &d);
+    return 0;
 }

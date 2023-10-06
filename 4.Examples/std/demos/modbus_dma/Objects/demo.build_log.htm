@@ -27,17 +27,15 @@ Project File Date:  10/06/2023
 <h2>Output:</h2>
 *** Using Compiler 'V5.06 update 7 (build 960)', folder: 'C:\Keil_v5\ARM\ARMCC\Bin'
 Build target 'Project'
-compiling mbrtu.c...
-..\..\3rdparty\freemodbus\modbus\rtu\mbrtu.c(149): warning:  #550-D: variable "xFrameReceived"  was set but never used
-      BOOL         xFrameReceived = FALSE;
-..\..\3rdparty\freemodbus\modbus\rtu\mbrtu.c(213): warning:  #167-D: argument of type "volatile UCHAR *" is incompatible with parameter of type "void *"
-          UART_Transmit_DMA(ucRTUBuf, usSndBufferCount, TRUE);
-..\..\3rdparty\freemodbus\modbus\rtu\mbrtu.c(298): warning:  #167-D: argument of type "volatile UCHAR *" is incompatible with parameter of type "void *__restrict__"
-      memcpy(ucRTUBuf, buffer, length);
-..\..\3rdparty\freemodbus\modbus\rtu\mbrtu.c: 3 warnings, 0 errors
+compiling main.c...
+Core\src\main.c(113): warning:  #177-D: variable "TIM_ICInitStructure"  was declared but never referenced
+          TIM_ICInitTypeDef       TIM_ICInitStructure;
+Core\src\main.c(119): warning:  #177-D: variable "uhPrescalerValue"  was declared but never referenced
+          uint16_t uhPrescalerValue = 0;
+Core\src\main.c: 2 warnings, 0 errors
 linking...
-Program Size: Code=7326 RO-data=954 RW-data=236 ZI-data=1844  
-".\Objects\demo.axf" - 0 Error(s), 3 Warning(s).
+Program Size: Code=8202 RO-data=954 RW-data=244 ZI-data=1844  
+".\Objects\demo.axf" - 0 Error(s), 2 Warning(s).
 
 <h2>Software Packages used:</h2>
 
@@ -50,7 +48,7 @@ Package Vendor: Keil
   C:\Users\Administrator\AppData\Local\Arm\Packs\Keil\STM32F4xx_DFP\2.11.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include
 
 <h2>Collection of Component Files used:</h2>
-Build Time Elapsed:  00:00:02
+Build Time Elapsed:  00:00:01
 </pre>
 </body>
 </html>

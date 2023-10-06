@@ -15,6 +15,7 @@
                 "d:\\how-to-use-xws-stm32f407vet6\\4.Examples\\std\\demos\\modbus_dma\\Core\\src",
                 "d:\\how-to-use-xws-stm32f407vet6\\4.Examples\\std\\board\\bsp",
                 "d:\\how-to-use-xws-stm32f407vet6\\4.Examples\\std\\board\\system",
+                "d:\\how-to-use-xws-stm32f407vet6\\4.Examples\\std\\board\\pulse",
                 "d:\\how-to-use-xws-stm32f407vet6\\4.Examples\\std\\fwlib\\Libraries\\STM32F4xx_StdPeriph_Driver\\src",
                 "d:\\how-to-use-xws-stm32f407vet6\\4.Examples\\std\\3rdparty\\freemodbus\\modbus\\functions",
                 "d:\\how-to-use-xws-stm32f407vet6\\4.Examples\\std\\3rdparty\\freemodbus\\modbus"

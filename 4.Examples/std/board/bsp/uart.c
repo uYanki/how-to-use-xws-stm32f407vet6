@@ -393,12 +393,7 @@ void UART_IRQHandler(void)
         UART_RXBUF_ADDR[length] = '\0';
 
 #ifdef CONFIG_UART_RXCBK
-
-        if (length > 0)
-        {
-            CONFIG_UART_RXCBK(UART_RXBUF_ADDR, length);
-        }
-
+        CONFIG_UART_RXCBK(UART_RXBUF_ADDR, length);
 #endif
 
         // receive data again

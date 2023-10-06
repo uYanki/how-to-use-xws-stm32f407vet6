@@ -811,6 +811,7 @@ typedef enum IRQn
 #include "core_cm4.h"             /* Cortex-M4 processor and core peripherals */
 #include "system_stm32f4xx.h"
 #include <stdint.h>
+#include <stdbool.h>
 
 /** @addtogroup Exported_types
   * @{
@@ -847,6 +848,9 @@ typedef __IO uint8_t  vu8;
 typedef __I uint32_t vuc32;  /*!< Read Only */
 typedef __I uint16_t vuc16;  /*!< Read Only */
 typedef __I uint8_t vuc8;   /*!< Read Only */
+
+typedef float  f32;
+typedef double f64;
 
 typedef enum {RESET = 0, SET = !RESET} FlagStatus, ITStatus;
 

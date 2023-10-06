@@ -24,6 +24,9 @@
         "limits": "c",
         "bit": "c",
         "compare": "c",
-        "cstddef": "c"
+        "cstddef": "c",
+        "pinctrl.h": "c",
+        "mbslave.h": "c",
+        "gen.h": "c"
     }
 }

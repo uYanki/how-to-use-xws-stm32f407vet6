@@ -210,7 +210,7 @@ eMBRTUSend(UCHAR ucSlaveAddress, const UCHAR* pucFrame, USHORT usLength)
         eSndState = STATE_TX_XMIT;
         vMBPortSerialEnable(FALSE, TRUE);
 
-        UART_Transmit_DMA(ucRTUBuf, usSndBufferCount, TRUE);
+        UART_Transmit_DMA((void*)ucRTUBuf, usSndBufferCount, TRUE);
     }
     else
     {
@@ -223,18 +223,6 @@ eMBRTUSend(UCHAR ucSlaveAddress, const UCHAR* pucFrame, USHORT usLength)
 BOOL xMBRTUReceiveFSM(void)
 {
     BOOL xNeedPoll = FALSE;
-
-    switch (eRcvState)
-    {
-        case STATE_RX_INIT:
-        case STATE_RX_IDLE:
-            xNeedPoll = xMBPortEventPost(EV_READY);
-            eRcvState = STATE_RX_RCV;
-            break;
-
-        default:
-            break;
-    }
 
     return xNeedPoll;
 }
@@ -250,34 +238,6 @@ BOOL xMBRTUTimerT35Expired(void)
 {
     BOOL xNeedPoll = FALSE;
 
-    switch (eRcvState)
-    {
-            /* Timer t35 expired. Startup phase is finished. */
-        case STATE_RX_INIT:
-            xNeedPoll = xMBPortEventPost(EV_READY);
-            eRcvState = STATE_RX_RCV;
-            break;
-
-            /* A frame was received and t35 expired. Notify the listener that
-             * a new frame was received. */
-        case STATE_RX_RCV:
-            xNeedPoll = xMBPortEventPost(EV_FRAME_RECEIVED);
-            eRcvState = STATE_RX_IDLE;
-            break;
-
-            /* An error occured while receiving the frame. */
-        case STATE_RX_ERROR:
-            break;
-
-            /* Function called in an illegal state. */
-        default:
-            assert((eRcvState == STATE_RX_INIT) ||
-                   (eRcvState == STATE_RX_RCV) || (eRcvState == STATE_RX_ERROR));
-    }
-
-    vMBPortTimersDisable();
-    eRcvState = STATE_RX_IDLE;
-
     return xNeedPoll;
 }
 
@@ -285,34 +245,22 @@ BOOL xMBRTUTimerT35Expired(void)
 
 #include "stm32f4xx.h"
 
+// call by USART_TC
 void uart_txcbk(void)
 {
-    // send finish, prepare recvice
-    // call xMBRTUReceiveFSM()
-    // eRcvState: STATE_RX_RCV -> STATE_RX_IDLE
-    pxMBFrameCBByteReceived();
+    // transmit finish, prepare recvice
+    eRcvState = STATE_RX_IDLE;
 }
 
+// call by USART_IDLE
 void uart_rxcbk(const uint8_t* buffer, uint16_t length)
 {
-    memcpy(ucRTUBuf, buffer, length);
     usRcvBufferPos = length;
-
-    // 解决非本设备 IP 导致无法发送
-    // call xMBRTUReceiveFSM
-    pxMBFrameCBByteReceived();
-
-#if 0
-    for (uint8_t i = 0; i < length; ++i)
-    {
-        printf("%c", ucRTUBuf[i]);
-    }
-#endif
+    memcpy((void*)ucRTUBuf, buffer, length);
 
     // recvice finish
-    // call xMBRTUTimerT35Expired()
-    // eRcvState: STATE_RX_RCV => STATE_RX_IDLE
-    pxMBPortCBTimerExpired();
+    eRcvState = STATE_RX_IDLE;
+    xMBPortEventPost(EV_FRAME_RECEIVED);
 }
 
 // https://blog.csdn.net/jackchen810/article/details/127179982

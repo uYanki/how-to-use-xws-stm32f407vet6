@@ -461,6 +461,21 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>pulse</GroupName>
+          <Files>
+            <File>
+              <FileName>cap.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\board\pulse\cap.c</FilePath>
+            </File>
+            <File>
+              <FileName>gen.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\board\pulse\gen.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>lib</GroupName>
         </Group>
         <Group>
