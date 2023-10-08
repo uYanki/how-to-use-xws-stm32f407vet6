@@ -42,7 +42,7 @@ int main()
 
     cop_slv->canHandle = CAN1;
     setNodeId(cop_slv, 0x03);
-    setState(cop_slv, Initialisation);  // ½Úµã³õÊ¼»¯
+    setState(cop_slv, Initialisation);  // èŠ‚ç‚¹åˆå§‹åŒ–
     setState(cop_slv, Operational);
     CopSlv_SetIdFltr(cop_slv);
 
@@ -71,7 +71,7 @@ int main()
 
             u8 slvid = *(cop_slv->bDeviceNodeId);
 
-            // ÒÔÏÂÁ½ÖÖ·½Ê½µÈĞ§
+            // ä»¥ä¸‹ä¸¤ç§æ–¹å¼ç­‰æ•ˆ
 #if 0
             u32 var, size;
 
@@ -101,7 +101,7 @@ int main()
 #else  // read
             spd_s16SpdTgt = counter;
             readNetworkDictCallbackAI(cop_mst, slvid, 0x2000, 2, int16, cbkSDORead, 0);
-            readNetworkDictCallbackAI(cop_mst, slvid + 1, 0x2000, 2, int16, cbkSDORead, 0);  // ÉèÖÃÁË¹ıÂËµÄ´Ó»ú²»»á½ÓÊÕµ½¸ÃÖ¡
+            readNetworkDictCallbackAI(cop_mst, slvid + 1, 0x2000, 2, int16, cbkSDORead, 0);  // è®¾ç½®äº†è¿‡æ»¤çš„ä»æœºä¸ä¼šæ¥æ”¶åˆ°è¯¥å¸§
 #endif
 
 #endif
@@ -207,7 +207,7 @@ UNS8 canSend(CAN_PORT port, Message* m)
     return CAN_Transmit((CAN_TypeDef*)port, &TxMessage) == CAN_TxStatus_NoMailBox;
 }
 
-UNS8 canChangeBaudRate(CAN_PORT port, char* baud)
+UNS8 canChangeBaudRate(CAN_PORT port, char* baud)  // æš‚æœªé€‚é… CAN LSSS
 {
     CAN_TypeDef* can = (CAN_TypeDef*)port;
 
@@ -215,7 +215,16 @@ UNS8 canChangeBaudRate(CAN_PORT port, char* baud)
     can->MCR |= CAN_MCR_INRQ;
 
     // set can bitrate
-    // can->BTR = 0;
+
+    // ç”± can_bitrate_generate.c ç”Ÿæˆçš„ CAN æ³¢ç‰¹ç‡è¡¨
+    // can->BTR = 0x00040005,  // 0 = 1000 kBit/sec: SJW = 1, TSEG1 = 5, TSEG2 = 1, PSC = 6, bitrate = 1000000, Sample Point = 85.7%
+    // can->BTR = 0x0004000B,  // 2 = 500 kBit/sec:  SJW = 1, TSEG1 = 5, TSEG2 = 1, PSC = 12, bitrate = 500000, Sample Point = 85.7%
+    // can->BTR = 0x00040017,  // 3 = 250 kBit/sec:  SJW = 1, TSEG1 = 5, TSEG2 = 1, PSC = 24, bitrate = 250000, Sample Point = 85.7%
+    // can->BTR = 0x0004002F,  // 4 = 125 kBit/sec:  SJW = 1, TSEG1 = 5, TSEG2 = 1, PSC = 48, bitrate = 125000, Sample Point = 85.7%
+    // can->BTR = 0x0004003B,  // 5 = 100 kBit/sec:  SJW = 1, TSEG1 = 5, TSEG2 = 1, PSC = 60, bitrate = 100000, Sample Point = 85.7%
+    // can->BTR = 0x00040077,  // 6 = 50 kBit/sec:   SJW = 1, TSEG1 = 5, TSEG2 = 1, PSC = 120, bitrate = 50000, Sample Point = 85.7%
+    // can->BTR = 0x0004012B,  // 7 = 20 kBit/sec:   SJW = 1, TSEG1 = 5, TSEG2 = 1, PSC = 300, bitrate = 20000, Sample Point = 85.7%
+    // can->BTR = 0x00040257,  // 8 = 10 kBit/sec:   SJW = 1, TSEG1 = 5, TSEG2 = 1, PSC = 600, bitrate = 10000, Sample Point = 85.7%
 
     // exit configuare mode
     can->MCR &= ~CAN_MCR_INRQ;
@@ -252,7 +261,7 @@ void cop_isr(CO_Data* d)
 
     if (RxMessage.IDE == CAN_ID_EXT)
     {
-        // Drop extended frames£¨ºöÂÔÀ©Õ¹Ö¡£©
+        // Drop extended framesï¼ˆå¿½ç•¥æ‰©å±•å¸§ï¼‰
         return;
     }
 
@@ -266,7 +275,7 @@ void cop_isr(CO_Data* d)
 
     if ((rxm.cob_id >> 7) == 0xB)
     {
-        // ¿ìËÙ SDO ²»ĞèÒª·´À¡ (Frame-ID = 0x580 + NodeID), ¼´²»Ğèµ÷ÓÃ canDispatch()
+        // å¿«é€Ÿ SDO ä¸éœ€è¦åé¦ˆ (Frame-ID = 0x580 + NodeID), å³ä¸éœ€è°ƒç”¨ canDispatch()
 
         uint8_t nodeID = rxm.cob_id & 0x7F;
 

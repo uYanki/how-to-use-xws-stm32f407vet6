@@ -46,6 +46,12 @@ int main()
 
     usRegHoldingBuf[0] = 100;
 
+    /* Input Trigger selection */
+    TIM_SelectInputTrigger(TIM4, TIM_TS_TI2FP2);
+
+    /* Slave Mode selection: Trigger Mode */
+    TIM_SelectSlaveMode(TIM4, TIM_SlaveMode_Trigger);
+
     while (1)
     {
         eMBPoll();
@@ -73,5 +79,9 @@ int main()
 #endif
 
         //------------------------------------------------
+
+#if 1
+
+#endif
     }
 }

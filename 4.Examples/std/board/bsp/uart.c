@@ -199,6 +199,12 @@ void UART_Config(USART_InitTypeDef* config)
     USART_Cmd(UART_PORT, ENABLE);
 }
 
+
+void UART_ReConfig(USART_InitTypeDef* config)
+{
+    USART_Init(UART_PORT, config);
+}
+
 void UART_DMA_Config(void)
 {
     // dma
