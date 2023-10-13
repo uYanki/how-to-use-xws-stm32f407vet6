@@ -6,8 +6,10 @@
 #include "mbslave.h"
 
 #include "pinmap.h"
+#include "paratbl/tbl.h"
 
 #include "pulse/gen.h"
+#include "pulse/wave.h"
 
 //-----------------------------------------------------------------------------
 //
@@ -30,6 +32,10 @@ void usdk_preinit(void)
     UART_DMA_Config();
 }
 
+//
+
+//
+
 int main()
 {
     NVIC_PriorityGroupConfig(NVIC_PriorityGroup_0);
@@ -44,13 +50,11 @@ int main()
     PulseInit();
     PulseConfig(1e3, 500);
 
-    usRegHoldingBuf[0] = 100;
+    WaveGenInit();
 
-    /* Input Trigger selection */
-    TIM_SelectInputTrigger(TIM4, TIM_TS_TI2FP2);
+    // usRegHoldingBuf[0] = 100;
 
-    /* Slave Mode selection: Trigger Mode */
-    TIM_SelectSlaveMode(TIM4, TIM_SlaveMode_Trigger);
+    P(PosCtl).s32EncTurns = 0x8888;
 
     while (1)
     {
@@ -68,10 +72,8 @@ int main()
 #if 0
         PEout(15) = !GETBIT(ucCoilBuf[0], 2);  // led3
 #else
-
         static tick_t t_blink = 0;
-
-        if (DelayNonBlockMS(t_blink, usRegHoldingBuf[0]))
+        if (DelayNonBlockMS(t_blink, P(DrvCfg).u16BlinkPeriod))
         {
             PEout(15) ^= 1;  // toggle
             t_blink = HAL_GetTick();
@@ -80,8 +82,6 @@ int main()
 
         //------------------------------------------------
 
-#if 1
-
-#endif
+        WaveGenCycle();
     }
 }

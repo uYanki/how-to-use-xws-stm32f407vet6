@@ -1,10 +1,19 @@
 #include "mbslave.h"
 
+// register_group_t
+typedef struct {
+    u16  u16Offset;
+    u16  u16Count;
+    u16* u16Buffer;
+} reg_grp_t;
+
+static RO reg_grp_t m_holding[] = {
+    {0, sizeof(ParaTable_t) / sizeof(u16), (u16*) &m_paratbl},
+};
+
+
 USHORT usRegInputStart                = REG_INPUT_START;
 USHORT usRegInputBuf[REG_INPUT_NREGS] = {0};
-
-USHORT usRegHoldingStart                  = REG_HOLDING_START;
-USHORT usRegHoldingBuf[REG_HOLDING_NREGS] = {0};
 
 USHORT usDiscInStart                   = DISC_INPUT_START;
 UCHAR  ucDiscInBuf[_DISC_INPUT_NDISCS] = {0};
@@ -61,44 +70,47 @@ eMBRegInputCB(UCHAR* pucRegBuffer, USHORT usAddress, USHORT usNRegs)
  * @return result
  */
 
-eMBErrorCode
-eMBRegHoldingCB(UCHAR* pucRegBuffer, USHORT usAddress, USHORT usNRegs, eMBRegisterMode eMode)
+eMBErrorCode eMBRegHoldingCB(u8* pu8Buffer, u16 u16Address, u16 u16Count, eMBRegisterMode eMode)
 {
-    eMBErrorCode eStatus = MB_ENOERR;
-    int          iRegIndex;
+    eMBErrorCode eStatus = MB_ENOREG;
 
-    /* it already plus one in modbus function method. */
-    usAddress--;
+    u8 u8GrpIdx;
 
-    if ((usAddress >= REG_HOLDING_START) && ((usAddress + usNRegs) <= (REG_HOLDING_START + REG_HOLDING_NREGS)))
+    u16Address--;
+
+    for (u8GrpIdx = 0; u8GrpIdx < ARRAY_SIZE(m_holding); ++u8GrpIdx)
     {
-        iRegIndex = (int)(usAddress - usRegHoldingStart);  // offset
-        switch (eMode)
+        if ((m_holding[u8GrpIdx].u16Offset <= u16Address) && 
+					 ((u16Address + u16Count) <= (m_holding[u8GrpIdx].u16Offset + m_holding[u8GrpIdx].u16Count)))
         {
-                /* read current register values from the protocol stack. */
-            case MB_REG_READ:
-                while (usNRegs > 0)
-                {
-                    *pucRegBuffer++ = (uint8_t)(usRegHoldingBuf[iRegIndex] >> 8);
-                    *pucRegBuffer++ = (uint8_t)(usRegHoldingBuf[iRegIndex] & 0xFF);
-                    iRegIndex++;
-                    usNRegs--;
+            u16  u16RegIdx  = u16Address - m_holding[u8GrpIdx].u16Offset;
+            u16* pu16RegBuf = &m_holding[u8GrpIdx].u16Buffer[u16RegIdx];
+
+            switch (eMode)
+            {
+                case MB_REG_READ: {
+                    while (u16Count > 0)
+                    {
+                        *pu8Buffer++ = (u8)(*pu16RegBuf >> 8);
+                        *pu8Buffer++ = (u8)(*pu16RegBuf & 0xFF);
+                        pu16RegBuf++;
+                        u16Count--;
+                    }
+                    break;
                 }
-                break;
-                /* write current register values with new values from the protocol stack. */
-            case MB_REG_WRITE:
-                while (usNRegs > 0)
-                {
-                    usRegHoldingBuf[iRegIndex] = *pucRegBuffer++ << 8;
-                    usRegHoldingBuf[iRegIndex] |= *pucRegBuffer++;
-                    iRegIndex++;
-                    usNRegs--;
+                case MB_REG_WRITE: {
+                    while (u16Count > 0)
+                    {
+                        *pu16RegBuf = *pu8Buffer++ << 8;
+                        *pu16RegBuf |= *pu8Buffer++;
+                        pu16RegBuf++;
+                        u16Count--;
+                    }
                 }
+            }
+
+            eStatus = MB_ENOERR;
         }
-    }
-    else
-    {
-        eStatus = MB_ENOREG;
     }
 
     return eStatus;
@@ -128,8 +140,8 @@ eMBRegCoilsCB(UCHAR* pucRegBuffer, USHORT usAddress, USHORT usNCoils, eMBRegiste
     if ((usAddress >= COIL_START) &&
         (usAddress + usNCoils <= COIL_START + COIL_NCOILS))
     {
-        iRegIndex    = (USHORT)(usAddress - usCoilStart) / 8;
-        iRegBitIndex = (USHORT)(usAddress - usCoilStart) % 8;
+        iRegIndex    = (USHORT)(usAddress - usCoilStart) >> 3; // /8
+        iRegBitIndex = (USHORT)(usAddress - usCoilStart) & 8;  // %8
         switch (eMode)
         {
             /* read current coil values from the protocol stack. */
@@ -217,62 +229,4 @@ eMBRegDiscreteCB(UCHAR* pucRegBuffer, USHORT usAddress, USHORT usNDiscrete)
     return eStatus;
 }
 
-#if 0
 
-// register_group_t
-typedef struct {
-    u16  u16Offset;
-    u16  u16Count;
-    u16* u16Buffer;
-} reg_grp_t;
-
-static RO reg_grp_t m_holding[] = {
-    {0, sizeof(m_DrvCtl) / sizeof(u16), &m_DrvCtl},
-};
-
-eMBErrorCode eMBRegHoldingCB(u8* pu8Buffer, u16 u16Address, u16 u16Count, eMBRegisterMode eMode)
-{
-    eMBErrorCode eStatus = MB_ENOREG;
-
-    u8 u8GrpIdx;
-
-    u16Address--;
-
-    for (u8GrpIdx = 0; u8GrpIdx < ARRAY_SIZE(m_holding); ++u8GrpIdx)
-    {
-        if ((m_holding[u8GrpIdx].u16Offset <= u16Address) && ((u16Address + u16Count) <= (m_holding[u8GrpIdx].u16Offset + m_holding[u8GrpIdx].u16Count)))
-        {
-            u16  u16RegIdx  = u16Address - m_holding[u8GrpIdx].u16Offset;
-            u16* pu16RegBuf = &m_holding[u8GrpIdx].u16Buffer[u16RegIdx];
-
-            switch (eMode)
-            {
-                case MB_REG_READ: {
-                    while (u16Count > 0)
-                    {
-                        *pu8Buffer++ = (u8)(*pu16RegBuf >> 8);
-                        *pu8Buffer++ = (u8)(*pu16RegBuf & 0xFF);
-                        pu16RegBuf++;
-                        u16Count--;
-                    }
-                    break;
-                }
-                case MB_REG_WRITE: {
-                    while (u16Count > 0)
-                    {
-                        *pu16RegBuf = *pu8Buffer++ << 8;
-                        *pu16RegBuf |= *pu8Buffer++;
-                        pu16RegBuf++;
-                        u16Count--;
-                    }
-                }
-            }
-
-            eStatus = MB_ENOERR;
-        }
-    }
-
-    return eStatus;
-}
-
-#endif

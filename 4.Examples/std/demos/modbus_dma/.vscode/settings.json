@@ -27,6 +27,9 @@
         "cstddef": "c",
         "pinctrl.h": "c",
         "mbslave.h": "c",
-        "gen.h": "c"
+        "gen.h": "c",
+        "tbl.h": "c",
+        "wave.h": "c",
+        "mb.h": "c"
     }
 }

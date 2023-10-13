@@ -18,57 +18,65 @@ void PulseInit(void)  // PA6 (TIM13_CH1)
     GPIO_Init(GPIOA, &GPIO_InitStructure);
 }
 
-bool PulseCalc(u32 clk, u32 freq, f32 duty, u16* prd, u16* psc, u16* ccr)
+bool PulseCalc(u32 clk, u32 freq, u16* prd, u16* psc, u32* frq)
 {
     if (freq > clk)
     {
         return false;
     }
 
-    if (duty <= 0.f || duty >= 1.f)
-    {
-        return false;
-    }
+    u16 _prd = 0;
+    u16 _psc = 0;
+    u32 _frq = 0;
 
-    u32 prescaler;
-
-    for (prescaler = 1; prescaler <= 65536; ++prescaler)
+    for (u32 prescaler = 1; prescaler <= 65536; ++prescaler)
     {
         f32 period = (f32)clk / (f32)freq / (f32)prescaler;
 
-        if (((u32)period == 0) || ((u32)period > 65536))
+        if (((u32)period < 2) || ((u32)period > 65536))
         {
             continue;
         }
 
-        if ((period - (u32)period) > 0.5f)
+        if ((period - (f32)(u32)period) > 0.5f)
         {
             continue;
         }
 
         // 寄存器值
 
-        *ccr = period * duty;
-
-        if (*ccr == 0)
-        {
-            continue;
-        }
-
         *prd = period - 1;
         *psc = prescaler - 1;
-        *ccr -= 1;
 
         // 实际频率
 
-        u32 frq = clk / (*prd + 1) / (*psc + 1);
+        *frq = clk / (*prd + 1) / (*psc + 1);
 
         // 频率相等
 
-        if (frq == freq)
+        if (*frq == freq)
         {
             return true;
         }
+
+        // 频率相近
+
+        if (abs(freq - *frq) < (freq * 0.05))
+        {
+            if (abs(freq - *frq) < (abs(freq) - _frq))
+            {
+                _prd = *prd;
+                _psc = *psc;
+                _frq = frq;
+            }
+        }
+    }
+
+    if (_frq != 0)
+    {
+        *prd = _prd;
+        *psc = _psc;
+        return true;
     }
 
     return false;
@@ -114,10 +122,11 @@ bool PulseConfig(u32 freq, u16 duty)
     TIM_TimeBaseInitTypeDef TIM_TimeBaseStructure;
     TIM_OCInitTypeDef       TIM_OCInitStructure;
 
-    if (!PulseCalc(84e6, freq, duty / 1000.f,
+    u32 freq_o;
+
+    if (!PulseCalc(84e6, freq,
                    (u16*)&TIM_TimeBaseStructure.TIM_Period,
-                   (u16*)&TIM_TimeBaseStructure.TIM_Prescaler,
-                   (u16*)&TIM_OCInitStructure.TIM_Pulse))
+                   (u16*)&TIM_TimeBaseStructure.TIM_Prescaler, &freq_o))
     {
         TIM_Cmd(TIMx, DISABLE);
 
@@ -126,12 +135,12 @@ bool PulseConfig(u32 freq, u16 duty)
 
     TIM_TimeBaseStructure.TIM_ClockDivision = 0;
     TIM_TimeBaseStructure.TIM_CounterMode   = TIM_CounterMode_Up;
+    TIM_TimeBaseInit(TIMx, &TIM_TimeBaseStructure);
 
+    TIM_OCInitStructure.TIM_Pulse       = (TIM_TimeBaseStructure.TIM_Period + 1) * 0.666f;  // 占空比
     TIM_OCInitStructure.TIM_OCMode      = TIM_OCMode_PWM1;
     TIM_OCInitStructure.TIM_OutputState = TIM_OutputState_Enable;
     TIM_OCInitStructure.TIM_OCPolarity  = TIM_OCPolarity_High;
-
-    TIM_TimeBaseInit(TIMx, &TIM_TimeBaseStructure);
     TIM_OC1Init(TIMx, &TIM_OCInitStructure);
 
     // TIM_SelectOnePulseMode(TIMx, TIM_OPMode_Single);  // one pulse mode

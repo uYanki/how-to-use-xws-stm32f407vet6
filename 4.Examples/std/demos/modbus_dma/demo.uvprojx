@@ -461,6 +461,26 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>paratbl</GroupName>
+          <Files>
+            <File>
+              <FileName>attr.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\Core\inc\paratbl\attr.h</FilePath>
+            </File>
+            <File>
+              <FileName>tbl.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\Core\inc\paratbl\tbl.h</FilePath>
+            </File>
+            <File>
+              <FileName>paratbl.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Core\src\paratbl.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>pulse</GroupName>
           <Files>
             <File>
@@ -472,6 +492,11 @@
               <FileName>gen.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\board\pulse\gen.c</FilePath>
+            </File>
+            <File>
+              <FileName>wave.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\board\pulse\wave.c</FilePath>
             </File>
           </Files>
         </Group>
