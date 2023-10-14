@@ -20,21 +20,15 @@
 //-----------------------------------------------------------------------------
 // funcs
 
+static void WaveGenDemo(void);
 static bool WaveGenCfg(WaveGen_t* pWaveGen, u32 DAC_Channel_x);
-extern bool PulseCalc(u32 clk, u32 freq, u16* prd, u16* psc, u32* frq);
+extern bool PulseCalc(u32 clk_i, u32 frq_i, u32 err_i, u16* prd_o, u16* psc_o, u32* frq_o);
 
 //-----------------------------------------------------------------------------
-//
+// wave
 
 static RO u16 aSine12bit[] = {
-#if 1
-    // step = 15 (10k, 25k, 100k, 250k ok)
-    2047, 2576, 3070, 3494, 3819, 4024, 4093, 4024, 3819, 3494, 3070, 2576, 2047, 1518, 1024, 600, 275, 70, 1, 70, 275, 600, 1024, 1518
-#else
-    // step = 4 (300Hz ok)
-    2047, 2189, 2331, 2472, 2611, 2747, 2879, 3008, 3131, 3250, 3362, 3468, 3568, 3660, 3744, 3819, 3886, 3944, 3993, 4033, 4062, 4082, 4092, 4092, 4082, 4062, 4033, 3993, 3944, 3886, 3819, 3744, 3660, 3568, 3468, 3362, 3250, 3131, 3008, 2879, 2747, 2611, 2472, 2331, 2189, 2047, 1905, 1763, 1622, 1483, 1347, 1215, 1086, 963, 844, 732, 626, 526, 434, 350, 275, 208, 150, 101, 61, 32, 12, 2, 2, 12, 32, 61, 101, 150, 208, 275, 350, 434, 526, 626, 732, 844, 963, 1086, 1215, 1347, 1483, 1622, 1763, 1905
-#endif
-};
+    2047, 2189, 2331, 2472, 2611, 2747, 2879, 3008, 3131, 3250, 3362, 3468, 3568, 3660, 3744, 3819, 3886, 3944, 3993, 4033, 4062, 4082, 4092, 4092, 4082, 4062, 4033, 3993, 3944, 3886, 3819, 3744, 3660, 3568, 3468, 3362, 3250, 3131, 3008, 2879, 2747, 2611, 2472, 2331, 2189, 2047, 1905, 1763, 1622, 1483, 1347, 1215, 1086, 963, 844, 732, 626, 526, 434, 350, 275, 208, 150, 101, 61, 32, 12, 2, 2, 12, 32, 61, 101, 150, 208, 275, 350, 434, 526, 626, 732, 844, 963, 1086, 1215, 1347, 1483, 1622, 1763, 1905};
 
 //-----------------------------------------------------------------------------
 //
@@ -72,16 +66,10 @@ void WaveGenInit(void)
         TIM_SelectOutputTrigger(DAC2_TIM_PORT, DAC2_TRGO);
     }
 
-    P(WaveGen1).u16WaveConfig = (u16)WaveConfig_Doit;
-    P(WaveGen2).u16WaveConfig = (u16)WaveConfig_Doit;
-
-    P(WaveGen1).u16WaveAmplitude = 8;
-
-    P(WaveGen1).u32WaveFreq = 7100;
-    P(WaveGen1).u16WaveType = WaveType_Triangle;
-
-    P(WaveGen2).u32WaveFreq = 200;
-    P(WaveGen2).u16WaveType = WaveType_Sine;
+#if 1
+    // demo
+    WaveGenDemo();
+#endif
 }
 
 void WaveGenCycle(void)
@@ -123,13 +111,11 @@ static bool WaveGenCfg(WaveGen_t* pWaveGen, u32 DAC_Channel_x)
     assert_param(IS_DAC_CHANNEL(DAC_Channel_x));
 
     //-----------------------------------------------------
-    //
+    // ports
 
     uint32_t            DACx_TRGO;
     TIM_TypeDef*        DACx_TIM;
     DMA_Stream_TypeDef* DMA_Stream_x;
-
-    uint16_t u16WaveSize = 0;
 
     if (DAC_Channel_1 == DAC_Channel_x)
     {
@@ -146,13 +132,17 @@ static bool WaveGenCfg(WaveGen_t* pWaveGen, u32 DAC_Channel_x)
 
     TIM_Cmd(DACx_TIM, DISABLE);  // stop TIM
 
+    pWaveGen->u32WaveActualFreq = 0;
+
     //-----------------------------------------------------
-    //
+    // DAC & DMA
+
+    uint16_t u16WaveSize;
 
     switch ((WaveType_e)(pWaveGen->u16WaveType))
     {
-        default: pWaveGen->u16WaveType = (u16)(WaveTYpe_None);
-        case WaveTYpe_None: {
+        default: pWaveGen->u16WaveType = (u16)(WaveType_None);
+        case WaveType_None: {
             // DAC
             DAC_InitTypeDef DAC_InitStructure = {
                 DAC_InitStructure.DAC_Trigger        = DAC_Trigger_None,
@@ -188,7 +178,6 @@ static bool WaveGenCfg(WaveGen_t* pWaveGen, u32 DAC_Channel_x)
             DAC_Init(DAC_Channel_x, &DAC_InitStructure);
             // TIM
             u16WaveSize = (2 << (pWaveGen->u16WaveAmplitude & 0xF)) * 2;
-            // DAC_InitStructure.DAC_LFSRUnmask_TriangleAmplitude;
             break;
         }
         case WaveType_Sine: {
@@ -221,9 +210,10 @@ static bool WaveGenCfg(WaveGen_t* pWaveGen, u32 DAC_Channel_x)
                     .DMA_BufferSize         = ARRAY_SIZE(aSine12bit),
                     .DMA_MemoryDataSize     = DMA_MemoryDataSize_HalfWord,
                     // data dest
-                    .DMA_PeripheralBaseAddr = (u32)((DAC_Channel_x == DAC_Channel_1) ? &DAC->DHR12R1 : &DAC->DHR12R2),
+                    .DMA_PeripheralBaseAddr = (u32)(&DAC->DHR12R1 + (DAC_Channel_x >> 4) * 3),
                     .DMA_PeripheralDataSize = DMA_PeripheralDataSize_HalfWord,
                 };
+                DMA_Cmd(DMA_Stream_x, DISABLE);
                 DMA_DeInit(DMA_Stream_x);
                 DMA_Init(DMA_Stream_x, &DMA_InitStructure);
                 DMA_Cmd(DMA_Stream_x, ENABLE);
@@ -262,8 +252,7 @@ static bool WaveGenCfg(WaveGen_t* pWaveGen, u32 DAC_Channel_x)
 
                 switch ((WaveAlign_e)(pWaveGen->u16WaveAlign))
                 {
-                    default:
-                        pWaveGen->u16WaveAlign = (u16)WaveAlign_12Bit_Right;
+                    default: pWaveGen->u16WaveAlign = (u16)WaveAlign_12Bit_Right;
                     case WaveAlign_12Bit_Right:  // DAC_Align_12b_R
                     case WaveAlign_12Bit_Left:   // DAC_Align_12b_L
                     {
@@ -279,6 +268,8 @@ static bool WaveGenCfg(WaveGen_t* pWaveGen, u32 DAC_Channel_x)
                     }
                     case WaveAlign_8Bit_Right: {  // DAC_Align_8b_R
 
+                        // 16bit -> 2 * 8bit
+
                         if (pWaveGen->u16WaveSize > ARRAY_SIZE(pWaveGen->u16WaveData) * 2)
                         {
                             pWaveGen->u16WaveSize = ARRAY_SIZE(pWaveGen->u16WaveData) * 2;
@@ -291,18 +282,16 @@ static bool WaveGenCfg(WaveGen_t* pWaveGen, u32 DAC_Channel_x)
                     }
                 }
 
-                DMA_InitStructure.DMA_Memory0BaseAddr = (u32)(&pWaveGen->u16WaveData);
-                DMA_InitStructure.DMA_BufferSize      = pWaveGen->u16WaveSize;
-
-                switch (DAC_Channel_x)
-                {
-                    case DAC_Channel_1: DMA_InitStructure.DMA_PeripheralBaseAddr = (u32)(&DAC->DHR12R1 + pWaveGen->u16WaveAlign); break;
-                    case DAC_Channel_2: DMA_InitStructure.DMA_PeripheralBaseAddr = (u32)(&DAC->DHR12R2 + pWaveGen->u16WaveAlign); break;
-                }
+                DMA_InitStructure.DMA_PeripheralBaseAddr = (u32)(&DAC->DHR12R1 + pWaveGen->u16WaveAlign + (DAC_Channel_x >> 4) * 3);
+                DMA_InitStructure.DMA_Memory0BaseAddr    = (u32)(pWaveGen->u16WaveData);
+                DMA_InitStructure.DMA_BufferSize         = pWaveGen->u16WaveSize;
 
                 DMA_DeInit(DMA_Stream_x);
                 DMA_Init(DMA_Stream_x, &DMA_InitStructure);
                 DMA_Cmd(DMA_Stream_x, ENABLE);
+
+                // TIM
+                u16WaveSize = DMA_InitStructure.DMA_BufferSize;
 
                 break;
             }
@@ -310,30 +299,42 @@ static bool WaveGenCfg(WaveGen_t* pWaveGen, u32 DAC_Channel_x)
     }
 
     //-----------------------------------------------------
-    //
+    // TIM
 
     {
         TIM_TimeBaseInitTypeDef TIM_TimeBaseStructure;
 
-        if (pWaveGen->u32WaveFreq == 0)
+        u32 u32FreqUnit;
+        switch ((WaveFreqUnit_e)(pWaveGen->u16WaveFreqUnit))
         {
-            return false;  // illegal frequency
+            default:
+            case WaveFreqUnit_Hz: u32FreqUnit = 1; break;
+            case WaveFreqUnit_mHz: u32FreqUnit = 1e3; break;
         }
 
-        if (!PulseCalc(TIM_FRQ, pWaveGen->u32WaveFreq * u16WaveSize,
-                       (u16*)&TIM_TimeBaseStructure.TIM_Period,
-                       (u16*)&TIM_TimeBaseStructure.TIM_Prescaler,
-                       (u32*)&pWaveGen->u32WaveRealFreq))
+        u32 u32ActualFreq;
+        u32 u32TargetFreq = pWaveGen->u32WaveTargetFreq * u16WaveSize / u32FreqUnit;
+
+        if (PulseCalc(TIM_FRQ, u32TargetFreq, TIM_FRQ * 0.02,
+                      (u16*)&TIM_TimeBaseStructure.TIM_Period,
+                      (u16*)&TIM_TimeBaseStructure.TIM_Prescaler,
+                      (u32*)&u32ActualFreq) == false)
         {
             return false;
         }
+
+        pWaveGen->u32WaveActualFreq = u32ActualFreq * u32FreqUnit / u16WaveSize;
 
         TIM_TimeBaseStructure.TIM_ClockDivision     = TIM_CKD_DIV1;
         TIM_TimeBaseStructure.TIM_CounterMode       = TIM_CounterMode_Up;
         TIM_TimeBaseStructure.TIM_RepetitionCounter = 0;
         TIM_TimeBaseInit(DACx_TIM, &TIM_TimeBaseStructure);
+
         TIM_SelectOutputTrigger(DACx_TIM, TIM_TRGOSource_Update);
         TIM_Cmd(DACx_TIM, ENABLE);
+
+        // 当 DAC 的某通道由于 TIM 或其他未知原因而无法再配置, 可尝试在配置完成后调用软件触发
+        // DAC_SoftwareTriggerCmd(DAC_Channel_x, ENABLE);
     }
 
     //-----------------------------------------------------
@@ -342,4 +343,85 @@ static bool WaveGenCfg(WaveGen_t* pWaveGen, u32 DAC_Channel_x)
     DAC_Cmd(DAC_Channel_x, ENABLE);
 
     return true;
+}
+
+//-----------------------------------------------------------------------------
+// demo
+
+static void WaveGenDemo(void)
+{
+    P(WaveGen1).u16WaveConfig = (u16)WaveConfig_Doit;
+    P(WaveGen2).u16WaveConfig = (u16)WaveConfig_Doit;
+
+    {
+        switch (0)
+        {
+            default:
+            case 0:
+                P(WaveGen1).u32WaveTargetFreq = 10000;  // 10k
+                P(WaveGen1).u16WaveType       = WaveType_Sine;
+                break;
+            case 1:
+                P(WaveGen1).u32WaveTargetFreq = 20000;  // 20k
+                P(WaveGen1).u16WaveType       = WaveType_Triangle;
+                P(WaveGen1).u16WaveAmplitude  = WaveAmplitude_255;
+                break;
+        }
+    }
+
+    {
+        P(WaveGen2).u32WaveTargetFreq = 1000;  // 1k
+        P(WaveGen2).u16WaveType       = WaveType_Custom;
+
+        // P(WaveGen2).u16WaveAlign = WaveAlign_12Bit_Left;
+        P(WaveGen2).u16WaveAlign = WaveAlign_12Bit_Right;
+        // P(WaveGen2).u16WaveAlign = WaveAlign_8Bit_Right;
+        switch ((WaveAlign_e)P(WaveGen2).u16WaveAlign)
+        {
+            case WaveAlign_12Bit_Right:
+            case WaveAlign_12Bit_Left:
+                P(WaveGen2).u16WaveSize = 64;
+                break;
+            case WaveAlign_8Bit_Right:
+                P(WaveGen2).u16WaveSize = 128;
+                break;
+        }
+
+        s16 left  = P(WaveGen2).u16WaveSize * 0.3;
+        s16 right = P(WaveGen2).u16WaveSize - left;
+
+        for (int i = 0; i < P(WaveGen2).u16WaveSize; ++i)
+        {
+            u16 data;
+
+            if (i < left)
+            {
+                data = (i - left) * (i - left);  // left
+            }
+            else if (i < right)
+            {
+                data = 1024;  // middle
+            }
+            else
+            {
+                data = (i - right) * (i - right);  // right
+            }
+
+            switch ((WaveAlign_e)P(WaveGen2).u16WaveAlign)
+            {
+                case WaveAlign_12Bit_Right:  // 0~4095
+                    P(WaveGen2).u16WaveData[i] = data;
+                    break;
+                case WaveAlign_12Bit_Left:  // 16~65520
+                    P(WaveGen2).u16WaveData[i] = data << 4;
+                    break;
+                case WaveAlign_8Bit_Right:  // 0~255
+                    data /= 10;
+                    (i & 0x1) ? (P(WaveGen2).u16WaveData[i / 2] |= data << 8) : (P(WaveGen2).u16WaveData[i / 2] = data);
+                    break;
+                default:
+                    break;
+            }
+        }
+    }
 }

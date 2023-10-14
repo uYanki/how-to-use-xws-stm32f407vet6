@@ -25,17 +25,22 @@ void dwt_init(void)
     DWT_CR |= (u32)DWT_CR_CYCCNTENA;
 }
 
+u32 dwt_tick(void)
+{
+    return DWT_CYCCNT;
+}
+
 void dwt_wait(u32 us)
 {
     u32 ticks, tcnt = 0;
     u32 t_old, t_now;
 
     ticks = us * (DWT_FREQ / 1000000);  // 节拍数
-    t_old = DWT_CYCCNT;
+    t_old = dwt_tick();
 
     while (tcnt < ticks)
     {
-        if ((t_now = DWT_CYCCNT) != t_old)
+        if ((t_now = dwt_tick()) != t_old)
         {
             if (t_now > t_old)
             {

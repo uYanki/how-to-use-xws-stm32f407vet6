@@ -25,6 +25,7 @@ typedef enum {
 
 inline void dwt_init(void);
 inline void dwt_wait(u32 us);
+inline u32  dwt_tick(void);
 
 //---------------------------------------------------------------
 //

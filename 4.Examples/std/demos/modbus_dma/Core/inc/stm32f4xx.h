@@ -812,6 +812,7 @@ typedef enum IRQn
 #include "system_stm32f4xx.h"
 #include <stdint.h>
 #include <stdbool.h>
+#include "usdk.defs.h"
 
 /** @addtogroup Exported_types
   * @{

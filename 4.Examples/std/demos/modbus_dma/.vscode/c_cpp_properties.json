@@ -14,6 +14,7 @@
                 "C:\\Keil_v5\\ARM\\ARMCC\\include\\rw",
                 "d:\\how-to-use-xws-stm32f407vet6\\4.Examples\\std\\demos\\modbus_dma\\Core\\src",
                 "d:\\how-to-use-xws-stm32f407vet6\\4.Examples\\std\\board\\bsp",
+                "d:\\how-to-use-xws-stm32f407vet6\\4.Examples\\std\\board\\sensor\\ds18b20",
                 "d:\\how-to-use-xws-stm32f407vet6\\4.Examples\\std\\board\\system",
                 "d:\\how-to-use-xws-stm32f407vet6\\4.Examples\\std\\demos\\modbus_dma\\Core\\inc\\paratbl",
                 "d:\\how-to-use-xws-stm32f407vet6\\4.Examples\\std\\board\\pulse",

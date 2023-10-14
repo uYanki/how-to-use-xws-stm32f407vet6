@@ -30,6 +30,14 @@
         "gen.h": "c",
         "tbl.h": "c",
         "wave.h": "c",
-        "mb.h": "c"
+        "mb.h": "c",
+        "cstdlib": "c",
+        "stm32f4xx_dac.h": "c",
+        "ds18b20.h": "c",
+        "gpio.h": "c",
+        "xmemory": "c",
+        "*.rh": "c",
+        "sleep.h": "c",
+        "autoinit.h": "c"
     }
 }

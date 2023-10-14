@@ -31,8 +31,10 @@
 
 //
 
+#define DS18B20_DQ_GPIO_CLK     RCC_AHB1Periph_GPIOE
 #define DS18B20_DQ_GPIO_PORT    GPIOE
 #define DS18B20_DQ_GPIO_PIN     GPIO_Pin_2
+#define DS18B20_DQ_GPIO_PINSRC  GPIO_PinSource2
 
 //
 

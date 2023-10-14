@@ -6,6 +6,7 @@
 ".\objects\key.o"
 ".\objects\led.o"
 ".\objects\uart.o"
+".\objects\ds18b20.o"
 ".\objects\sleep.o"
 ".\objects\autoinit.o"
 ".\objects\paratbl.o"

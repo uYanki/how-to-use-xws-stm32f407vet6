@@ -1,5 +1,7 @@
 #include "gen.h"
 
+#define TIM_FRQ 84e6
+
 void PulseInit(void)  // PA6 (TIM13_CH1)
 {
     GPIO_InitTypeDef GPIO_InitStructure;
@@ -18,68 +20,80 @@ void PulseInit(void)  // PA6 (TIM13_CH1)
     GPIO_Init(GPIOA, &GPIO_InitStructure);
 }
 
-bool PulseCalc(u32 clk, u32 freq, u16* prd, u16* psc, u32* frq)
+// err_i: maximum allowable error
+bool PulseCalc(u32 clk_i, u32 frq_i, u32 err_i, u16* prd_o, u16* psc_o, u32* frq_o)
 {
-    if (freq > clk)
+    if (frq_i == 0)
     {
         return false;
     }
 
-    u16 _prd = 0;
-    u16 _psc = 0;
-    u32 _frq = 0;
-
-    for (u32 prescaler = 1; prescaler <= 65536; ++prescaler)
+#if 1
+    if (frq_i > clk_i)
+#else
+    // because period >= 2
+    if (frq_i > (clk_i >> 1))
+#endif
     {
-        f32 period = (f32)clk / (f32)freq / (f32)prescaler;
+        return false;
+    }
 
-        if (((u32)period < 2) || ((u32)period > 65536))
+    bool similar = false;
+    u32  prd, psc, frq;
+    u32  err_pre = err_i, err_cur;
+
+    // for (prd = 2; prd <= 65536u; ++prd)
+    for (prd = 65536u; prd >= 2; --prd)
+    {
+        psc = (f32)clk_i / (f32)frq_i / (f32)prd;
+
+        if (psc == 0 || psc > 65536)
         {
             continue;
         }
-
-        if ((period - (f32)(u32)period) > 0.5f)
-        {
-            continue;
-        }
-
-        // 寄存器值
-
-        *prd = period - 1;
-        *psc = prescaler - 1;
 
         // 实际频率
 
-        *frq = clk / (*prd + 1) / (*psc + 1);
+        frq = (f32)clk_i / (f32)psc / (f32)prd;
 
-        // 频率相等
-
-        if (*frq == freq)
+        if (frq > clk_i)
         {
-            return true;
+            continue;
         }
 
-        // 频率相近
+        // 频率误差
 
-        if (abs(freq - *frq) < (freq * 0.05))
+        if (frq > frq_i)
         {
-            if (abs(freq - *frq) < (abs(freq) - _frq))
+            err_cur = frq - frq_i;
+        }
+        else
+        {
+            err_cur = frq_i - frq;
+        }
+
+        if (err_pre > err_cur)
+        {
+            err_pre = err_cur;
+
+            *frq_o = frq;
+            *prd_o = prd - 1;
+            *psc_o = psc - 1;
+
+            // 频率相等
+
+            if (err_cur == 0)
             {
-                _prd = *prd;
-                _psc = *psc;
-                _frq = frq;
+                return true;
             }
+
+            // 频率相近
+
+            similar = true;
         }
     }
 
-    if (_frq != 0)
-    {
-        *prd = _prd;
-        *psc = _psc;
-        return true;
-    }
-
-    return false;
+    return similar;
 }
 
 // range of duty: (0,1000)
@@ -124,9 +138,9 @@ bool PulseConfig(u32 freq, u16 duty)
 
     u32 freq_o;
 
-    if (!PulseCalc(84e6, freq,
-                   (u16*)&TIM_TimeBaseStructure.TIM_Period,
-                   (u16*)&TIM_TimeBaseStructure.TIM_Prescaler, &freq_o))
+    if (PulseCalc(TIM_FRQ, freq, TIM_FRQ * 0.02,
+                  (u16*)&TIM_TimeBaseStructure.TIM_Period,
+                  (u16*)&TIM_TimeBaseStructure.TIM_Prescaler, &freq_o) == false)
     {
         TIM_Cmd(TIMx, DISABLE);
 
@@ -137,7 +151,7 @@ bool PulseConfig(u32 freq, u16 duty)
     TIM_TimeBaseStructure.TIM_CounterMode   = TIM_CounterMode_Up;
     TIM_TimeBaseInit(TIMx, &TIM_TimeBaseStructure);
 
-    TIM_OCInitStructure.TIM_Pulse       = (TIM_TimeBaseStructure.TIM_Period + 1) * 0.666f;  // 占空比
+    TIM_OCInitStructure.TIM_Pulse       = (TIM_TimeBaseStructure.TIM_Period + 1) * (f32)duty / 1000 - 1;  // 占空比
     TIM_OCInitStructure.TIM_OCMode      = TIM_OCMode_PWM1;
     TIM_OCInitStructure.TIM_OutputState = TIM_OutputState_Enable;
     TIM_OCInitStructure.TIM_OCPolarity  = TIM_OCPolarity_High;
