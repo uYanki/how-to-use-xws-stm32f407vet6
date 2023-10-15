@@ -38,6 +38,7 @@
         "xmemory": "c",
         "*.rh": "c",
         "sleep.h": "c",
-        "autoinit.h": "c"
+        "autoinit.h": "c",
+        "enc.h": "c"
     }
 }

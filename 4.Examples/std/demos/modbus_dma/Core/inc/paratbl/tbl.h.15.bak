@@ -82,8 +82,8 @@ typedef __packed struct {
     u16 u16DutyPhc;     ///< 012 C相输出占空比
     s16 s16Uq;          ///< 013
     s16 s16Ud;          ///< 014
-    s16 s16UserSpdRef;  ///< 015 用户速度指令, 单位 rpm
-    s16 s16UserSpdFb;   ///< 016 用户速度反馈, 单位 rpm
+    s16 s16UserSpdRef;  ///< 015 用户速度指令
+    s16 s16UserSpdFb;   ///< 016 用户速度反馈
     s64 s64UserPosRef;  ///< 017 用户位置指令
     s64 s64UserPosFb;   ///< 021 用户位置反馈
     s16 s16UserTrqRef;  ///< 025
@@ -344,7 +344,7 @@ typedef struct {
             u16 RESV7[GROUP_SIZE];
             u16 RESV8[GROUP_SIZE];
         };
-        DbgSta_t DbgSta;
+        DbgSta_t DbgCtl;
     };
 
     // clang-format on

@@ -82,8 +82,8 @@ typedef __packed struct {
     u16 u16DutyPhc;     ///< 012 C相输出占空比
     s16 s16Uq;          ///< 013
     s16 s16Ud;          ///< 014
-    s16 s16UserSpdRef;  ///< 015 用户速度指令, 单位 rpm
-    s16 s16UserSpdFb;   ///< 016 用户速度反馈, 单位 rpm
+    s16 s16UserSpdRef;  ///< 015 用户速度指令
+    s16 s16UserSpdFb;   ///< 016 用户速度反馈
     s64 s64UserPosRef;  ///< 017 用户位置指令
     s64 s64UserPosFb;   ///< 021 用户位置反馈
     s16 s16UserTrqRef;  ///< 025
@@ -91,6 +91,9 @@ typedef __packed struct {
 
     s16 s16EnvTemp;  ///< 027 环境温度(ds18b20), 单位 0.01°
 
+    u64 u64DbgBuf[4];   ///< 028
+    u32 u32DbgBuf[8];   ///< 044
+    u16 u16DbgBuf[16];  ///< 060
 } MotSta_t;
 
 //-----------------------------------------------------------------------------
@@ -115,7 +118,7 @@ typedef __packed struct {
     u16 u16DecTime;         ///< 004 减速时间
     u16 u16AccTime;         ///< 005 加速时间
     s16 s16SpdDigRef;       ///< 006 数字速度指令
-    u16 u16SpdMulRefSel;    ///< 007 多段指令选择
+    u16 u16SpdMulRefSel;    ///< 009 多段指令选择
     s16 s16SpdDigRefs[16];  ///< 008 数字速度指令
     u16 u16SpdAiCoeff;      ///< 024 单位模拟量对应转速指令
     u16 u16SpdLimSrc;       ///< 025 速度限制来源
@@ -141,7 +144,7 @@ typedef __packed struct {
     u16 u16PosTgtSrc;       ///< 000 位置指令来源
     s64 s16PosTgtRef;       ///< 001 目标位置指令
     s64 s64PosDigRef;       ///< 005 数字位置指令
-    u16 u16SpdMulRefSel;    ///< 007 多段指令选择
+    u16 u16SpdMulRefSel;    ///< 009 多段指令选择
     s64 s64PosDigRefs[16];  ///< 010 数字位置指令
     u16 u16PosLimSrc;       ///< 074 位置限制来源
     u16 u16PosLimRes;       ///< 075 位置限制状态
@@ -240,7 +243,7 @@ typedef enum {
 
 typedef enum {
     WaveType_None     = 0,  // 无
-    WaveType_Noise    = 1,  // 噪声
+    WaveType_Noise    = 1,  // 噪声波
     WaveType_Triangle = 2,  // 三角波
     WaveType_Sine     = 3,  // 正弦波
     WaveType_Custom   = 4,  // 自定义
@@ -271,34 +274,36 @@ typedef enum {
     _WaveAmplitude_Count = 12,
 } WaveAmplitude_e;
 
-// 波形同步输出(共用时钟源)
 typedef enum {
     WaveSync_Disable,  // 同步输出
     WaveSync_Enable,   // 异步输出
 } WaveSync_e;
 
 typedef __packed struct {
-    u16 u16WaveConfig;      ///< 000 RW 触发配置
-    u16 u16WaveType;        ///< 001 RW 波形类型
-    u32 u32WaveTargetFreq;  ///< 002 RW 波形期望频率
-    u32 u32WaveActualFreq;  ///< 004 RO 波形实际频率
-    u16 u16WaveFreqUnit;    ///< 006 RW 波形频率单位
-    u16 u16WaveAmplitude;   ///< 007 RW 波形振幅
-    u16 u16WaveAlign;       ///< 008 RW 数据点对齐方式
-    u16 u16WaveSize;        ///< 009 RW 数据点数量
-    u16 u16WaveData[64];    ///< 010 RW 数据点数值
+    u16 u16WaveSync;  ///< 000 RW 波形同步输出
+    struct {
+        u16 u16WaveConfig;      ///< 001 RW 触发配置
+        u16 u16WaveType;        ///< 002 RW 波形类型
+        u32 u32WaveTargetFreq;  ///< 003 RW 波形期望频率
+        u32 u32WaveActualFreq;  ///< 005 RO 波形实际频率
+        u16 u16WaveFreqUnit;    ///< 007 RW 波形频率单位
+        u16 u16WaveAmplitude;   ///< 008 RW 波形振幅
+        u16 u16WaveAlign;       ///< 009 RW 数据点对齐方式
+        u16 u16WaveSize;        ///< 010 RW 数据点数量
+        u16 u16WaveData[64];    ///< 011 RW 数据点数值
+    } Wave1;
+    struct {
+        u16 u16WaveConfig;      ///< 091 RW 触发配置
+        u16 u16WaveType;        ///< 092 RW 波形类型
+        u32 u32WaveTargetFreq;  ///< 093 RW 波形期望频率
+        u32 u32WaveActualFreq;  ///< 095 RO 波形实际频率
+        u16 u16WaveFreqUnit;    ///< 097 RW 波形频率单位
+        u16 u16WaveAmplitude;   ///< 098 RW 波形振幅
+        u16 u16WaveAlign;       ///< 099 RW 数据点对齐方式
+        u16 u16WaveSize;        ///< 100 RW 数据点数量
+        u16 u16WaveData[64];    ///< 101 RW 数据点数值
+    } Wave2;
 } WaveGen_t;
-
-//-----------------------------------------------------------------------------
-//
-
-typedef __packed struct {
-    u16 u16DbgBuf[8];  ///< 000
-    u32 u32DbgBuf[8];  ///< 008
-    u64 u64DbgBuf[8];  ///< 024
-    f32 f32DbgBuf[8];  ///< 056
-    f64 f64DbgBuf[8];  ///< 072
-} DbgSta_t;
 
 //-----------------------------------------------------------------------------
 //
@@ -329,22 +334,13 @@ typedef struct {
         PosCtl_t PosCtl;
     };
 
-    union {
-        u16 RESV5[GROUP_SIZE];
-        WaveGen_t WaveGen1;
-    };
-
-    union {
-        u16 RESV6[GROUP_SIZE];
-        WaveGen_t WaveGen2;
-    };
-
-    union {
+    struct 
+    {
         struct {
-            u16 RESV7[GROUP_SIZE];
-            u16 RESV8[GROUP_SIZE];
+            u16 RESV3[GROUP_SIZE];
+            u16 RESV4[GROUP_SIZE];
         };
-        DbgSta_t DbgSta;
+        WaveGen_t WaveGen;
     };
 
     // clang-format on

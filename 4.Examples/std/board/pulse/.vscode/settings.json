@@ -1,0 +1,7 @@
+{
+    "files.associations": {
+        "gen.h": "c",
+        "wave.h": "c",
+        "calc.h": "c"
+    }
+}

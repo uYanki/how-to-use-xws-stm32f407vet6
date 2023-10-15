@@ -68,25 +68,25 @@ typedef __packed struct {
 
 typedef __packed struct {
     u16 u16Umdc;        ///< 000 母线电压
-    s16 s16CurPhAFb;    ///< 001
-    s16 s16CurPhBFb;    ///< 002
-    s16 s16IalphaFb;    ///< 003
-    s16 s16IbetaFb;     ///< 004
-    s16 s16IqFb;        ///< 005
-    s16 s16IdFb;        ///< 006
-    u16 u16ElecAng;     ///< 007
-    s16 s16Ualpha;      ///< 008
-    s16 s16Ubeta;       ///< 009
+    s16 s16CurPhAFb;    ///< 001 
+    s16 s16CurPhBFb;    ///< 002 
+    s16 s16IalphaFb;    ///< 003 
+    s16 s16IbetaFb;     ///< 004 
+    s16 s16IqFb;        ///< 005 
+    s16 s16IdFb;        ///< 006 
+    u16 u16ElecAng;     ///< 007 
+    s16 s16Ualpha;      ///< 008 
+    s16 s16Ubeta;       ///< 009 
     u16 u16DutyPha;     ///< 010 A相输出占空比
     u16 u16DutyPhb;     ///< 011 B相输出占空比
     u16 u16DutyPhc;     ///< 012 C相输出占空比
-    s16 s16Uq;          ///< 013
-    s16 s16Ud;          ///< 014
-    s16 s16UserSpdRef;  ///< 015 用户速度指令, 单位 rpm
-    s16 s16UserSpdFb;   ///< 016 用户速度反馈, 单位 rpm
+    s16 s16Uq;          ///< 013 
+    s16 s16Ud;          ///< 014 
+    s16 s16UserSpdRef;  ///< 015 用户速度指令
+    s16 s16UserSpdFb;   ///< 016 用户速度反馈
     s64 s64UserPosRef;  ///< 017 用户位置指令
     s64 s64UserPosFb;   ///< 021 用户位置反馈
-    s16 s16UserTrqRef;  ///< 025
+    s16 s16UserTrqRef;  ///< 025 
     s16 s16UserTrqFb;   ///< 026 用户转矩反馈
 
     s16 s16EnvTemp;  ///< 027 环境温度(ds18b20), 单位 0.01°
@@ -115,7 +115,7 @@ typedef __packed struct {
     u16 u16DecTime;         ///< 004 减速时间
     u16 u16AccTime;         ///< 005 加速时间
     s16 s16SpdDigRef;       ///< 006 数字速度指令
-    u16 u16SpdMulRefSel;    ///< 007 多段指令选择
+    u16 u16SpdMulRefSel;    ///< 009 多段指令选择
     s16 s16SpdDigRefs[16];  ///< 008 数字速度指令
     u16 u16SpdAiCoeff;      ///< 024 单位模拟量对应转速指令
     u16 u16SpdLimSrc;       ///< 025 速度限制来源
@@ -141,7 +141,7 @@ typedef __packed struct {
     u16 u16PosTgtSrc;       ///< 000 位置指令来源
     s64 s16PosTgtRef;       ///< 001 目标位置指令
     s64 s64PosDigRef;       ///< 005 数字位置指令
-    u16 u16SpdMulRefSel;    ///< 007 多段指令选择
+    u16 u16SpdMulRefSel;    ///< 009 多段指令选择
     s64 s64PosDigRefs[16];  ///< 010 数字位置指令
     u16 u16PosLimSrc;       ///< 074 位置限制来源
     u16 u16PosLimRes;       ///< 075 位置限制状态
@@ -293,11 +293,11 @@ typedef __packed struct {
 //
 
 typedef __packed struct {
-    u16 u16DbgBuf[8];  ///< 000
-    u32 u32DbgBuf[8];  ///< 008
-    u64 u64DbgBuf[8];  ///< 024
-    f32 f32DbgBuf[8];  ///< 056
-    f64 f64DbgBuf[8];  ///< 072
+    u16 u16DbgBuf[8];  ///< 000 
+    u32 u32DbgBuf[8];  ///< 008 
+    u64 u64DbgBuf[8];  ///< 024 
+    f32 f32DbgBuf[8];  ///< 056 
+    f64 f64DbgBuf[8];  ///< 072 
 } DbgSta_t;
 
 //-----------------------------------------------------------------------------

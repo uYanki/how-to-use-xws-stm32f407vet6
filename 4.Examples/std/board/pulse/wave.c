@@ -1,28 +1,30 @@
-#include "stm32f4xx.h"
-
 #include "wave.h"
+#include "calc.h"
 
 //-----------------------------------------------------------------------------
 // ports
 
-#define TIM_FRQ        84e6
+#define TIM_FRQ            84000000ul  // 84e6
 
-#define DAC1_TIM_CLKEN RCC_APB1PeriphClockCmd
-#define DAC1_TIM_CLK   RCC_APB1Periph_TIM6
-#define DAC1_TIM_PORT  TIM6
-#define DAC1_TRGO      DAC_Trigger_T6_TRGO
+#define DAC_CH1            DAC_Channel_1
+#define DAC_CH1_TIM_CLKEN  RCC_APB1PeriphClockCmd
+#define DAC_CH1_TIM_CLK    RCC_APB1Periph_TIM5
+#define DAC_CH1_TIM_PORT   TIM5
+#define DAC_CH1_TIM_TRGO   DAC_Trigger_T5_TRGO
+#define DAC_CH1_DMA_Stream DMA1_Stream5
 
-#define DAC2_TIM_CLKEN RCC_APB1PeriphClockCmd
-#define DAC2_TIM_CLK   RCC_APB1Periph_TIM5
-#define DAC2_TIM_PORT  TIM5
-#define DAC2_TRGO      DAC_Trigger_T5_TRGO
+#define DAC_CH2            DAC_Channel_2
+#define DAC_CH2_TIM_CLKEN  RCC_APB1PeriphClockCmd
+#define DAC_CH2_TIM_CLK    RCC_APB1Periph_TIM6
+#define DAC_CH2_TIM_PORT   TIM6
+#define DAC_CH2_TIM_TRGO   DAC_Trigger_T6_TRGO
+#define DAC_CH2_DMA_Stream DMA1_Stream6
 
 //-----------------------------------------------------------------------------
 // funcs
 
 static void WaveGenDemo(void);
-static bool WaveGenCfg(WaveGen_t* pWaveGen, u32 DAC_Channel_x);
-extern bool PulseCalc(u32 clk_i, u32 frq_i, u32 err_i, u16* prd_o, u16* psc_o, u32* frq_o);
+static bool WaveGenCfg(WaveGen_t* pWaveGen, u32 DAC_CHx, TIM_TypeDef* DAC_TIM_PORT, u32 DAC_TIM_TRGO, DMA_Stream_TypeDef* DAC_DMA_Stream);
 
 //-----------------------------------------------------------------------------
 // wave
@@ -35,8 +37,8 @@ static RO u16 aSine12bit[] = {
 
 void WaveGenInit(void)
 {
-    // DAC_OUT1 = PA.4
-    // DAC_OUT2 = PA.5
+    // DAC_Channel_1: PA.4, DMA_Channel_7 DMA1_Stream5
+    // DAC_Channel_2: PA.5, DMA_Channel_7 DMA1_Stream6
 
     // gpio
     {
@@ -59,11 +61,11 @@ void WaveGenInit(void)
 
     // tim
     {
-        DAC1_TIM_CLKEN(DAC1_TIM_CLK, ENABLE);
-        TIM_SelectOutputTrigger(DAC1_TIM_PORT, DAC1_TRGO);
+        DAC_CH1_TIM_CLKEN(DAC_CH1_TIM_CLK, ENABLE);
+        TIM_SelectOutputTrigger(DAC_CH1_TIM_PORT, DAC_CH1_TIM_TRGO);
 
-        DAC2_TIM_CLKEN(DAC2_TIM_CLK, ENABLE);
-        TIM_SelectOutputTrigger(DAC2_TIM_PORT, DAC2_TRGO);
+        DAC_CH2_TIM_CLKEN(DAC_CH2_TIM_CLK, ENABLE);
+        TIM_SelectOutputTrigger(DAC_CH2_TIM_PORT, DAC_CH2_TIM_TRGO);
     }
 
 #if 1
@@ -74,13 +76,17 @@ void WaveGenInit(void)
 
 void WaveGenCycle(void)
 {
-    switch ((WaveConfig_e)(P(WaveGen1).u16WaveConfig))
+    WaveGen_t* pWaveGen;
+
+    pWaveGen = &P(WaveGen1);
+
+    switch ((WaveConfig_e)(pWaveGen->u16WaveConfig))
     {
         case WaveConfig_Doit:
-            switch (WaveGenCfg(&P(WaveGen1), DAC_Channel_1))
+            switch (WaveGenCfg(pWaveGen, DAC_CH1, DAC_CH1_TIM_PORT, DAC_CH1_TIM_TRGO, DAC_CH1_DMA_Stream))
             {
-                case true: P(WaveGen1).u16WaveConfig = WaveConfig_Success; break;
-                case false: P(WaveGen1).u16WaveConfig = WaveConfig_Failure; break;
+                case true: pWaveGen->u16WaveConfig = WaveConfig_Success; break;
+                case false: pWaveGen->u16WaveConfig = WaveConfig_Failure; break;
             }
         default:
         case WaveConfig_Success:
@@ -88,13 +94,15 @@ void WaveGenCycle(void)
             break;
     }
 
-    switch ((WaveConfig_e)(P(WaveGen2).u16WaveConfig))
+    pWaveGen = &P(WaveGen2);
+
+    switch ((WaveConfig_e)(pWaveGen->u16WaveConfig))
     {
         case WaveConfig_Doit:
-            switch (WaveGenCfg(&P(WaveGen2), DAC_Channel_2))
+            switch (WaveGenCfg(pWaveGen, DAC_CH2, DAC_CH2_TIM_PORT, DAC_CH2_TIM_TRGO, DAC_CH2_DMA_Stream))
             {
-                case true: P(WaveGen2).u16WaveConfig = WaveConfig_Success; break;
-                case false: P(WaveGen2).u16WaveConfig = WaveConfig_Failure; break;
+                case true: pWaveGen->u16WaveConfig = WaveConfig_Success; break;
+                case false: pWaveGen->u16WaveConfig = WaveConfig_Failure; break;
             }
         default:
         case WaveConfig_Success:
@@ -103,34 +111,11 @@ void WaveGenCycle(void)
     }
 }
 
-static bool WaveGenCfg(WaveGen_t* pWaveGen, u32 DAC_Channel_x)
+static bool WaveGenCfg(WaveGen_t* pWaveGen, u32 DAC_CHx, TIM_TypeDef* DAC_TIM_PORT, u32 DAC_TIM_TRGO, DMA_Stream_TypeDef* DAC_DMA_Stream)
 {
-    // DAC_Channel_1: DMA1_Stream5 channel7
-    // DAC_Channel_2: DMA1_Stream6 channel7
+    assert_param(IS_DAC_CHANNEL(DAC_CHx));
 
-    assert_param(IS_DAC_CHANNEL(DAC_Channel_x));
-
-    //-----------------------------------------------------
-    // ports
-
-    uint32_t            DACx_TRGO;
-    TIM_TypeDef*        DACx_TIM;
-    DMA_Stream_TypeDef* DMA_Stream_x;
-
-    if (DAC_Channel_1 == DAC_Channel_x)
-    {
-        DACx_TRGO    = DAC1_TRGO;
-        DACx_TIM     = DAC1_TIM_PORT;
-        DMA_Stream_x = DMA1_Stream5;
-    }
-    else  // DAC_Channel_2
-    {
-        DACx_TRGO    = DAC2_TRGO;
-        DACx_TIM     = DAC2_TIM_PORT;
-        DMA_Stream_x = DMA1_Stream6;
-    }
-
-    TIM_Cmd(DACx_TIM, DISABLE);  // stop TIM
+    TIM_Cmd(DAC_TIM_PORT, DISABLE);  // stop TIM
 
     pWaveGen->u32WaveActualFreq = 0;
 
@@ -149,20 +134,20 @@ static bool WaveGenCfg(WaveGen_t* pWaveGen, u32 DAC_Channel_x)
                 DAC_InitStructure.DAC_WaveGeneration = DAC_WaveGeneration_None,
                 DAC_InitStructure.DAC_OutputBuffer   = DAC_OutputBuffer_Disable,
             };
-            DAC_Init(DAC_Channel_x, &DAC_InitStructure);
+            DAC_Init(DAC_CHx, &DAC_InitStructure);
             // DMA
-            DMA_Cmd(DMA_Stream_x, DISABLE);
+            DMA_Cmd(DAC_DMA_Stream, DISABLE);
             return true;
         }
         case WaveType_Noise: {
             // DAC
             DAC_InitTypeDef DAC_InitStructure = {
-                .DAC_Trigger                      = DACx_TRGO,
+                .DAC_Trigger                      = DAC_TIM_TRGO,
                 .DAC_WaveGeneration               = DAC_WaveGeneration_Noise,
                 .DAC_OutputBuffer                 = DAC_OutputBuffer_Disable,
                 .DAC_LFSRUnmask_TriangleAmplitude = (pWaveGen->u16WaveAmplitude & 0xF) << 8,  // LFSRUnmask
             };
-            DAC_Init(DAC_Channel_x, &DAC_InitStructure);
+            DAC_Init(DAC_CHx, &DAC_InitStructure);
             // TIM
             u16WaveSize = 1;
             break;
@@ -170,12 +155,12 @@ static bool WaveGenCfg(WaveGen_t* pWaveGen, u32 DAC_Channel_x)
         case WaveType_Triangle: {
             // DAC
             DAC_InitTypeDef DAC_InitStructure = {
-                .DAC_Trigger                      = DACx_TRGO,
+                .DAC_Trigger                      = DAC_TIM_TRGO,
                 .DAC_WaveGeneration               = DAC_WaveGeneration_Triangle,
                 .DAC_OutputBuffer                 = DAC_OutputBuffer_Disable,
                 .DAC_LFSRUnmask_TriangleAmplitude = (pWaveGen->u16WaveAmplitude & 0xF) << 8,  // TriangleAmplitude
             };
-            DAC_Init(DAC_Channel_x, &DAC_InitStructure);
+            DAC_Init(DAC_CHx, &DAC_InitStructure);
             // TIM
             u16WaveSize = (2 << (pWaveGen->u16WaveAmplitude & 0xF)) * 2;
             break;
@@ -184,12 +169,12 @@ static bool WaveGenCfg(WaveGen_t* pWaveGen, u32 DAC_Channel_x)
             // DAC
             {
                 DAC_InitTypeDef DAC_InitStructure = {
-                    .DAC_Trigger        = DACx_TRGO,
+                    .DAC_Trigger        = DAC_TIM_TRGO,
                     .DAC_WaveGeneration = DAC_WaveGeneration_None,
                     .DAC_OutputBuffer   = DAC_OutputBuffer_Disable,
                 };
-                DAC_Init(DAC_Channel_x, &DAC_InitStructure);
-                DAC_DMACmd(DAC_Channel_x, ENABLE);
+                DAC_Init(DAC_CHx, &DAC_InitStructure);
+                DAC_DMACmd(DAC_CHx, ENABLE);
             }
             // DMA
             {
@@ -210,13 +195,13 @@ static bool WaveGenCfg(WaveGen_t* pWaveGen, u32 DAC_Channel_x)
                     .DMA_BufferSize         = ARRAY_SIZE(aSine12bit),
                     .DMA_MemoryDataSize     = DMA_MemoryDataSize_HalfWord,
                     // data dest
-                    .DMA_PeripheralBaseAddr = (u32)(&DAC->DHR12R1 + (DAC_Channel_x >> 4) * 3),
+                    .DMA_PeripheralBaseAddr = (u32)(&DAC->DHR12R1 + (DAC_CHx >> 4) * 3),
                     .DMA_PeripheralDataSize = DMA_PeripheralDataSize_HalfWord,
                 };
-                DMA_Cmd(DMA_Stream_x, DISABLE);
-                DMA_DeInit(DMA_Stream_x);
-                DMA_Init(DMA_Stream_x, &DMA_InitStructure);
-                DMA_Cmd(DMA_Stream_x, ENABLE);
+                DMA_Cmd(DAC_DMA_Stream, DISABLE);
+                DMA_DeInit(DAC_DMA_Stream);
+                DMA_Init(DAC_DMA_Stream, &DMA_InitStructure);
+                DMA_Cmd(DAC_DMA_Stream, ENABLE);
                 // TIM
                 u16WaveSize = DMA_InitStructure.DMA_BufferSize;
             }
@@ -226,12 +211,12 @@ static bool WaveGenCfg(WaveGen_t* pWaveGen, u32 DAC_Channel_x)
             // DAC
             {
                 DAC_InitTypeDef DAC_InitStructure = {
-                    .DAC_Trigger        = DACx_TRGO,
+                    .DAC_Trigger        = DAC_TIM_TRGO,
                     .DAC_WaveGeneration = DAC_WaveGeneration_None,
                     .DAC_OutputBuffer   = DAC_OutputBuffer_Disable,
                 };
-                DAC_Init(DAC_Channel_x, &DAC_InitStructure);
-                DAC_DMACmd(DAC_Channel_x, ENABLE);
+                DAC_Init(DAC_CHx, &DAC_InitStructure);
+                DAC_DMACmd(DAC_CHx, ENABLE);
             }
             // DMA
             {
@@ -282,13 +267,13 @@ static bool WaveGenCfg(WaveGen_t* pWaveGen, u32 DAC_Channel_x)
                     }
                 }
 
-                DMA_InitStructure.DMA_PeripheralBaseAddr = (u32)(&DAC->DHR12R1 + pWaveGen->u16WaveAlign + (DAC_Channel_x >> 4) * 3);
+                DMA_InitStructure.DMA_PeripheralBaseAddr = (u32)(&DAC->DHR12R1 + pWaveGen->u16WaveAlign + (DAC_CHx >> 4) * 3);
                 DMA_InitStructure.DMA_Memory0BaseAddr    = (u32)(pWaveGen->u16WaveData);
                 DMA_InitStructure.DMA_BufferSize         = pWaveGen->u16WaveSize;
 
-                DMA_DeInit(DMA_Stream_x);
-                DMA_Init(DMA_Stream_x, &DMA_InitStructure);
-                DMA_Cmd(DMA_Stream_x, ENABLE);
+                DMA_DeInit(DAC_DMA_Stream);
+                DMA_Init(DAC_DMA_Stream, &DMA_InitStructure);
+                DMA_Cmd(DAC_DMA_Stream, ENABLE);
 
                 // TIM
                 u16WaveSize = DMA_InitStructure.DMA_BufferSize;
@@ -315,10 +300,10 @@ static bool WaveGenCfg(WaveGen_t* pWaveGen, u32 DAC_Channel_x)
         u32 u32ActualFreq;
         u32 u32TargetFreq = pWaveGen->u32WaveTargetFreq * u16WaveSize / u32FreqUnit;
 
-        if (PulseCalc(TIM_FRQ, u32TargetFreq, TIM_FRQ * 0.02,
-                      (u16*)&TIM_TimeBaseStructure.TIM_Period,
-                      (u16*)&TIM_TimeBaseStructure.TIM_Prescaler,
-                      (u32*)&u32ActualFreq) == false)
+        if (TIM_Calc(TIM_FRQ, u32TargetFreq, TIM_FRQ * 0.02,
+                     (u16*)&TIM_TimeBaseStructure.TIM_Period,
+                     (u16*)&TIM_TimeBaseStructure.TIM_Prescaler,
+                     (u32*)&u32ActualFreq) == false)
         {
             return false;
         }
@@ -328,10 +313,10 @@ static bool WaveGenCfg(WaveGen_t* pWaveGen, u32 DAC_Channel_x)
         TIM_TimeBaseStructure.TIM_ClockDivision     = TIM_CKD_DIV1;
         TIM_TimeBaseStructure.TIM_CounterMode       = TIM_CounterMode_Up;
         TIM_TimeBaseStructure.TIM_RepetitionCounter = 0;
-        TIM_TimeBaseInit(DACx_TIM, &TIM_TimeBaseStructure);
+        TIM_TimeBaseInit(DAC_TIM_PORT, &TIM_TimeBaseStructure);
 
-        TIM_SelectOutputTrigger(DACx_TIM, TIM_TRGOSource_Update);
-        TIM_Cmd(DACx_TIM, ENABLE);
+        TIM_SelectOutputTrigger(DAC_TIM_PORT, TIM_TRGOSource_Update);
+        TIM_Cmd(DAC_TIM_PORT, ENABLE);
 
         // 当 DAC 的某通道由于 TIM 或其他未知原因而无法再配置, 可尝试在配置完成后调用软件触发
         // DAC_SoftwareTriggerCmd(DAC_Channel_x, ENABLE);
@@ -340,7 +325,7 @@ static bool WaveGenCfg(WaveGen_t* pWaveGen, u32 DAC_Channel_x)
     //-----------------------------------------------------
     //
 
-    DAC_Cmd(DAC_Channel_x, ENABLE);
+    DAC_Cmd(DAC_CHx, ENABLE);
 
     return true;
 }

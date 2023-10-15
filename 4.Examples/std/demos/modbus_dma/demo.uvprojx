@@ -494,19 +494,24 @@
           <GroupName>pulse</GroupName>
           <Files>
             <File>
-              <FileName>cap.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\board\pulse\cap.c</FilePath>
-            </File>
-            <File>
-              <FileName>gen.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\board\pulse\gen.c</FilePath>
-            </File>
-            <File>
               <FileName>wave.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\board\pulse\wave.c</FilePath>
+            </File>
+            <File>
+              <FileName>pulse.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\board\pulse\pulse.c</FilePath>
+            </File>
+            <File>
+              <FileName>enc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\board\pulse\enc.c</FilePath>
+            </File>
+            <File>
+              <FileName>calc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\board\pulse\calc.c</FilePath>
             </File>
           </Files>
         </Group>

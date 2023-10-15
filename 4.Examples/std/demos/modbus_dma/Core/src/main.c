@@ -9,17 +9,21 @@
 #include "pinmap.h"
 #include "paratbl/tbl.h"
 
-#include "pulse/gen.h"
+#include "pulse/pulse.h"
 #include "pulse/wave.h"
+#include "pulse/enc.h"
 
 #include "sensor/ds18b20/ds18b20.h"
 
-#define CONFIG_MODULE_TEMPERATURE 1  // 温度模块
+#define CONFIG_MODULE_WAVEGEN     1  // 波形发生器模块
+#define CONFIG_MODULE_TEMPERATURE 1  // 环境温度采集模块
+#define CONFIG_MODULE_ENCODER     1  // 编码器测速模块
 
 //-----------------------------------------------------------------------------
 //
 
 static void TempSensorCycle(void);
+static void EncoderCycle(void);
 
 //-----------------------------------------------------------------------------
 //
@@ -44,8 +48,6 @@ void usdk_preinit(void)
 
 //
 
-//
-
 int main()
 {
     NVIC_PriorityGroupConfig(NVIC_PriorityGroup_0);
@@ -57,8 +59,8 @@ int main()
 
     eMBEnable();
 
-    PulseInit();
-    PulseConfig(434e2, 230);
+    PulseGenInit();
+    PulseGenConfig(10000, 230);
 
     WaveGenInit();
 
@@ -92,10 +94,11 @@ int main()
 
         WaveGenCycle();
 
-        //------------------------------------------------
-
 #if CONFIG_MODULE_TEMPERATURE
         TempSensorCycle();
+#endif
+#if CONFIG_MODULE_ENCODER
+        EncoderCycle();
 #endif
     }
 }
@@ -140,105 +143,32 @@ static void TempSensorCycle(void)
 
 #endif
 
-/*****************************************
-引脚说明：
-PB6
+//-----------------------------------------------------------------------------
+// encoder: position recording, speed calculation
 
-TIM4_CH1(TIM4 -- APB1 16位  84MHZ)
+#if CONFIG_MODULE_ENCODER
 
-*****************************************/
-
-int Pwm_PB6_InputInit(void)
+static int EncoderInit(void)
 {
-    GPIO_InitTypeDef        GPIO_InitStructure;
-    TIM_TimeBaseInitTypeDef TIM_TimeBaseStructure;
-    NVIC_InitTypeDef        NVIC_InitStructure;
-    TIM_ICInitTypeDef       TIM4_ICInitStructure;
+    EncInit();
 
-    RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM4, ENABLE);   // 时钟使能
-    RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOB, ENABLE);  // 使能GPIOB时钟
-
-    GPIO_InitStructure.GPIO_Pin   = GPIO_Pin_6;         // GPIOB6
-    GPIO_InitStructure.GPIO_Mode  = GPIO_Mode_AF;       // 复用功能
-    GPIO_InitStructure.GPIO_Speed = GPIO_Speed_100MHz;  // 速度100MHz
-    GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;      // 推挽复用输出
-    GPIO_InitStructure.GPIO_PuPd  = GPIO_PuPd_NOPULL;   // 下拉
-    GPIO_Init(GPIOB, &GPIO_InitStructure);              // 初始化
-
-    // 定时器复用引脚
-    GPIO_PinAFConfig(GPIOB, GPIO_PinSource6, GPIO_AF_TIM4);
-
-    TIM_TimeBaseStructure.TIM_Prescaler     = 0;                   // 定时器分频
-    TIM_TimeBaseStructure.TIM_CounterMode   = TIM_CounterMode_Up;  // 向上计数模式
-    TIM_TimeBaseStructure.TIM_Period        = 50000 - 1;           // 自动重装载值
-    TIM_TimeBaseStructure.TIM_ClockDivision = TIM_CKD_DIV1;        // 分频因子 配置死区时会用到
-
-    TIM_TimeBaseInit(TIM4, &TIM_TimeBaseStructure);
-
-    // 初始化TIM2输入捕获参数
-    TIM4_ICInitStructure.TIM_Channel     = TIM_Channel_1;             // 通道1
-    TIM4_ICInitStructure.TIM_ICPolarity  = TIM_ICPolarity_Rising;     // 上升沿捕获
-    TIM4_ICInitStructure.TIM_ICSelection = TIM_ICSelection_DirectTI;  // 映射到TI1上
-    TIM4_ICInitStructure.TIM_ICPrescaler = TIM_ICPSC_DIV1;            // 配置输入分频,不分频
-    TIM4_ICInitStructure.TIM_ICFilter    = 0x05;                      // IC3F=0000 配置输入滤波器 不滤波
-    // 初始化 PWM 输入模式
-    TIM_PWMIConfig(TIM4, &TIM4_ICInitStructure);
-
-    // 当工作做 PWM 输入模式时,只需要设置触发信号的那一路即可（用于测量周期）
-    // 另外一路（用于测量占空比）会由硬件自带设置，不需要再配置
-
-    // 选择输入捕获的触发信号
-    TIM_SelectInputTrigger(TIM4, TIM_TS_TI1FP1);
-
-    // 选择从模式: 复位模式
-    // PWM 输入模式时,从模式必须工作在复位模式，当捕获开始时,计数器 CNT 会被复位
-    TIM_SelectSlaveMode(TIM4, TIM_SlaveMode_Reset);
-    TIM_SelectMasterSlaveMode(TIM4, TIM_MasterSlaveMode_Enable);
-
-    // 使能捕获中断,这个中断针对的是主捕获通道（测量周期那个）
-    TIM_ITConfig(TIM4, TIM_IT_CC1, ENABLE);
-    TIM_ClearITPendingBit(TIM4, TIM_IT_CC1);
-
-    NVIC_InitStructure.NVIC_IRQChannel                   = TIM4_IRQn;
-    NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 2;       // 抢占优先级2
-    NVIC_InitStructure.NVIC_IRQChannelSubPriority        = 0;       // 子优先级0
-    NVIC_InitStructure.NVIC_IRQChannelCmd                = ENABLE;  // IRQ通道使能
-    NVIC_Init(&NVIC_InitStructure);                                 // 根据指定的参数初始化VIC寄存器、
-
-    // TIM_ITConfig(TIM4,TIM_IT_Update|TIM_IT_CC2,ENABLE);				//允许更新中断 ,允许CC2IE捕获中断
-
-    TIM_Cmd(TIM4, ENABLE);  // 使能定时器4
-
-    NVIC_PriorityGroupConfig(NVIC_PriorityGroup_2);
-
-    return 0;
+    return INIT_RESULT_SUCCESS;
 }
 
-USDK_INIT_EXPORT(Pwm_PB6_InputInit, INIT_LEVEL_COMPONENT)
+USDK_INIT_EXPORT(EncoderInit, INIT_LEVEL_BOARD)
 
-u32   IC1Value, IC2Value;
-float DutyCycle, Frequency;
-
-// 定时器4中断服务程序
-void TIM4_IRQHandler(void)
+static void EncoderCycle(void)
 {
-    /* 清除定时器捕获/比较 1 中断 */
-    TIM_ClearITPendingBit(TIM4, TIM_IT_CC1);
+    static tick_t t = 0;
 
-    /* 获取输入捕获值 */
-    IC1Value = TIM_GetCapture1(TIM4);
-    IC2Value = TIM_GetCapture2(TIM4);
-    // printf("IC1Value = %d IC2Value = %d ",IC1Value,IC2Value);
-    //  注意：捕获寄存器 CCR1 和 CCR2 的值在计算占空比和频率的时候必须加 1
-    if (IC1Value != 0)
+    if (DelayNonBlockMS(t, 1))
     {
-        /* 占空比计算 */
-        DutyCycle = (float)((IC2Value + 1) * 100) / (IC1Value + 1);
+        t = HAL_GetTick();
 
-        /* 频率计算 */
-        Frequency = 84000000 / (float)(IC1Value + 1);
-
-        P(MotSta).u32DbgBuf[0] = DutyCycle;
-        P(MotSta).u32DbgBuf[1] = Frequency;
+        EncCycle();
     }
 }
+
+#endif
+
+//-----------------------------------------------------------------------------

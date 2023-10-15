@@ -1,7 +1,7 @@
-#ifndef __WAVE_GENERATE_H__
-#define __WAVE_GENERATE_H__
+#ifndef __WAVE_H__
+#define __WAVE_H__
 
-#include "usdk.defs.h"
+#include "stm32f4xx.h"
 #include "paratbl/tbl.h"
 
 #define Hz_2_mHz 1000
