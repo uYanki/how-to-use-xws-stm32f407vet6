@@ -20,7 +20,8 @@
                 "d:\\how-to-use-xws-stm32f407vet6\\4.Examples\\std\\board\\pulse",
                 "d:\\how-to-use-xws-stm32f407vet6\\4.Examples\\std\\fwlib\\Libraries\\STM32F4xx_StdPeriph_Driver\\src",
                 "d:\\how-to-use-xws-stm32f407vet6\\4.Examples\\std\\3rdparty\\freemodbus\\modbus\\functions",
-                "d:\\how-to-use-xws-stm32f407vet6\\4.Examples\\std\\3rdparty\\freemodbus\\modbus"
+                "d:\\how-to-use-xws-stm32f407vet6\\4.Examples\\std\\3rdparty\\freemodbus\\modbus",
+                "d:\\how-to-use-xws-stm32f407vet6\\4.Examples\\std\\board\\enc"
             ],
             "defines": [
                 "STM32F40_41xxx",

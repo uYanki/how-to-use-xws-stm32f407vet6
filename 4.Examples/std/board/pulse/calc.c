@@ -57,7 +57,11 @@ bool TIM_Calc(u32 clk_i, u32 frq_i, u32 err_i, u16* prd_o, u16* psc_o, u32* frq_
         {
             err_pre = err_cur;
 
-            *frq_o = frq;
+            if (frq_o != nullptr)
+            {
+                *frq_o = frq;
+            }
+
             *prd_o = prd - 1;
             *psc_o = psc - 1;
 

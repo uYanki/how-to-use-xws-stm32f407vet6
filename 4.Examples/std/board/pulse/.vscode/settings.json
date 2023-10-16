@@ -2,6 +2,7 @@
     "files.associations": {
         "gen.h": "c",
         "wave.h": "c",
-        "calc.h": "c"
+        "calc.h": "c",
+        "incenc.h": "c"
     }
 }

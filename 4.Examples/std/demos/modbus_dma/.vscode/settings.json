@@ -39,6 +39,8 @@
         "*.rh": "c",
         "sleep.h": "c",
         "autoinit.h": "c",
-        "enc.h": "c"
+        "enc.h": "c",
+        "calc.h": "c",
+        "pulse.h": "c"
     }
 }

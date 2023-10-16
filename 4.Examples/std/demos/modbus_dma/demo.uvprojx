@@ -504,11 +504,6 @@
               <FilePath>..\..\board\pulse\pulse.c</FilePath>
             </File>
             <File>
-              <FileName>enc.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\board\pulse\enc.c</FilePath>
-            </File>
-            <File>
               <FileName>calc.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\board\pulse\calc.c</FilePath>
@@ -820,6 +815,26 @@
         </Group>
         <Group>
           <GroupName>docs</GroupName>
+        </Group>
+        <Group>
+          <GroupName>encoder</GroupName>
+          <Files>
+            <File>
+              <FileName>absEnc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\board\enc\absEnc.c</FilePath>
+            </File>
+            <File>
+              <FileName>incEnc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\board\enc\incEnc.c</FilePath>
+            </File>
+            <File>
+              <FileName>pulse.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\board\enc\pulse.c</FilePath>
+            </File>
+          </Files>
         </Group>
       </Groups>
     </Target>

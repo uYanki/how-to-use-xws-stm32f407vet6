@@ -2,17 +2,16 @@
 #include "system/sleep.h"
 #include "paratbl/tbl.h"
 
-#include "enc.h"
+#include "incEnc.h"
 
 //----------------------------------------------------------
 // config
 
-#define CONFIG_ENC_PPR    (60)  // 分辨率
+#define CONFIG_ENC_PPR    (60)  // ?????
 
 //----------------------------------------------------------
 // ports
 
-// TIMX = 1、2、3、4、5、8
 #define ENC_TIM_CLK       RCC_APB1Periph_TIM4
 #define ENC_TIM_PORT      TIM4
 #define ENC_TIM_CH_A      TIM_Channel_1
@@ -36,17 +35,20 @@
 
 #define TIM_BaseLine      ((ENC_TIM_MAX_PRD) >> 4)
 
-static inline s32 EncGet(void)
+static inline s32 IncEncGet(void)
 {
     return (s32)TIM_GetCounter(ENC_TIM_PORT) - (s32)TIM_BaseLine;
 }
 
-static inline void EncRst(void)
+static inline void IncEncRst(void)
 {
     TIM_SetCounter(ENC_TIM_PORT, TIM_BaseLine);
 }
 
-void EncInit(void)
+/**
+ * [in]  u32EncRes;
+ */
+void IncEncInit(IncEncArgs_t* args)
 {
     // gpio
     {
@@ -66,10 +68,6 @@ void EncInit(void)
         GPIO_Init(ENC_A_GPIO_PORT, &GPIO_InitStructure);
         GPIO_InitStructure.GPIO_Pin = ENC_B_GPIO_PIN;
         GPIO_Init(ENC_B_GPIO_PORT, &GPIO_InitStructure);
-
-        // RCC_AHB1PeriphClockCmd(ENC_Z_GPIO_CLK, ENABLE);
-        // GPIO_InitStructure.GPIO_Pin = ENC_Z_GPIO_PIN;
-        // GPIO_Init(ENC_Z_GPIO_PORT, &GPIO_InitStructure);
     }
     // tim
     {
@@ -78,7 +76,7 @@ void EncInit(void)
         RCC_APB1PeriphClockCmd(ENC_TIM_CLK, ENABLE);
 
         TIM_TimeBaseStructure.TIM_Prescaler         = 0;  // No prescaling
-        TIM_TimeBaseStructure.TIM_Period            = (4 * CONFIG_ENC_PPR) - 1;
+        TIM_TimeBaseStructure.TIM_Period            = 4 * (*args->u32EncRes) - 1;
         TIM_TimeBaseStructure.TIM_ClockDivision     = TIM_CKD_DIV1;
         TIM_TimeBaseStructure.TIM_CounterMode       = TIM_CounterMode_Up;
         TIM_TimeBaseStructure.TIM_RepetitionCounter = 0;
@@ -100,42 +98,52 @@ void EncInit(void)
     }
 
     // Reset counter
-    EncRst();
+    IncEncRst();
 
-    P(DrvCfg).u32EncRes = CONFIG_ENC_PPR;
+    args->u32LastTick  = 0;
+    args->f32DeltaTick = 0;
 
     TIM_Cmd(ENC_TIM_PORT, ENABLE);
 }
 
-void EncCycle(void)
+/**
+ * [in]  u32EncRes;
+ * [out] s32EncPos;
+ * [out] s32EncTurns;
+ * [out] s16UserSpdFb;
+ * [out] s64UserPosFb;
+ */
+void IncEncCycle(IncEncArgs_t* args)
 {
-    static u32 u32LastTick = 0;
+    u32 u32CurTick = dwt_tick();
 
-    if (u32LastTick != 0)
+    if (args->u32LastTick != 0)
     {
-        s32 s32EncDeltaPos = EncGet();
-        EncRst();  // 立即复位计数器
+        s32 s32EncDeltaPos = IncEncGet();
 
-        u32 u32DeltaTick = HAL_DeltaTick(u32LastTick, dwt_tick());
+        // immediately reset, otherwise pulse loss may occur
+        IncEncRst();
 
-        P(PosCtl).s32EncPos += s32EncDeltaPos;
-
-        if (P(PosCtl).s32EncPos > (s32)P(DrvCfg).u32EncRes)
-        {
-            P(PosCtl).s32EncPos -= (s32)P(DrvCfg).u32EncRes;
-        }
-        else if (P(PosCtl).s32EncPos < 0)
-        {
-            P(PosCtl).s32EncPos += (s32)P(DrvCfg).u32EncRes;
-        }
-
-        // speed (rpm)
-        P(MotSta).s16UserSpdFb = 60 * s32EncDeltaPos / ((f64)u32DeltaTick / (f64)SystemCoreClock) / (s32)P(DrvCfg).u32EncRes;
+        // time (second)
+        args->f32DeltaTick = (f32)HAL_DeltaTick(args->u32LastTick, u32CurTick) / (f32)SystemCoreClock;
 
         // position (pulse)
-        P(MotSta).s64UserPosFb += (s64)s32EncDeltaPos;
-        P(PosCtl).s32EncTurns = P(MotSta).s64UserPosFb / (s64)P(DrvCfg).u32EncRes;
+        *args->s32EncPos += s32EncDeltaPos;
+        if (*args->s32EncPos >= (s32)(*args->u32EncRes))
+        {
+            *args->s32EncPos -= (s32)(*args->u32EncRes);
+        }
+        else if (*args->s32EncPos < 0)
+        {
+            *args->s32EncPos += (s32)(*args->u32EncRes);
+        }
+        *args->s64UserPosFb += (s64)s32EncDeltaPos;
+        *args->s32EncTurns = *args->s64UserPosFb / (s64)(*args->u32EncRes);
+
+        // speed (rpm)
+        *args->s16UserSpdFb = 60 * (f32)s32EncDeltaPos / (f32)args->f32DeltaTick / (f32)(*args->u32EncRes);
     }
 
-    u32LastTick = dwt_tick();
+    // time (microsecond,us)
+    args->u32LastTick = u32CurTick;
 }

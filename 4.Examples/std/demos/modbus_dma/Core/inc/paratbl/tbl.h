@@ -355,6 +355,7 @@ typedef struct {
 
 extern ParaTable_t m_paratbl;
 
-#define P(group) m_paratbl.group
+#define P(grp)      m_paratbl.grp
+#define P_ADDR(grp) &P(grp)
 
 #endif

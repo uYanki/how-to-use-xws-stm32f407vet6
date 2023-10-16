@@ -12,7 +12,6 @@
 ".\objects\paratbl.o"
 ".\objects\wave.o"
 ".\objects\pulse.o"
-".\objects\enc.o"
 ".\objects\calc.o"
 ".\objects\misc.o"
 ".\objects\stm32f4xx_adc.o"
@@ -70,6 +69,9 @@
 ".\objects\portevent.o"
 ".\objects\portserial.o"
 ".\objects\porttimer.o"
+".\objects\absenc.o"
+".\objects\incenc.o"
+".\objects\pulse_1.o"
 --library_type=microlib --strict --scatter ".\Objects\demo.sct"
 --summary_stderr --info summarysizes --map --load_addr_map_info --xref --callgraph --symbols
 --info sizes --info totals --info unused --info veneers
