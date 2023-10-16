@@ -11,7 +11,6 @@
 ".\objects\autoinit.o"
 ".\objects\paratbl.o"
 ".\objects\wave.o"
-".\objects\pulse.o"
 ".\objects\calc.o"
 ".\objects\misc.o"
 ".\objects\stm32f4xx_adc.o"

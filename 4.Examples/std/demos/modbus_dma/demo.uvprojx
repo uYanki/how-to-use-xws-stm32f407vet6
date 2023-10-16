@@ -499,11 +499,6 @@
               <FilePath>..\..\board\pulse\wave.c</FilePath>
             </File>
             <File>
-              <FileName>pulse.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\board\pulse\pulse.c</FilePath>
-            </File>
-            <File>
               <FileName>calc.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\board\pulse\calc.c</FilePath>
