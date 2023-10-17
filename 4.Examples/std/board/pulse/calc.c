@@ -1,6 +1,6 @@
 #include "calc.h"
 
-// err_i: maximum allowable error
+// err_i: maximum allowable frequency error
 
 bool TIM_Calc(u32 clk_i, u32 frq_i, u32 err_i, u16* prd_o, u16* psc_o, u32* frq_o)
 {

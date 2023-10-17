@@ -26,27 +26,30 @@
 // #pragma pack(2)
 // #pragma pack()
 
-typedef __packed struct {
-    u32 u32DrvScheme;       ///< 000 驱动器方案
-    u16 u16McuSwVerMajor;   ///< 002 软件基线版本号
-    u16 u16McuSwVerMinor;   ///< 003 软件分支版本号
-    u32 u32McuSwDate;       ///< 004 软件日期
-    u32 u32McuSwBuildDate;  ///< 006 软件构建日期
-    u16 u16MotType;         ///< 008 电机类型
-    u16 u16MotPolePairs;    ///< 009 电机极对数
-    u16 u16EncScheme;       ///< 010 编码器方案
-    u16 u16EncType;         ///< 011 编码器类型
-    u32 u32EncRes;          ///< 012 编码器分辨率
-    u32 u32EncOffset;       ///< 014 编码器安装偏置
-    u16 u16HallOffset;      ///< 016 霍尔安装偏置
-    u16 u16EncOverTemp;     ///< 017 编码器过热点
-    u16 u16CurRate;         ///< 018 额定电流
-    u16 u16CurMax;          ///< 019 最大电流
-    u16 u16TrqRate;         ///< 020 额定转矩
-    u16 u16TrqMax;          ///< 021 最大转矩
-    u16 u16SpdRate;         ///< 022 额定转速
-    u16 u16SpdMax;          ///< 023 最大转速
-    u16 u16BlinkPeriod;     ///< 024 指示灯闪烁周期
+#define EXPORT_PARA_GROUP
+
+EXPORT_PARA_GROUP typedef __packed struct {
+    u32 u32DrvScheme;       ///< P00.000 RO 驱动器方案
+    u16 u16McuSwVerMajor;   ///< P00.002 RO 软件基线版本号
+    u16 u16McuSwVerMinor;   ///< P00.003 RO 软件分支版本号
+    u32 u32McuSwDate;       ///< P00.004 RO 软件日期
+    u32 u32McuSwBuildDate;  ///< P00.006 RO 软件构建日期
+    u16 u16MotType;         ///< P00.008 RW 电机类型
+    u16 u16MotPolePairs;    ///< P00.009 RW 电机极对数
+    u16 u16EncScheme;       ///< P00.010 RW 编码器方案
+    u16 u16EncType;         ///< P00.011 RW 编码器类型
+    u32 u32EncRes;          ///< P00.012 RW 编码器分辨率
+    u32 u32EncOffset;       ///< P00.014 RW 编码器安装偏置
+    u16 u16HallOffset;      ///< P00.016 RW 霍尔安装偏置
+    u16 u16EncOverTemp;     ///< P00.017 RW 编码器过热点
+    u16 u16CurRate;         ///< P00.018 RW 额定电流
+    u16 u16CurMax;          ///< P00.019 RW 最大电流
+    u16 u16TrqRate;         ///< P00.020 RW 额定转矩
+    u16 u16TrqMax;          ///< P00.021 RW 最大转矩
+    u16 u16SpdRate;         ///< P00.022 RW 额定转速
+    u16 u16SpdMax;          ///< P00.023 RW 最大转速
+    u16 u16BlinkPeriod;     ///< P00.024 RW 指示灯闪烁周期
+
 } DrvCfg_t;
 
 // u16 u16VoltInRate;  // 额定输入电压
@@ -66,30 +69,30 @@ typedef __packed struct {
 // u16 u16MotMidOlt;   // 连续过载时间
 // u16 u16MotMaxOlt;   // 瞬时过载时间
 
-typedef __packed struct {
-    u16 u16Umdc;        ///< 000 母线电压
-    s16 s16CurPhAFb;    ///< 001
-    s16 s16CurPhBFb;    ///< 002
-    s16 s16IalphaFb;    ///< 003
-    s16 s16IbetaFb;     ///< 004
-    s16 s16IqFb;        ///< 005
-    s16 s16IdFb;        ///< 006
-    u16 u16ElecAng;     ///< 007
-    s16 s16Ualpha;      ///< 008
-    s16 s16Ubeta;       ///< 009
-    u16 u16DutyPha;     ///< 010 A相输出占空比
-    u16 u16DutyPhb;     ///< 011 B相输出占空比
-    u16 u16DutyPhc;     ///< 012 C相输出占空比
-    s16 s16Uq;          ///< 013
-    s16 s16Ud;          ///< 014
-    s16 s16UserSpdRef;  ///< 015 用户速度指令, 单位 rpm
-    s16 s16UserSpdFb;   ///< 016 用户速度反馈, 单位 rpm
-    s64 s64UserPosRef;  ///< 017 用户位置指令
-    s64 s64UserPosFb;   ///< 021 用户位置反馈
-    s16 s16UserTrqRef;  ///< 025
-    s16 s16UserTrqFb;   ///< 026 用户转矩反馈
+EXPORT_PARA_GROUP typedef __packed struct {
+    u16 u16Umdc;        ///< P01.000 RO 母线电压
+    s16 s16CurPhAFb;    ///< P01.001 RO
+    s16 s16CurPhBFb;    ///< P01.002 RO
+    s16 s16IalphaFb;    ///< P01.003 RO
+    s16 s16IbetaFb;     ///< P01.004 RO
+    s16 s16IqFb;        ///< P01.005 RO
+    s16 s16IdFb;        ///< P01.006 RO
+    u16 u16ElecAng;     ///< P01.007 RO
+    s16 s16Ualpha;      ///< P01.008 RO
+    s16 s16Ubeta;       ///< P01.009 RO
+    u16 u16DutyPha;     ///< P01.010 RO A相输出占空比
+    u16 u16DutyPhb;     ///< P01.011 RO B相输出占空比
+    u16 u16DutyPhc;     ///< P01.012 RO C相输出占空比
+    s16 s16Uq;          ///< P01.013 RO
+    s16 s16Ud;          ///< P01.014 RO
+    s16 s16UserSpdRef;  ///< P01.015 RO 用户速度指令, 单位 rpm
+    s16 s16UserSpdFb;   ///< P01.016 RO 用户速度反馈, 单位 rpm
+    s64 s64UserPosRef;  ///< P01.017 RO 用户位置指令
+    s64 s64UserPosFb;   ///< P01.021 RO 用户位置反馈
+    s16 s16UserTrqRef;  ///< P01.025 RO 用户转矩指令
+    s16 s16UserTrqFb;   ///< P01.026 RO 用户转矩反馈
 
-    s16 s16EnvTemp;  ///< 027 环境温度(ds18b20), 单位 0.01°
+    s16 s16EnvTemp;  ///< P01.027 RO 环境温度(ds18b20), 单位 0.01°
 
 } MotSta_t;
 
@@ -107,21 +110,22 @@ typedef enum {
     SPD_LIM_REV,
 } SpdLimSrc_e;
 
-typedef __packed struct {
-    u16 u16SpdTgtSrc;       ///< 000 速度指令来源
-    s16 s16SpdTgtRef;       ///< 001 目标速度指令
-    u16 u16SpdTgtUnit;      ///< 002 速度指令单位
-    u16 u16SpdPlanMode;     ///< 003 速度规划模式
-    u16 u16DecTime;         ///< 004 减速时间
-    u16 u16AccTime;         ///< 005 加速时间
-    s16 s16SpdDigRef;       ///< 006 数字速度指令
-    u16 u16SpdMulRefSel;    ///< 007 多段指令选择
-    s16 s16SpdDigRefs[16];  ///< 008 数字速度指令
-    u16 u16SpdAiCoeff;      ///< 024 单位模拟量对应转速指令
-    u16 u16SpdLimSrc;       ///< 025 速度限制来源
-    u16 u16SpdLimRes;       ///< 026 速度限制状态
-    u16 s64SpdFwdLim;       ///< 027 正向速度限制
-    u16 s64SpdRevLim;       ///< 028 反向速度限制
+EXPORT_PARA_GROUP typedef __packed struct {
+    u16 u16SpdTgtSrc;       ///< P02.000 RW 速度指令来源
+    s16 s16SpdTgtRef;       ///< P02.001 RW 目标速度指令
+    u16 u16SpdTgtUnit;      ///< P02.002 RW 速度指令单位
+    u16 u16SpdPlanMode;     ///< P02.003 RW 速度规划模式
+    u16 u16DecTime;         ///< P02.004 RW 减速时间
+    u16 u16AccTime;         ///< P02.005 RW 加速时间
+    s16 s16SpdDigRef;       ///< P02.006 RW 数字速度指令
+    u16 u16SpdMulRefSel;    ///< P02.007 RW 多段指令选择
+    s16 s16SpdDigRefs[16];  ///< P02.008 RW 数字速度指令
+    u16 u16SpdAiCoeff;      ///< P02.024 RW 单位模拟量对应转速指令
+    u16 u16SpdLimSrc;       ///< P02.025 RW 速度限制来源
+    u16 u16SpdLimRes;       ///< P02.026 RW 速度限制状态
+    u16 s64SpdFwdLim;       ///< P02.027 RW 正向速度限制
+    u16 s64SpdRevLim;       ///< P02.028 RW 反向速度限制
+    u16 u16SpdCoeff;        ///< P02.029 RW 速度缩放系数
 } SpdCtl_t;
 
 //-----------------------------------------------------------------------------
@@ -137,34 +141,32 @@ typedef enum {
     POS_LIM_REV,
 } PosLimSrc_e;
 
-typedef __packed struct {
-    u16 u16PosTgtSrc;       ///< 000 位置指令来源
-    s64 s16PosTgtRef;       ///< 001 目标位置指令
-    s64 s64PosDigRef;       ///< 005 数字位置指令
-    u16 u16SpdMulRefSel;    ///< 007 多段指令选择
-    s64 s64PosDigRefs[16];  ///< 010 数字位置指令
-    u16 u16PosLimSrc;       ///< 074 位置限制来源
-    u16 u16PosLimRes;       ///< 075 位置限制状态
-    u16 s64PosFwdLim;       ///< 076 正向位置限制
-    u16 s64PosRevLim;       ///< 077 反向位置限制
+EXPORT_PARA_GROUP typedef __packed struct {
+    u16 u16PosTgtSrc;       ///< P03.000 RW 位置指令来源
+    s64 s16PosTgtRef;       ///< P03.001 RW 目标位置指令
+    s64 s64PosDigRef;       ///< P03.005 RW 数字位置指令
+    u16 u16SpdMulRefSel;    ///< P03.009 RW 多段指令选择
+    s64 s64PosDigRefs[16];  ///< P03.010 RW 数字位置指令
+    u16 u16PosLimSrc;       ///< P03.074 RW 位置限制来源
+    u16 u16PosLimRes;       ///< P03.075 RO 位置限制状态
+    u16 s64PosFwdLim;       ///< P03.076 RW 正向位置限制
+    u16 s64PosRevLim;       ///< P03.077 RW 反向位置限制
 
-    s64 s64MechOffset;    ///< 078 机械位置偏置
-    u32 u32ElecGearNum;   ///< 082 电子齿轮比分子
-    u32 u32ElecGearDeno;  ///< 084 电子齿轮比分母
+    s64 s64MechOffset;    ///< P03.078 RW 机械位置偏置
+    u32 u32ElecGearNum;   ///< P03.082 RW 电子齿轮比分子(numerator)
+    u32 u32ElecGearDeno;  ///< P03.084 RW 电子齿轮比分母(denominator)
 
-    u16 u16EncState;    ///< 086 编码器状态
-    s16 s16EncTemp;     ///< 087 编码器温度
-    u16 u16EncContErr;  ///< 088 编码器单次连续出错最大数
-    u16 u16EncErrSum;   ///< 089 编码器出错累计数
-    u16 u16EncErrType;  ///< 090 编码器错误类型
-    u16 u16EncMode;     ///< 091 编码器工作模式
-    s64 s64EncPosInit;  ///< 092 编码器上电初始位置
-    s32 s32EncPos;      ///< 096 编码器单圈位置
-    s32 s32EncTurns;    ///< 098 编码器圈数
+    u16 u16EncState;    ///< P03.086 RO 编码器状态
+    s16 s16EncTemp;     ///< P03.087 RO 编码器温度
+    u16 u16EncMode;     ///< P03.088 RW 编码器工作模式
+    s64 s64EncPosInit;  ///< P03.089 RW 编码器上电初始位置
+    s32 s32EncPos;      ///< P03.093 RO 编码器单圈位置
+    s32 s32EncTurns;    ///< P03.095 RO 编码器圈数
 
-    u16 u16EncFreqDivDir;   ///< 100 编码器分频输出脉冲方向
-    u16 u16EncFreqDivNum;   ///< 101 编码器分频输出分子
-    u16 u16EncFreqDivDeno;  ///< 102 编码器分频输出分母
+    u16 u16EncFreqDivDir;   ///< P03.097 RW 编码器分频输出脉冲方向
+    u16 u16EncFreqDivNum;   ///< P03.098 RW 编码器分频输出分子
+    u16 u16EncFreqDivDeno;  ///< P03.099 RW 编码器分频输出分母
+
 } PosCtl_t;
 
 //-----------------------------------------------------------------------------
@@ -178,24 +180,24 @@ typedef __packed struct {
 //-----------------------------------------------------------------------------
 //
 
-typedef __packed struct {
-    u16 u16CommSlaveAddr;      ///< 000 RW 通讯从站地址
-    u16 u16ModBaudrate;        ///< 001 RW Modbus 波特率
-    u16 u16ModDataFmt;         ///< 002 RW Modbus 数据格式
-    u16 u16ModMasterEndian;    ///< 003 RW Modbus 主站大小端
-    u16 u16ModDisconnectTime;  ///< 004 RW Modbus 通讯断开检测时间
-    u16 u16ModAckDelay;        ///< 005 RW Modbus 命令响应延时
-    u16 u16CopBitrate;         ///< 006 RW CANopen 比特率
+EXPORT_PARA_GROUP typedef __packed struct {
+    u16 u16CommSlaveAddr;      ///< P04.000 RW 通讯从站地址
+    u16 u16ModBaudrate;        ///< P04.001 RW Modbus 波特率
+    u16 u16ModDataFmt;         ///< P04.002 RW Modbus 数据格式
+    u16 u16ModMasterEndian;    ///< P04.003 RW Modbus 主站大小端
+    u16 u16ModDisconnectTime;  ///< P04.004 RW Modbus 通讯断开检测时间
+    u16 u16ModAckDelay;        ///< P04.005 RW Modbus 命令响应延时
+    u16 u16CopBitrate;         ///< P04.006 RW CANopen 比特率
 } SlvCom_t;
 
 //-----------------------------------------------------------------------------
 //
 
-typedef __packed struct {
-    u16 u16LogSampPrd;   ///< 000 RW 数据记录采样周期设定
-    u16 u16LogSampPts;   ///< 001 RW 数据记录采样点数设定
-    u16 u16LogChCnt;     ///< 002 RW 数据记录通道数量设定
-    u16 u16LogChSrc[8];  ///< 003 RW 数据记录通道地址设定 (数据源)
+EXPORT_PARA_GROUP typedef __packed struct {
+    u16 u16LogSampPrd;   ///< P05.000 RW 数据记录采样周期设定
+    u16 u16LogSampPts;   ///< P05.001 RW 数据记录采样点数设定
+    u16 u16LogChCnt;     ///< P05.002 RW 数据记录通道数量设定
+    u16 u16LogChSrc[8];  ///< P05.003 RW 数据记录通道地址设定 (数据源)
 } CurveTrace_t;
 
 //-----------------------------------------------------------------------------
@@ -277,27 +279,27 @@ typedef enum {
     WaveSync_Enable,   // 异步输出
 } WaveSync_e;
 
-typedef __packed struct {
-    u16 u16WaveConfig;      ///< 000 RW 触发配置
-    u16 u16WaveType;        ///< 001 RW 波形类型
-    u32 u32WaveTargetFreq;  ///< 002 RW 波形期望频率
-    u32 u32WaveActualFreq;  ///< 004 RO 波形实际频率
-    u16 u16WaveFreqUnit;    ///< 006 RW 波形频率单位
-    u16 u16WaveAmplitude;   ///< 007 RW 波形振幅
-    u16 u16WaveAlign;       ///< 008 RW 数据点对齐方式
-    u16 u16WaveSize;        ///< 009 RW 数据点数量
-    u16 u16WaveData[64];    ///< 010 RW 数据点数值
+EXPORT_PARA_GROUP typedef __packed struct {
+    u16 u16WaveConfig;      ///< P06.000 RW 触发配置
+    u16 u16WaveType;        ///< P06.001 RW 波形类型
+    u32 u32WaveTargetFreq;  ///< P06.002 RW 波形期望频率
+    u32 u32WaveActualFreq;  ///< P06.004 RO 波形实际频率
+    u16 u16WaveFreqUnit;    ///< P06.006 RW 波形频率单位
+    u16 u16WaveAmplitude;   ///< P06.007 RW 波形振幅
+    u16 u16WaveAlign;       ///< P06.008 RW 数据点对齐方式
+    u16 u16WaveSize;        ///< P06.009 RW 数据点数量
+    u16 u16WaveData[64];    ///< P06.010 RW 数据点数值
 } WaveGen_t;
 
 //-----------------------------------------------------------------------------
 //
 
-typedef __packed struct {
-    u16 u16DbgBuf[8];  ///< 000
-    u32 u32DbgBuf[8];  ///< 008
-    u64 u64DbgBuf[8];  ///< 024
-    f32 f32DbgBuf[8];  ///< 056
-    f64 f64DbgBuf[8];  ///< 072
+EXPORT_PARA_GROUP typedef __packed struct {
+    u16 u16DbgBuf[8];  ///< P07.000
+    u32 u32DbgBuf[8];  ///< P07.008
+    u64 u64DbgBuf[8];  ///< P07.024
+    f32 f32DbgBuf[8];  ///< P07.056
+    f64 f64DbgBuf[8];  ///< P07.072
 } DbgSta_t;
 
 //-----------------------------------------------------------------------------
@@ -322,27 +324,24 @@ typedef struct {
     };
     
     union {
-        struct {
-            u16 RESV3[GROUP_SIZE];
-            u16 RESV4[GROUP_SIZE];
-        };
+        u16 RESV3[GROUP_SIZE];
         PosCtl_t PosCtl;
     };
 
     union {
-        u16 RESV5[GROUP_SIZE];
+        u16 RESV4[GROUP_SIZE];
         WaveGen_t WaveGen1;
     };
 
     union {
-        u16 RESV6[GROUP_SIZE];
+        u16 RESV5[GROUP_SIZE];
         WaveGen_t WaveGen2;
     };
 
     union {
         struct {
+            u16 RESV6[GROUP_SIZE];
             u16 RESV7[GROUP_SIZE];
-            u16 RESV8[GROUP_SIZE];
         };
         DbgSta_t DbgSta;
     };

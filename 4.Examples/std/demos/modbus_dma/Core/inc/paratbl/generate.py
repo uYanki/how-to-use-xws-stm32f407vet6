@@ -6,8 +6,17 @@ filesrc = "./tbl.h"
 filedst = filesrc
 
 # regex
-blocks = re.compile(r"typedef __packed struct {\n(.*?)} (\w+_t);", re.S)
-lines = re.compile(r"((([u|s|f])(\d{1,2}) .*?(\[(\d{1,})\])?;\s+///<) ?(\d{1,})? ?(.*?))\n")
+blocks = re.compile(r"(EXPORT_PARA_GROUP)? typedef __packed struct {\n(.*?)} (\w+_t);", re.S)
+lines = re.compile(r"((([u|s|f])(\d{1,2}) .*?(\[(\d{1,})\])?;\s+///<) ?(P\d{1,}\.\d{1,})? ?(.*?))\n")
+
+
+def add_prefix(number, prefix, length):
+    result = str(number)
+    delta = length - len(result)
+    if delta > 0:
+        result = prefix * delta + result
+    return result
+
 
 if os.path.exists(filesrc):
 
@@ -28,17 +37,17 @@ if os.path.exists(filesrc):
 
     with open(filedst, "w+") as fdst:
 
-        # group
+        group_index = 0
+
         for block in blocks.findall(ctx):
+            group_export = len(block[0]) != 0
+            group_paras = block[1]
+            group_name = block[2]
 
-            grp_paras = block[0]
-            grp_name = block[1]
-            print(grp_name)
-
-            id = 0
+            member_offset = 0
 
             # para
-            for line in lines.findall(grp_paras):
+            for line in lines.findall(group_paras):
 
                 para_line = line[0]
                 para_left = line[1]
@@ -57,7 +66,7 @@ if os.path.exists(filesrc):
                     print(para_type)
                     raise "error type"
 
-                para_index = " " + ("0" * (3 - len(str(id)))) + str(id) + " "
+                para_index = " P" + add_prefix(group_index, "0", 2) + "." + add_prefix(member_offset, "0",  3) + " "
                 para_newline = para_left + para_index + para_right
                 ctx = ctx.replace(para_line, para_newline)
                 # print(para_newline)
@@ -77,6 +86,10 @@ if os.path.exists(filesrc):
                 if para_array_size != '':
                     offset *= int(para_array_size)
 
-                id += offset
+                member_offset += offset
+
+            if group_export:
+                group_index += 1
 
         fdst.write(ctx)
+        # print(ctx)

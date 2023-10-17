@@ -9,7 +9,7 @@
 #include "pinmap.h"
 #include "paratbl/tbl.h"
 
-#include "pulse/pulse.h"
+// #include "pulse/pwm.h"
 #include "pulse/wave.h"
 
 #include "enc/incEnc.h"
@@ -20,6 +20,7 @@
 #define CONFIG_MODULE_WAVEGEN     1  // 波形发生器模块
 #define CONFIG_MODULE_TEMPERATURE 1  // 环境温度采集模块
 #define CONFIG_MODULE_ENCODER     1  // 编码器测速模块
+#define CONFIG_MODULE_FREQDIVOUT  1  // 分频输出模块
 
 //-----------------------------------------------------------------------------
 //
@@ -64,9 +65,6 @@ int main()
 
     eMBEnable();
 
-    // PulseGenConfig(10000, 230);
-    PulseGenInit();
-
     WaveGenInit();
 
     P(DrvCfg).u16BlinkPeriod = 1000;
@@ -91,7 +89,7 @@ int main()
         if (DelayNonBlockMS(t_blink, P(DrvCfg).u16BlinkPeriod))
         {
             PEout(15) ^= 1;  // toggle
-            PulseGenN(8);
+            PulseGenStart(6);
             t_blink = HAL_GetTick();
         }
 #endif
@@ -102,10 +100,16 @@ int main()
 
 #if CONFIG_MODULE_TEMPERATURE
         BspTempSensorCycle();
-#endif
+#endif  // CONFIG_MODULE_TEMPERATURE
+
 #if CONFIG_MODULE_ENCODER
         BspEncCycle();
-#endif
+
+#if CONFIG_MODULE_FREQDIVOUT
+        BspFreqDivOutCycle();
+#endif  // CONFIG_MODULE_FREQDIVOUT
+
+#endif  // CONFIG_MODULE_ENCODER
     }
 }
 
@@ -165,13 +169,14 @@ static int BspEncInit(void)
     EncArgs.s32EncTurns  = (vs32*)P_ADDR(PosCtl.s32EncTurns);
     EncArgs.s16UserSpdFb = (vs16*)P_ADDR(MotSta.s16UserSpdFb);
     EncArgs.s64UserPosFb = (vs64*)P_ADDR(MotSta.s64UserPosFb);
+    EncArgs.u16SpdCoeff  = (vu16*)P_ADDR(SpdCtl.u16SpdCoeff);
 
     pEncArgs = &EncArgs;
 
-    P(DrvCfg.u32EncRes) = CONFIG_ENC_PPS;
+    P(DrvCfg.u32EncRes)   = CONFIG_ENC_PPS;
+    P(SpdCtl.u16SpdCoeff) = 100;
 
     IncEncInit(pEncArgs);
-    PulseGenInit();
 
     return INIT_RESULT_SUCCESS;
 }
@@ -191,10 +196,13 @@ static void BspEncCycle(void)
 }
 
 //-----------------------------------------------------------------------------
+// freq div output
 
 static int BspFreqDivOutInit(void)
 {
-    // PulseGenInit();
+    PulseGenInit();
+    PulseGenConfig(5678, 0.37);
+
     return INIT_RESULT_SUCCESS;
 }
 
@@ -208,11 +216,21 @@ static void BspFreqDivOutCycle(void)
     {
         t = HAL_GetTick();
 
-        static s64 s64LastUserPosFb = 0;
+        static u32 u32RemainedPulse = 0;
 
-        // s64 s64CurUserPosFb = P(MotSta).s64UserPosFb;
+        // 剩余的未输出脉冲数
+        u32RemainedPulse += abs(pEncArgs->s32DeltaPos);
 
-        // PulseGenConfig(abs(s64CurUserPosFb - s64LastUserPosFb), 500);
+        // 将要的输出脉冲数
+        u32 u32PulseOut = MAX(u32RemainedPulse, 2500);
+
+        // 输出脉冲
+        if (u32RemainedPulse &&
+            PulseGenConfig(u32PulseOut, 0.333) &&
+            PulseGenStart(u32PulseOut))
+        {
+            u32RemainedPulse -= u32PulseOut;
+        }
     }
 }
 

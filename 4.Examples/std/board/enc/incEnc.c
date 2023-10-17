@@ -5,11 +5,6 @@
 #include "incEnc.h"
 
 //----------------------------------------------------------
-// config
-
-#define CONFIG_ENC_PPR    (60)  // ?????
-
-//----------------------------------------------------------
 // ports
 
 #define ENC_TIM_CLK       RCC_APB1Periph_TIM4
@@ -46,7 +41,7 @@ static inline void IncEncRst(void)
 }
 
 /**
- * [in]  u32EncRes;
+ * [in]  u32EncRes
  */
 void IncEncInit(IncEncArgs_t* args)
 {
@@ -102,16 +97,18 @@ void IncEncInit(IncEncArgs_t* args)
 
     args->u32LastTick  = 0;
     args->f32DeltaTick = 0;
+    args->s32DeltaPos  = 0;
 
     TIM_Cmd(ENC_TIM_PORT, ENABLE);
 }
 
 /**
- * [in]  u32EncRes;
- * [out] s32EncPos;
- * [out] s32EncTurns;
- * [out] s16UserSpdFb;
- * [out] s64UserPosFb;
+ * [in]  u16SpdCoeff
+ * [in]  u32EncRes
+ * [out] s32EncPos
+ * [out] s32EncTurns
+ * [out] s16UserSpdFb
+ * [out] s64UserPosFb
  */
 void IncEncCycle(IncEncArgs_t* args)
 {
@@ -119,7 +116,7 @@ void IncEncCycle(IncEncArgs_t* args)
 
     if (args->u32LastTick != 0)
     {
-        s32 s32EncDeltaPos = IncEncGet();
+        args->s32DeltaPos = IncEncGet();
 
         // immediately reset, otherwise pulse loss may occur
         IncEncRst();
@@ -128,7 +125,7 @@ void IncEncCycle(IncEncArgs_t* args)
         args->f32DeltaTick = (f32)HAL_DeltaTick(args->u32LastTick, u32CurTick) / (f32)SystemCoreClock;
 
         // position (pulse)
-        *args->s32EncPos += s32EncDeltaPos;
+        *args->s32EncPos += args->s32DeltaPos;
         if (*args->s32EncPos >= (s32)(*args->u32EncRes))
         {
             *args->s32EncPos -= (s32)(*args->u32EncRes);
@@ -137,11 +134,12 @@ void IncEncCycle(IncEncArgs_t* args)
         {
             *args->s32EncPos += (s32)(*args->u32EncRes);
         }
-        *args->s64UserPosFb += (s64)s32EncDeltaPos;
+        *args->s64UserPosFb += (s64)args->s32DeltaPos;
         *args->s32EncTurns = *args->s64UserPosFb / (s64)(*args->u32EncRes);
 
         // speed (rpm)
-        *args->s16UserSpdFb = 60 * (f32)s32EncDeltaPos / (f32)args->f32DeltaTick / (f32)(*args->u32EncRes);
+        *args->s16UserSpdFb = *args->u16SpdCoeff;
+        *args->s16UserSpdFb *= 60 * (f32)args->s32DeltaPos / (f32)args->f32DeltaTick / (f32)(*args->u32EncRes);
     }
 
     // time (microsecond,us)

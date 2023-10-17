@@ -2,7 +2,7 @@
 #define __INC_ENC_H__
 
 //----------------------------------------------------------
-// Õı½»±àÂëÆ÷/ÔöÁ¿Ê½±àÂëÆ÷: Î»ÖÃ¼ÇÂ¼,ËÙ¶È¼ÆËã
+// æ­£äº¤ç¼–ç å™¨/å¢é‡å¼ç¼–ç å™¨: ä½ç½®è®°å½•,é€Ÿåº¦è®¡ç®—
 
 #include "stm32f4xx.h"
 
@@ -12,6 +12,8 @@ __packed typedef struct {
     vs32* s32EncTurns;
     vs16* s16UserSpdFb;
     vs64* s64UserPosFb;
+    vu16* u16SpdCoeff;
+    s32   s32DeltaPos;
     u32   u32LastTick;
     f32   f32DeltaTick;
 } IncEncArgs_t;
