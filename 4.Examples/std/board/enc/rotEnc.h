@@ -1,8 +1,8 @@
-#ifndef __INC_ENC_H__
-#define __INC_ENC_H__
+#ifndef __ROT_ENC_H__
+#define __ROT_ENC_H__
 
 //----------------------------------------------------------
-// 正交编码器/增量式编码器: 位置记录,速度计算
+// 旋变编码器: 位置记录,速度计算
 
 #include "stm32f4xx.h"
 
@@ -15,9 +15,9 @@ __packed typedef struct {
     vu16* u16SpdCoeff;
     u32   u32LastTick;
     f32   f32DeltaTick;
-} IncEncArgs_t;
+} RotEncArgs_t;
 
-void IncEncInit(IncEncArgs_t* args);
-s32  IncEncCycle(IncEncArgs_t* args);
+void RotEncInit(RotEncArgs_t* args);
+s32  RotEncCycle(RotEncArgs_t* args);
 
 #endif

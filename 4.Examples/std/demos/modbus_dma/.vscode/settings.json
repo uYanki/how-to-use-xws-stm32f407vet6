@@ -42,5 +42,6 @@
         "enc.h": "c",
         "calc.h": "c",
         "pulse.h": "c"
-    }
+    },
+    "C_Cpp.errorSquiggles": "disabled"
 }

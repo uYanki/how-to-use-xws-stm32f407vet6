@@ -7,9 +7,7 @@
 #include <stdio.h>
 #endif
 
-#include <stdbool.h>
 #include "stm32f4xx.h"
-#include "usdk.defs.h"
 
 void UART_Config(USART_InitTypeDef* config);
 void UART_ReConfig(USART_InitTypeDef* config);

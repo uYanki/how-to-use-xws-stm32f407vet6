@@ -17,6 +17,8 @@
 
 #include "sensor/ds18b20/ds18b20.h"
 
+#include "math.h"
+
 #define CONFIG_MODULE_WAVEGEN     1  // 波形发生器模块
 #define CONFIG_MODULE_TEMPERATURE 1  // 环境温度采集模块
 #define CONFIG_MODULE_ENCODER     1  // 编码器测速模块
@@ -89,7 +91,6 @@ int main()
         if (DelayNonBlockMS(t_blink, P(DrvCfg).u16BlinkPeriod))
         {
             PEout(15) ^= 1;  // toggle
-            PulseGenStart(6);
             t_blink = HAL_GetTick();
         }
 #endif
@@ -104,11 +105,6 @@ int main()
 
 #if CONFIG_MODULE_ENCODER
         BspEncCycle();
-
-#if CONFIG_MODULE_FREQDIVOUT
-        BspFreqDivOutCycle();
-#endif  // CONFIG_MODULE_FREQDIVOUT
-
 #endif  // CONFIG_MODULE_ENCODER
     }
 }
@@ -154,9 +150,10 @@ static void BspTempSensorCycle(void)
 #endif
 
 //-----------------------------------------------------------------------------
-// encoder: position recording, speed calculation
+// encoder: position recording, speed calculation, freq-div output
 
-#define CONFIG_ENC_PPS 60
+#define CONFIG_ENC_PPS 60  // 编码器单圈分辨率
+#define CONFIF_FRQ_DIV 4   // 分频输出的分频因子
 
 static IncEncArgs_t* pEncArgs;
 
@@ -177,6 +174,7 @@ static int BspEncInit(void)
     P(SpdCtl.u16SpdCoeff) = 100;
 
     IncEncInit(pEncArgs);
+    PulseGenInit();
 
     return INIT_RESULT_SUCCESS;
 }
@@ -189,47 +187,28 @@ static void BspEncCycle(void)
 
     if (DelayNonBlockMS(t, 1))
     {
+        static u32 pulse = 0;
+
         t = HAL_GetTick();
 
-        IncEncCycle(pEncArgs);
-    }
-}
+        pulse += abs(IncEncCycle(pEncArgs));
 
-//-----------------------------------------------------------------------------
-// freq div output
+        // 每毫秒输出 (s32DeltaPos / CONFIF_FRQ_DIV) 个脉冲
 
-static int BspFreqDivOutInit(void)
-{
-    PulseGenInit();
-    PulseGenConfig(5678, 0.37);
-
-    return INIT_RESULT_SUCCESS;
-}
-
-USDK_INIT_EXPORT(BspFreqDivOutInit, INIT_LEVEL_BOARD)
-
-static void BspFreqDivOutCycle(void)
-{
-    static tick_t t = 0;
-
-    if (DelayNonBlockMS(t, 1))
-    {
-        t = HAL_GetTick();
-
-        static u32 u32RemainedPulse = 0;
-
-        // 剩余的未输出脉冲数
-        u32RemainedPulse += abs(pEncArgs->s32DeltaPos);
-
-        // 将要的输出脉冲数
-        u32 u32PulseOut = MAX(u32RemainedPulse, 2500);
-
-        // 输出脉冲
-        if (u32RemainedPulse &&
-            PulseGenConfig(u32PulseOut, 0.333) &&
-            PulseGenStart(u32PulseOut))
+        if (pulse >= CONFIF_FRQ_DIV)
         {
-            u32RemainedPulse -= u32PulseOut;
+            u32 n = pulse / CONFIF_FRQ_DIV;
+
+            // output n pulse in 1ms
+            u32 frq = n * 1000;
+
+            if (PulseGenConfig(frq, 0.333))
+            {
+                if (PulseGenStart(n))
+                {
+                    pulse %= CONFIF_FRQ_DIV;
+                }
+            }
         }
     }
 }

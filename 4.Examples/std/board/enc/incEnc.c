@@ -97,7 +97,6 @@ void IncEncInit(IncEncArgs_t* args)
 
     args->u32LastTick  = 0;
     args->f32DeltaTick = 0;
-    args->s32DeltaPos  = 0;
 
     TIM_Cmd(ENC_TIM_PORT, ENABLE);
 }
@@ -109,14 +108,16 @@ void IncEncInit(IncEncArgs_t* args)
  * [out] s32EncTurns
  * [out] s16UserSpdFb
  * [out] s64UserPosFb
+ *
+ * [ret] s32DeltaPos
  */
-void IncEncCycle(IncEncArgs_t* args)
+s32 IncEncCycle(IncEncArgs_t* args)
 {
     u32 u32CurTick = dwt_tick();
 
     if (args->u32LastTick != 0)
     {
-        args->s32DeltaPos = IncEncGet();
+        s32 s32DeltaPos = IncEncGet();
 
         // immediately reset, otherwise pulse loss may occur
         IncEncRst();
@@ -125,7 +126,7 @@ void IncEncCycle(IncEncArgs_t* args)
         args->f32DeltaTick = (f32)HAL_DeltaTick(args->u32LastTick, u32CurTick) / (f32)SystemCoreClock;
 
         // position (pulse)
-        *args->s32EncPos += args->s32DeltaPos;
+        *args->s32EncPos += s32DeltaPos;
         if (*args->s32EncPos >= (s32)(*args->u32EncRes))
         {
             *args->s32EncPos -= (s32)(*args->u32EncRes);
@@ -134,14 +135,18 @@ void IncEncCycle(IncEncArgs_t* args)
         {
             *args->s32EncPos += (s32)(*args->u32EncRes);
         }
-        *args->s64UserPosFb += (s64)args->s32DeltaPos;
+        *args->s64UserPosFb += (s64)s32DeltaPos;
         *args->s32EncTurns = *args->s64UserPosFb / (s64)(*args->u32EncRes);
 
         // speed (rpm)
         *args->s16UserSpdFb = *args->u16SpdCoeff;
-        *args->s16UserSpdFb *= 60 * (f32)args->s32DeltaPos / (f32)args->f32DeltaTick / (f32)(*args->u32EncRes);
+        *args->s16UserSpdFb *= 60 * (f32)s32DeltaPos / (f32)args->f32DeltaTick / (f32)(*args->u32EncRes);
+
+        return s32DeltaPos;
     }
 
     // time (microsecond,us)
     args->u32LastTick = u32CurTick;
+
+    return 0;
 }

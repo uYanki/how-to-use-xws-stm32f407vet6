@@ -127,9 +127,7 @@ void PULSE_GEN_SLV_TIM_IRQHandler()  // 达到指定脉冲数
     if (SET == TIM_GetITStatus(PULSE_GEN_SLV_TIM_PORT, PULSE_GEN_SLV_TIM_IT))
     {
         TIM_ClearITPendingBit(PULSE_GEN_SLV_TIM_PORT, PULSE_GEN_SLV_TIM_IT);
-
-        TIM_Cmd(PULSE_GEN_MST_TIM_PORT, DISABLE);
-        TIM_Cmd(PULSE_GEN_SLV_TIM_PORT, DISABLE);
+        PulseGenStop();
     }
 }
 
@@ -142,7 +140,7 @@ void PulseGenInit(void)
             .GPIO_Mode  = GPIO_Mode_AF,
             .GPIO_Speed = GPIO_Speed_100MHz,
             .GPIO_OType = GPIO_OType_PP,
-            .GPIO_PuPd  = GPIO_PuPd_DOWN,
+            .GPIO_PuPd  = GPIO_PuPd_UP,
         };
 
         PULSE_GEN_MST_GPIO_CLKEN(PULSE_GEN_MST_GPIO_CLK, ENABLE);
@@ -168,9 +166,9 @@ void PulseGenInit(void)
         TIM_ARRPreloadConfig(PULSE_GEN_MST_TIM_PORT, DISABLE);  // disable ARPE
 
         // pwm
-        TIM_OCInitStructure.TIM_OCMode      = TIM_OCMode_PWM2;
+        TIM_OCInitStructure.TIM_OCMode      = TIM_OCMode_PWM1;
         TIM_OCInitStructure.TIM_Pulse       = (TIM_TimeBaseStructure.TIM_Period + 1) * 0.33 - 1;  // duty
-        TIM_OCInitStructure.TIM_OCPolarity  = TIM_OCPolarity_Low;
+        TIM_OCInitStructure.TIM_OCPolarity  = TIM_OCPolarity_High;
         TIM_OCInitStructure.TIM_OutputState = TIM_OutputState_Enable;
 
 #if (PULSE_GEN_MST_TIM_CH == 1)
@@ -212,7 +210,7 @@ void PulseGenInit(void)
         NVIC_InitTypeDef NVIC_InitStructure;
         NVIC_InitStructure.NVIC_IRQChannel                   = PULSE_GEN_SLV_TIM_IRQn;
         NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0;
-        NVIC_InitStructure.NVIC_IRQChannelSubPriority        = 0;
+        NVIC_InitStructure.NVIC_IRQChannelSubPriority        = 1;
         NVIC_InitStructure.NVIC_IRQChannelCmd                = ENABLE;
         NVIC_Init(&NVIC_InitStructure);
 
@@ -241,7 +239,7 @@ bool PulseGenConfig(u32 freq, f32 duty)  // 配置脉冲
 
     u16 prd, psc, ccr;
 
-    if (false == TIM_Calc(PULSE_GEN_MST_TIM_FRQ, freq, freq * 0.02, &prd, &psc, nullptr))
+    if (TIM_Calc(PULSE_GEN_MST_TIM_FRQ, freq, freq * 0.02, &prd, &psc, nullptr) == false)
     {
         // 配置失败: 无法生成目标频率的脉冲
         return false;
@@ -255,6 +253,7 @@ bool PulseGenConfig(u32 freq, f32 duty)  // 配置脉冲
         return false;
     }
 
+    // 比较值
     ccr -= 1;
 
     // 频率
@@ -285,22 +284,41 @@ bool PulseGenStart(u32 count)  // 生成脉冲
     if (count == 0 || count > 65536)
     {
         // 配置失败: 取值范围超过上下限制
+        // TODO: 16为位定时器,待测单次最多个数时 65535 还是 65536
         return false;
     }
 
-    // 脉冲生成个数(16为位定时器,单次最多)
-    ///< TODO: 待测单次最多个数时 65535 还是 65536
-    TIM_SetAutoreload(PULSE_GEN_SLV_TIM_PORT, count - 1);
+    --count;
 
-    // enable pulse generator
-    TIM_Cmd(PULSE_GEN_MST_TIM_PORT, ENABLE);
-    TIM_Cmd(PULSE_GEN_SLV_TIM_PORT, ENABLE);
+    if (count == 0)
+    {
+        // 单脉冲模式
+        TIM_SelectOnePulseMode(PULSE_GEN_MST_TIM_PORT, TIM_OPMode_Single);
+
+        // enable pulse generator
+        TIM_Cmd(PULSE_GEN_MST_TIM_PORT, ENABLE);
+    }
+    else
+    {
+        // PWM 模式
+        TIM_SelectOnePulseMode(PULSE_GEN_MST_TIM_PORT, TIM_OPMode_Repetitive);
+
+        // 脉冲生成个数 (必须大于2)
+        TIM_SetAutoreload(PULSE_GEN_SLV_TIM_PORT, count);
+
+        // enable pulse generator
+        TIM_CtrlPWMOutputs(PULSE_GEN_MST_TIM_PORT, ENABLE);
+        TIM_Cmd(PULSE_GEN_MST_TIM_PORT, ENABLE);
+        TIM_Cmd(PULSE_GEN_SLV_TIM_PORT, ENABLE);
+    }
 
     return true;
 }
 
 void PulseGenStop(void)
 {
+    // disable pulse generator
     TIM_Cmd(PULSE_GEN_MST_TIM_PORT, DISABLE);
     TIM_Cmd(PULSE_GEN_SLV_TIM_PORT, DISABLE);
+    TIM_CtrlPWMOutputs(PULSE_GEN_MST_TIM_PORT, DISABLE);
 }

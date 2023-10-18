@@ -443,6 +443,11 @@
               <FileType>1</FileType>
               <FilePath>..\..\board\bsp\uart.c</FilePath>
             </File>
+            <File>
+              <FileName>adc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\board\bsp\adc.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -828,6 +833,16 @@
               <FileName>pulse.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\board\enc\pulse.c</FilePath>
+            </File>
+            <File>
+              <FileName>hallEnc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\board\enc\hallEnc.c</FilePath>
+            </File>
+            <File>
+              <FileName>rotEnc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\board\enc\rotEnc.c</FilePath>
             </File>
           </Files>
         </Group>
