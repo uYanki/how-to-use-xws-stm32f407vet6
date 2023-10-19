@@ -86,15 +86,15 @@ EXPORT_PARA_GROUP typedef __packed struct {
     s16 s16Uq;          ///< P01.013 RO
     s16 s16Ud;          ///< P01.014 RO
     s32 s32UserSpdRef;  ///< P01.015 RO 用户速度指令, 单位 rpm
-    s32 s32UserSpdFb;   ///< P01.017 RO 用户速度反馈, 单位 rpm
-    s64 s64UserPosRef;  ///< P01.019 RO 用户位置指令
-    s64 s64UserPosFb;   ///< P01.023 RO 用户位置反馈
-    s16 s16UserTrqRef;  ///< P01.027 RO 用户转矩指令
-    s16 s16UserTrqFb;   ///< P01.028 RO 用户转矩反馈
+    s32 s32UserSpdFb;   ///< P01.016 RO 用户速度反馈, 单位 rpm
+    s64 s64UserPosRef;  ///< P01.017 RO 用户位置指令
+    s64 s64UserPosFb;   ///< P01.021 RO 用户位置反馈
+    s16 s16UserTrqRef;  ///< P01.025 RO 用户转矩指令
+    s16 s16UserTrqFb;   ///< P01.026 RO 用户转矩反馈
 
-    s16 s16EnvTemp;         ///< P01.029 RO 环境温度(ds18b20), 单位 0.01°
-    u32 u32AdcSampTime;     ///< P01.030 RO ADC采样耗时
-    u16 u16AdcSampRes[10];  ///< P01.032 RO ADC采样结果
+    s16 s16EnvTemp;  ///< P01.027 RO 环境温度(ds18b20), 单位 0.01°
+		u32 u32AdcSampTime;///< ADC 采样耗时
+    u16 u16AdcSampRes[10]; ///< ADC 采样结果
 } MotSta_t;
 
 //-----------------------------------------------------------------------------

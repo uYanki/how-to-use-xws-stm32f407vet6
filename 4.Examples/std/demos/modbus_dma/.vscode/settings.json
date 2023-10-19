@@ -41,7 +41,11 @@
         "autoinit.h": "c",
         "enc.h": "c",
         "calc.h": "c",
-        "pulse.h": "c"
+        "pulse.h": "c",
+        "adc.h": "c",
+        "incenc.h": "c",
+        "hallenc.h": "c",
+        "rotenc.h": "c"
     },
     "C_Cpp.errorSquiggles": "disabled"
 }

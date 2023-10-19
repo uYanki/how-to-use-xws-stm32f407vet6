@@ -92,9 +92,9 @@ EXPORT_PARA_GROUP typedef __packed struct {
     s16 s16UserTrqRef;  ///< P01.027 RO 用户转矩指令
     s16 s16UserTrqFb;   ///< P01.028 RO 用户转矩反馈
 
-    s16 s16EnvTemp;         ///< P01.029 RO 环境温度(ds18b20), 单位 0.01°
-    u32 u32AdcSampTime;     ///< P01.030 RO ADC采样耗时
-    u16 u16AdcSampRes[10];  ///< P01.032 RO ADC采样结果
+    s16 s16EnvTemp;  ///< P01.029 RO 环境温度(ds18b20), 单位 0.01°
+		u32 u32AdcSampTime; ///< ADC 采样耗时
+    u16 u16AdcSampRes[10]; ///< P01.030 ADC 采样结果
 } MotSta_t;
 
 //-----------------------------------------------------------------------------
@@ -296,11 +296,11 @@ EXPORT_PARA_GROUP typedef __packed struct {
 //
 
 EXPORT_PARA_GROUP typedef __packed struct {
-    u16 u16DbgBuf[8];  ///< P07.000
-    u32 u32DbgBuf[8];  ///< P07.008
-    u64 u64DbgBuf[8];  ///< P07.024
-    f32 f32DbgBuf[8];  ///< P07.056
-    f64 f64DbgBuf[8];  ///< P07.072
+    u16 u16DbgBuf[8];  ///< P07.000 
+    u32 u32DbgBuf[8];  ///< P07.008 
+    u64 u64DbgBuf[8];  ///< P07.024 
+    f32 f32DbgBuf[8];  ///< P07.056 
+    f64 f64DbgBuf[8];  ///< P07.072 
 } DbgSta_t;
 
 //-----------------------------------------------------------------------------

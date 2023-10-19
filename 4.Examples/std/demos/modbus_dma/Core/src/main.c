@@ -15,6 +15,8 @@
 #include "enc/incEnc.h"
 #include "enc/pulse.h"
 
+#include "bsp/adc.h"
+
 #include "sensor/ds18b20/ds18b20.h"
 
 #include "math.h"
@@ -164,7 +166,7 @@ static int BspEncInit(void)
     EncArgs.u32EncRes    = (vu32*)P_ADDR(DrvCfg.u32EncRes);
     EncArgs.s32EncPos    = (vs32*)P_ADDR(PosCtl.s32EncPos);
     EncArgs.s32EncTurns  = (vs32*)P_ADDR(PosCtl.s32EncTurns);
-    EncArgs.s16UserSpdFb = (vs16*)P_ADDR(MotSta.s16UserSpdFb);
+    EncArgs.s32UserSpdFb = (vs32*)P_ADDR(MotSta.s32UserSpdFb);
     EncArgs.s64UserPosFb = (vs64*)P_ADDR(MotSta.s64UserPosFb);
     EncArgs.u16SpdCoeff  = (vu16*)P_ADDR(SpdCtl.u16SpdCoeff);
 
@@ -214,6 +216,14 @@ static void BspEncCycle(void)
 }
 
 //
+
+static int BspAdcInit(void)
+{
+    AdcInit();
+    return INIT_RESULT_SUCCESS;
+}
+
+USDK_INIT_EXPORT(BspAdcInit, INIT_LEVEL_BOARD)
 
 #if 0
 

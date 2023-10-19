@@ -40,9 +40,9 @@ I (..\..\fwlib\Libraries\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_dcmi.h)(0x61F2
 I (..\..\fwlib\Libraries\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_fsmc.h)(0x61F25A36)
 F (.\Core\inc\board_conf.h)(0x651F06EA)()
 F (..\..\board\pinmap.h)(0x652ACBBC)()
-F (.\Core\src\main.c)(0x653011D5)(--c99 --gnu -c --cpu Cortex-M4.fp.sp -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I ..\..\fwlib\Libraries\STM32F4xx_StdPeriph_Driver\inc -I ..\..\fwlib\Libraries\CMSIS\Include -I ..\..\board -I .\Core\inc -I ..\..\3rdparty\freemodbus\modbus\include -I .\Core\src\mbslave -I ..\..\3rdparty\freemodbus\modbus\rtu-IC:\Users\Administrator\AppData\Local\Arm\Packs\Keil\STM32F4xx_DFP\2.11.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="535" -DSTM32F407xx -DSTM32F40_41xxx -DUSE_STDPERIPH_DRIVER -DHSE_VALUE="25000000"-o .\objects\main.o --omf_browse .\objects\main.crf --depend .\objects\main.d)
+F (.\Core\src\main.c)(0x6531630A)(--c99 --gnu -c --cpu Cortex-M4.fp.sp -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I ..\..\fwlib\Libraries\STM32F4xx_StdPeriph_Driver\inc -I ..\..\fwlib\Libraries\CMSIS\Include -I ..\..\board -I .\Core\inc -I ..\..\3rdparty\freemodbus\modbus\include -I .\Core\src\mbslave -I ..\..\3rdparty\freemodbus\modbus\rtu-IC:\Users\Administrator\AppData\Local\Arm\Packs\Keil\STM32F4xx_DFP\2.11.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="535" -DSTM32F407xx -DSTM32F40_41xxx -DUSE_STDPERIPH_DRIVER -DHSE_VALUE="25000000"-o .\objects\main.o --omf_browse .\objects\main.crf --depend .\objects\main.d)
 I (.\Core\inc\main.h)(0x650EFDF7)
-I (..\..\board\system/sleep.h)(0x652BC1E0)
+I (..\..\board\system/sleep.h)(0x6531613A)
 I (C:\Keil_v5\ARM\ARMCC\include\stdbool.h)(0x6025237C)
 I (.\Core\inc\stm32f4xx.h)(0x652A455E)
 I (..\..\fwlib\Libraries\CMSIS\Include\core_cm4.h)(0x61F12857)
@@ -85,7 +85,7 @@ I (..\..\board\bsp/uart.h)(0x65301099)
 I (C:\Keil_v5\ARM\ARMCC\include\stdio.h)(0x60252374)
 I (..\..\board\pinctrl.h)(0x651FAC36)
 I (.\Core\src\mbslave\mbslave.h)(0x6526B0C3)
-I (.\Core\inc\paratbl/tbl.h)(0x652EC0D7)
+I (.\Core\inc\paratbl/tbl.h)(0x653162A0)
 I (.\Core\inc\paratbl/attr.h)(0x6526A7FC)
 I (..\..\3rdparty\freemodbus\modbus\include\mb.h)(0x5B9AC2A6)
 I (.\Core\src\mbslave\port.h)(0x6407EBA8)
@@ -94,8 +94,9 @@ I (..\..\3rdparty\freemodbus\modbus\include\mbproto.h)(0x5B9AC2A6)
 I (..\..\3rdparty\freemodbus\modbus\include\mbutils.h)(0x5B9AC2A6)
 I (..\..\board\pinmap.h)(0x652ACBBC)
 I (..\..\board\pulse/wave.h)(0x652C22A8)
-I (..\..\board\enc/incEnc.h)(0x652FD7F6)
+I (..\..\board\enc/incEnc.h)(0x653160F3)
 I (..\..\board\enc/pulse.h)(0x652EBCB5)
+I (..\..\board\bsp/adc.h)(0x6531636A)
 I (..\..\board\sensor/ds18b20/ds18b20.h)(0x652AD106)
 I (C:\Keil_v5\ARM\ARMCC\include\math.h)(0x60252378)
 F (.\Core\src\stm32f4xx_it.c)(0x651FAF13)(--c99 --gnu -c --cpu Cortex-M4.fp.sp -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I ..\..\fwlib\Libraries\STM32F4xx_StdPeriph_Driver\inc -I ..\..\fwlib\Libraries\CMSIS\Include -I ..\..\board -I .\Core\inc -I ..\..\3rdparty\freemodbus\modbus\include -I .\Core\src\mbslave -I ..\..\3rdparty\freemodbus\modbus\rtu-IC:\Users\Administrator\AppData\Local\Arm\Packs\Keil\STM32F4xx_DFP\2.11.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="535" -DSTM32F407xx -DSTM32F40_41xxx -DUSE_STDPERIPH_DRIVER -DHSE_VALUE="25000000"-o .\objects\stm32f4xx_it.o --omf_browse .\objects\stm32f4xx_it.crf --depend .\objects\stm32f4xx_it.d)
@@ -139,7 +140,7 @@ I (..\..\fwlib\Libraries\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_dac.h)(0x61F25
 I (..\..\fwlib\Libraries\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_dcmi.h)(0x61F25A31)
 I (..\..\fwlib\Libraries\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_fsmc.h)(0x61F25A36)
 I (..\..\board\system/autoinit.h)(0x652AD136)
-I (..\..\board\system/sleep.h)(0x652BC1E0)
+I (..\..\board\system/sleep.h)(0x6531613A)
 I (.\Core\inc\board_conf.h)(0x651F06EA)
 I (..\..\board\pinmap.h)(0x652ACBBC)
 I (..\..\board\bsp\key.h)(0x650EEF73)
@@ -181,7 +182,7 @@ I (..\..\fwlib\Libraries\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_dac.h)(0x61F25
 I (..\..\fwlib\Libraries\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_dcmi.h)(0x61F25A31)
 I (..\..\fwlib\Libraries\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_fsmc.h)(0x61F25A36)
 I (..\..\board\system/autoinit.h)(0x652AD136)
-I (..\..\board\system/sleep.h)(0x652BC1E0)
+I (..\..\board\system/sleep.h)(0x6531613A)
 I (.\Core\inc\board_conf.h)(0x651F06EA)
 I (..\..\board\pinmap.h)(0x652ACBBC)
 I (..\..\board\bsp\led.h)(0x650FCA28)
@@ -223,13 +224,14 @@ I (..\..\fwlib\Libraries\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_dac.h)(0x61F25
 I (..\..\fwlib\Libraries\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_dcmi.h)(0x61F25A31)
 I (..\..\fwlib\Libraries\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_fsmc.h)(0x61F25A36)
 I (..\..\board\system/autoinit.h)(0x652AD136)
-I (..\..\board\system/sleep.h)(0x652BC1E0)
+I (..\..\board\system/sleep.h)(0x6531613A)
 I (.\Core\inc\board_conf.h)(0x651F06EA)
 I (..\..\board\pinmap.h)(0x652ACBBC)
 I (..\..\board\bsp\uart.h)(0x65301099)
 I (C:\Keil_v5\ARM\ARMCC\include\stdio.h)(0x60252374)
 I (C:\Keil_v5\ARM\ARMCC\include\stdarg.h)(0x60252376)
-F (..\..\board\bsp\adc.c)(0x65301214)(--c99 --gnu -c --cpu Cortex-M4.fp.sp -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I ..\..\fwlib\Libraries\STM32F4xx_StdPeriph_Driver\inc -I ..\..\fwlib\Libraries\CMSIS\Include -I ..\..\board -I .\Core\inc -I ..\..\3rdparty\freemodbus\modbus\include -I .\Core\src\mbslave -I ..\..\3rdparty\freemodbus\modbus\rtu-IC:\Users\Administrator\AppData\Local\Arm\Packs\Keil\STM32F4xx_DFP\2.11.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="535" -DSTM32F407xx -DSTM32F40_41xxx -DUSE_STDPERIPH_DRIVER -DHSE_VALUE="25000000"-o .\objects\adc.o --omf_browse .\objects\adc.crf --depend .\objects\adc.d)
+F (..\..\board\bsp\adc.c)(0x65316482)(--c99 --gnu -c --cpu Cortex-M4.fp.sp -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I ..\..\fwlib\Libraries\STM32F4xx_StdPeriph_Driver\inc -I ..\..\fwlib\Libraries\CMSIS\Include -I ..\..\board -I .\Core\inc -I ..\..\3rdparty\freemodbus\modbus\include -I .\Core\src\mbslave -I ..\..\3rdparty\freemodbus\modbus\rtu-IC:\Users\Administrator\AppData\Local\Arm\Packs\Keil\STM32F4xx_DFP\2.11.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="535" -DSTM32F407xx -DSTM32F40_41xxx -DUSE_STDPERIPH_DRIVER -DHSE_VALUE="25000000"-o .\objects\adc.o --omf_browse .\objects\adc.crf --depend .\objects\adc.d)
+I (..\..\board\bsp\adc.h)(0x6531636A)
 I (.\Core\inc\stm32f4xx.h)(0x652A455E)
 I (..\..\fwlib\Libraries\CMSIS\Include\core_cm4.h)(0x61F12857)
 I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x64AD4B3A)
@@ -266,15 +268,12 @@ I (..\..\fwlib\Libraries\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_can.h)(0x61F25
 I (..\..\fwlib\Libraries\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_dac.h)(0x61F25A30)
 I (..\..\fwlib\Libraries\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_dcmi.h)(0x61F25A31)
 I (..\..\fwlib\Libraries\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_fsmc.h)(0x61F25A36)
-I (..\..\board\system/autoinit.h)(0x652AD136)
-I (..\..\board\system/sleep.h)(0x652BC1E0)
-I (.\Core\inc\board_conf.h)(0x651F06EA)
-I (..\..\board\bsp\adc.h)(0x6530109F)
-I (.\Core\inc\paratbl/tbl.h)(0x652EC0D7)
+I (..\..\board\system/sleep.h)(0x6531613A)
+I (.\Core\inc\paratbl/tbl.h)(0x653162A0)
 I (.\Core\inc\paratbl/attr.h)(0x6526A7FC)
 F (..\..\board\sensor\ds18b20\ds18b20.c)(0x652AD101)(--c99 --gnu -c --cpu Cortex-M4.fp.sp -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I ..\..\fwlib\Libraries\STM32F4xx_StdPeriph_Driver\inc -I ..\..\fwlib\Libraries\CMSIS\Include -I ..\..\board -I .\Core\inc -I ..\..\3rdparty\freemodbus\modbus\include -I .\Core\src\mbslave -I ..\..\3rdparty\freemodbus\modbus\rtu-IC:\Users\Administrator\AppData\Local\Arm\Packs\Keil\STM32F4xx_DFP\2.11.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="535" -DSTM32F407xx -DSTM32F40_41xxx -DUSE_STDPERIPH_DRIVER -DHSE_VALUE="25000000"-o .\objects\ds18b20.o --omf_browse .\objects\ds18b20.crf --depend .\objects\ds18b20.d)
 I (..\..\board\pinmap.h)(0x652ACBBC)
-I (..\..\board\system/sleep.h)(0x652BC1E0)
+I (..\..\board\system/sleep.h)(0x6531613A)
 I (C:\Keil_v5\ARM\ARMCC\include\stdbool.h)(0x6025237C)
 I (.\Core\inc\stm32f4xx.h)(0x652A455E)
 I (..\..\fwlib\Libraries\CMSIS\Include\core_cm4.h)(0x61F12857)
@@ -313,8 +312,8 @@ I (..\..\fwlib\Libraries\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_dcmi.h)(0x61F2
 I (..\..\fwlib\Libraries\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_fsmc.h)(0x61F25A36)
 I (..\..\board\sensor\ds18b20\ds18b20.h)(0x652AD106)
 I (..\..\board\pinctrl.h)(0x651FAC36)
-F (..\..\board\system\sleep.c)(0x652AE074)(--c99 --gnu -c --cpu Cortex-M4.fp.sp -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I ..\..\fwlib\Libraries\STM32F4xx_StdPeriph_Driver\inc -I ..\..\fwlib\Libraries\CMSIS\Include -I ..\..\board -I .\Core\inc -I ..\..\3rdparty\freemodbus\modbus\include -I .\Core\src\mbslave -I ..\..\3rdparty\freemodbus\modbus\rtu-IC:\Users\Administrator\AppData\Local\Arm\Packs\Keil\STM32F4xx_DFP\2.11.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="535" -DSTM32F407xx -DSTM32F40_41xxx -DUSE_STDPERIPH_DRIVER -DHSE_VALUE="25000000"-o .\objects\sleep.o --omf_browse .\objects\sleep.crf --depend .\objects\sleep.d)
-I (..\..\board\system\sleep.h)(0x652BC1E0)
+F (..\..\board\system\sleep.c)(0x653161EC)(--c99 --gnu -c --cpu Cortex-M4.fp.sp -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I ..\..\fwlib\Libraries\STM32F4xx_StdPeriph_Driver\inc -I ..\..\fwlib\Libraries\CMSIS\Include -I ..\..\board -I .\Core\inc -I ..\..\3rdparty\freemodbus\modbus\include -I .\Core\src\mbslave -I ..\..\3rdparty\freemodbus\modbus\rtu-IC:\Users\Administrator\AppData\Local\Arm\Packs\Keil\STM32F4xx_DFP\2.11.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="535" -DSTM32F407xx -DSTM32F40_41xxx -DUSE_STDPERIPH_DRIVER -DHSE_VALUE="25000000"-o .\objects\sleep.o --omf_browse .\objects\sleep.crf --depend .\objects\sleep.d)
+I (..\..\board\system\sleep.h)(0x6531613A)
 I (C:\Keil_v5\ARM\ARMCC\include\stdbool.h)(0x6025237C)
 I (.\Core\inc\stm32f4xx.h)(0x652A455E)
 I (..\..\fwlib\Libraries\CMSIS\Include\core_cm4.h)(0x61F12857)
@@ -353,7 +352,7 @@ I (..\..\fwlib\Libraries\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_dcmi.h)(0x61F2
 I (..\..\fwlib\Libraries\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_fsmc.h)(0x61F25A36)
 F (..\..\board\system\autoinit.c)(0x651D4FF3)(--c99 --gnu -c --cpu Cortex-M4.fp.sp -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I ..\..\fwlib\Libraries\STM32F4xx_StdPeriph_Driver\inc -I ..\..\fwlib\Libraries\CMSIS\Include -I ..\..\board -I .\Core\inc -I ..\..\3rdparty\freemodbus\modbus\include -I .\Core\src\mbslave -I ..\..\3rdparty\freemodbus\modbus\rtu-IC:\Users\Administrator\AppData\Local\Arm\Packs\Keil\STM32F4xx_DFP\2.11.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="535" -DSTM32F407xx -DSTM32F40_41xxx -DUSE_STDPERIPH_DRIVER -DHSE_VALUE="25000000"-o .\objects\autoinit.o --omf_browse .\objects\autoinit.crf --depend .\objects\autoinit.d)
 I (..\..\board\system\autoinit.h)(0x652AD136)
-I (..\..\board\system\sleep.h)(0x652BC1E0)
+I (..\..\board\system\sleep.h)(0x6531613A)
 I (C:\Keil_v5\ARM\ARMCC\include\stdbool.h)(0x6025237C)
 I (.\Core\inc\stm32f4xx.h)(0x652A455E)
 I (..\..\fwlib\Libraries\CMSIS\Include\core_cm4.h)(0x61F12857)
@@ -392,9 +391,9 @@ I (..\..\fwlib\Libraries\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_dcmi.h)(0x61F2
 I (..\..\fwlib\Libraries\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_fsmc.h)(0x61F25A36)
 I (.\Core\inc\board_conf.h)(0x651F06EA)
 F (.\Core\inc\paratbl\attr.h)(0x6526A7FC)()
-F (.\Core\inc\paratbl\tbl.h)(0x652EC0D7)()
+F (.\Core\inc\paratbl\tbl.h)(0x653162A0)()
 F (.\Core\src\paratbl.c)(0x6526AD59)(--c99 --gnu -c --cpu Cortex-M4.fp.sp -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I ..\..\fwlib\Libraries\STM32F4xx_StdPeriph_Driver\inc -I ..\..\fwlib\Libraries\CMSIS\Include -I ..\..\board -I .\Core\inc -I ..\..\3rdparty\freemodbus\modbus\include -I .\Core\src\mbslave -I ..\..\3rdparty\freemodbus\modbus\rtu-IC:\Users\Administrator\AppData\Local\Arm\Packs\Keil\STM32F4xx_DFP\2.11.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="535" -DSTM32F407xx -DSTM32F40_41xxx -DUSE_STDPERIPH_DRIVER -DHSE_VALUE="25000000"-o .\objects\paratbl.o --omf_browse .\objects\paratbl.crf --depend .\objects\paratbl.d)
-I (.\Core\inc\paratbl/tbl.h)(0x652EC0D7)
+I (.\Core\inc\paratbl/tbl.h)(0x653162A0)
 I (.\Core\inc\paratbl/attr.h)(0x6526A7FC)
 I (.\Core\inc\stm32f4xx.h)(0x652A455E)
 I (..\..\fwlib\Libraries\CMSIS\Include\core_cm4.h)(0x61F12857)
@@ -470,7 +469,7 @@ I (..\..\fwlib\Libraries\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_can.h)(0x61F25
 I (..\..\fwlib\Libraries\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_dac.h)(0x61F25A30)
 I (..\..\fwlib\Libraries\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_dcmi.h)(0x61F25A31)
 I (..\..\fwlib\Libraries\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_fsmc.h)(0x61F25A36)
-I (.\Core\inc\paratbl/tbl.h)(0x652EC0D7)
+I (.\Core\inc\paratbl/tbl.h)(0x653162A0)
 I (.\Core\inc\paratbl/attr.h)(0x6526A7FC)
 I (..\..\board\pulse\calc.h)(0x652D39EA)
 F (..\..\board\pulse\calc.c)(0x652FE0C9)(--c99 --gnu -c --cpu Cortex-M4.fp.sp -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I ..\..\fwlib\Libraries\STM32F4xx_StdPeriph_Driver\inc -I ..\..\fwlib\Libraries\CMSIS\Include -I ..\..\board -I .\Core\inc -I ..\..\3rdparty\freemodbus\modbus\include -I .\Core\src\mbslave -I ..\..\3rdparty\freemodbus\modbus\rtu-IC:\Users\Administrator\AppData\Local\Arm\Packs\Keil\STM32F4xx_DFP\2.11.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="535" -DSTM32F407xx -DSTM32F40_41xxx -DUSE_STDPERIPH_DRIVER -DHSE_VALUE="25000000"-o .\objects\calc.o --omf_browse .\objects\calc.crf --depend .\objects\calc.d)
@@ -2193,7 +2192,7 @@ I (..\..\3rdparty\freemodbus\modbus\include\mbframe.h)(0x5B9AC2A6)
 I (..\..\3rdparty\freemodbus\modbus\rtu\mbcrc.h)(0x5B9AC2A6)
 F (.\Core\src\mbslave\mbslave.c)(0x6526B0DB)(--c99 --gnu -c --cpu Cortex-M4.fp.sp -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I ..\..\fwlib\Libraries\STM32F4xx_StdPeriph_Driver\inc -I ..\..\fwlib\Libraries\CMSIS\Include -I ..\..\board -I .\Core\inc -I ..\..\3rdparty\freemodbus\modbus\include -I .\Core\src\mbslave -I ..\..\3rdparty\freemodbus\modbus\rtu-IC:\Users\Administrator\AppData\Local\Arm\Packs\Keil\STM32F4xx_DFP\2.11.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="535" -DSTM32F407xx -DSTM32F40_41xxx -DUSE_STDPERIPH_DRIVER -DHSE_VALUE="25000000"-o .\objects\mbslave.o --omf_browse .\objects\mbslave.crf --depend .\objects\mbslave.d)
 I (Core\src\mbslave\mbslave.h)(0x6526B0C3)
-I (.\Core\inc\paratbl/tbl.h)(0x652EC0D7)
+I (.\Core\inc\paratbl/tbl.h)(0x653162A0)
 I (.\Core\inc\paratbl/attr.h)(0x6526A7FC)
 I (.\Core\inc\stm32f4xx.h)(0x652A455E)
 I (..\..\fwlib\Libraries\CMSIS\Include\core_cm4.h)(0x61F12857)
@@ -2293,8 +2292,8 @@ I (..\..\3rdparty\freemodbus\modbus\include\mb.h)(0x5B9AC2A6)
 I (..\..\3rdparty\freemodbus\modbus\include\mbport.h)(0x5B9AC2A6)
 I (..\..\3rdparty\freemodbus\modbus\include\mbproto.h)(0x5B9AC2A6)
 F (..\..\board\enc\absEnc.c)(0x652D3A1D)(--c99 --gnu -c --cpu Cortex-M4.fp.sp -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I ..\..\fwlib\Libraries\STM32F4xx_StdPeriph_Driver\inc -I ..\..\fwlib\Libraries\CMSIS\Include -I ..\..\board -I .\Core\inc -I ..\..\3rdparty\freemodbus\modbus\include -I .\Core\src\mbslave -I ..\..\3rdparty\freemodbus\modbus\rtu-IC:\Users\Administrator\AppData\Local\Arm\Packs\Keil\STM32F4xx_DFP\2.11.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="535" -DSTM32F407xx -DSTM32F40_41xxx -DUSE_STDPERIPH_DRIVER -DHSE_VALUE="25000000"-o .\objects\absenc.o --omf_browse .\objects\absenc.crf --depend .\objects\absenc.d)
-F (..\..\board\enc\incEnc.c)(0x652FD7FE)(--c99 --gnu -c --cpu Cortex-M4.fp.sp -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I ..\..\fwlib\Libraries\STM32F4xx_StdPeriph_Driver\inc -I ..\..\fwlib\Libraries\CMSIS\Include -I ..\..\board -I .\Core\inc -I ..\..\3rdparty\freemodbus\modbus\include -I .\Core\src\mbslave -I ..\..\3rdparty\freemodbus\modbus\rtu-IC:\Users\Administrator\AppData\Local\Arm\Packs\Keil\STM32F4xx_DFP\2.11.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="535" -DSTM32F407xx -DSTM32F40_41xxx -DUSE_STDPERIPH_DRIVER -DHSE_VALUE="25000000"-o .\objects\incenc.o --omf_browse .\objects\incenc.crf --depend .\objects\incenc.d)
-I (..\..\board\system/sleep.h)(0x652BC1E0)
+F (..\..\board\enc\incEnc.c)(0x65316126)(--c99 --gnu -c --cpu Cortex-M4.fp.sp -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I ..\..\fwlib\Libraries\STM32F4xx_StdPeriph_Driver\inc -I ..\..\fwlib\Libraries\CMSIS\Include -I ..\..\board -I .\Core\inc -I ..\..\3rdparty\freemodbus\modbus\include -I .\Core\src\mbslave -I ..\..\3rdparty\freemodbus\modbus\rtu-IC:\Users\Administrator\AppData\Local\Arm\Packs\Keil\STM32F4xx_DFP\2.11.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="535" -DSTM32F407xx -DSTM32F40_41xxx -DUSE_STDPERIPH_DRIVER -DHSE_VALUE="25000000"-o .\objects\incenc.o --omf_browse .\objects\incenc.crf --depend .\objects\incenc.d)
+I (..\..\board\system/sleep.h)(0x6531613A)
 I (C:\Keil_v5\ARM\ARMCC\include\stdbool.h)(0x6025237C)
 I (.\Core\inc\stm32f4xx.h)(0x652A455E)
 I (..\..\fwlib\Libraries\CMSIS\Include\core_cm4.h)(0x61F12857)
@@ -2331,10 +2330,10 @@ I (..\..\fwlib\Libraries\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_can.h)(0x61F25
 I (..\..\fwlib\Libraries\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_dac.h)(0x61F25A30)
 I (..\..\fwlib\Libraries\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_dcmi.h)(0x61F25A31)
 I (..\..\fwlib\Libraries\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_fsmc.h)(0x61F25A36)
-I (.\Core\inc\paratbl/tbl.h)(0x652EC0D7)
+I (.\Core\inc\paratbl/tbl.h)(0x653162A0)
 I (.\Core\inc\paratbl/attr.h)(0x6526A7FC)
-I (..\..\board\enc\incEnc.h)(0x652FD7F6)
-F (..\..\board\enc\pulse.c)(0x652FE7E4)(--c99 --gnu -c --cpu Cortex-M4.fp.sp -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I ..\..\fwlib\Libraries\STM32F4xx_StdPeriph_Driver\inc -I ..\..\fwlib\Libraries\CMSIS\Include -I ..\..\board -I .\Core\inc -I ..\..\3rdparty\freemodbus\modbus\include -I .\Core\src\mbslave -I ..\..\3rdparty\freemodbus\modbus\rtu-IC:\Users\Administrator\AppData\Local\Arm\Packs\Keil\STM32F4xx_DFP\2.11.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="535" -DSTM32F407xx -DSTM32F40_41xxx -DUSE_STDPERIPH_DRIVER -DHSE_VALUE="25000000"-o .\objects\pulse_1.o --omf_browse .\objects\pulse_1.crf --depend .\objects\pulse_1.d)
+I (..\..\board\enc\incEnc.h)(0x653160F3)
+F (..\..\board\enc\pulse.c)(0x6531592E)(--c99 --gnu -c --cpu Cortex-M4.fp.sp -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I ..\..\fwlib\Libraries\STM32F4xx_StdPeriph_Driver\inc -I ..\..\fwlib\Libraries\CMSIS\Include -I ..\..\board -I .\Core\inc -I ..\..\3rdparty\freemodbus\modbus\include -I .\Core\src\mbslave -I ..\..\3rdparty\freemodbus\modbus\rtu-IC:\Users\Administrator\AppData\Local\Arm\Packs\Keil\STM32F4xx_DFP\2.11.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="535" -DSTM32F407xx -DSTM32F40_41xxx -DUSE_STDPERIPH_DRIVER -DHSE_VALUE="25000000"-o .\objects\pulse_1.o --omf_browse .\objects\pulse_1.crf --depend .\objects\pulse_1.d)
 I (..\..\board\pulse/calc.h)(0x652D39EA)
 I (.\Core\inc\stm32f4xx.h)(0x652A455E)
 I (..\..\fwlib\Libraries\CMSIS\Include\core_cm4.h)(0x61F12857)
@@ -2374,7 +2373,7 @@ I (..\..\fwlib\Libraries\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_dcmi.h)(0x61F2
 I (..\..\fwlib\Libraries\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_fsmc.h)(0x61F25A36)
 I (..\..\board\enc\pulse.h)(0x652EBCB5)
 F (..\..\board\enc\hallEnc.c)(0x65301154)(--c99 --gnu -c --cpu Cortex-M4.fp.sp -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I ..\..\fwlib\Libraries\STM32F4xx_StdPeriph_Driver\inc -I ..\..\fwlib\Libraries\CMSIS\Include -I ..\..\board -I .\Core\inc -I ..\..\3rdparty\freemodbus\modbus\include -I .\Core\src\mbslave -I ..\..\3rdparty\freemodbus\modbus\rtu-IC:\Users\Administrator\AppData\Local\Arm\Packs\Keil\STM32F4xx_DFP\2.11.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="535" -DSTM32F407xx -DSTM32F40_41xxx -DUSE_STDPERIPH_DRIVER -DHSE_VALUE="25000000"-o .\objects\hallenc.o --omf_browse .\objects\hallenc.crf --depend .\objects\hallenc.d)
-I (..\..\board\system/sleep.h)(0x652BC1E0)
+I (..\..\board\system/sleep.h)(0x6531613A)
 I (C:\Keil_v5\ARM\ARMCC\include\stdbool.h)(0x6025237C)
 I (.\Core\inc\stm32f4xx.h)(0x652A455E)
 I (..\..\fwlib\Libraries\CMSIS\Include\core_cm4.h)(0x61F12857)
@@ -2411,11 +2410,11 @@ I (..\..\fwlib\Libraries\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_can.h)(0x61F25
 I (..\..\fwlib\Libraries\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_dac.h)(0x61F25A30)
 I (..\..\fwlib\Libraries\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_dcmi.h)(0x61F25A31)
 I (..\..\fwlib\Libraries\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_fsmc.h)(0x61F25A36)
-I (.\Core\inc\paratbl/tbl.h)(0x652EC0D7)
+I (.\Core\inc\paratbl/tbl.h)(0x653162A0)
 I (.\Core\inc\paratbl/attr.h)(0x6526A7FC)
-I (..\..\board\enc\hallEnc.h)(0x653011AA)
+I (..\..\board\enc\hallEnc.h)(0x65316100)
 F (..\..\board\enc\rotEnc.c)(0x6530118F)(--c99 --gnu -c --cpu Cortex-M4.fp.sp -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I ..\..\fwlib\Libraries\STM32F4xx_StdPeriph_Driver\inc -I ..\..\fwlib\Libraries\CMSIS\Include -I ..\..\board -I .\Core\inc -I ..\..\3rdparty\freemodbus\modbus\include -I .\Core\src\mbslave -I ..\..\3rdparty\freemodbus\modbus\rtu-IC:\Users\Administrator\AppData\Local\Arm\Packs\Keil\STM32F4xx_DFP\2.11.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="535" -DSTM32F407xx -DSTM32F40_41xxx -DUSE_STDPERIPH_DRIVER -DHSE_VALUE="25000000"-o .\objects\rotenc.o --omf_browse .\objects\rotenc.crf --depend .\objects\rotenc.d)
-I (..\..\board\system/sleep.h)(0x652BC1E0)
+I (..\..\board\system/sleep.h)(0x6531613A)
 I (C:\Keil_v5\ARM\ARMCC\include\stdbool.h)(0x6025237C)
 I (.\Core\inc\stm32f4xx.h)(0x652A455E)
 I (..\..\fwlib\Libraries\CMSIS\Include\core_cm4.h)(0x61F12857)
@@ -2452,6 +2451,6 @@ I (..\..\fwlib\Libraries\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_can.h)(0x61F25
 I (..\..\fwlib\Libraries\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_dac.h)(0x61F25A30)
 I (..\..\fwlib\Libraries\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_dcmi.h)(0x61F25A31)
 I (..\..\fwlib\Libraries\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_fsmc.h)(0x61F25A36)
-I (.\Core\inc\paratbl/tbl.h)(0x652EC0D7)
+I (.\Core\inc\paratbl/tbl.h)(0x653162A0)
 I (.\Core\inc\paratbl/attr.h)(0x6526A7FC)
-I (..\..\board\enc\rotEnc.h)(0x653011B2)
+I (..\..\board\enc\rotEnc.h)(0x65316108)

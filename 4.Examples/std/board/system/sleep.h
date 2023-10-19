@@ -69,4 +69,21 @@ inline tick_t HAL_DeltaTick(tick_t nStartTick, tick_t nEndTick);
 
 void FirewareDelay(u32 nWaitTime);
 
+//---------------------------------------------------------------
+// time measure
+
+#define TID_0 0
+#define TID_1 1
+#define TID_2 2
+#define TID_3 3
+#define TID_4 4
+#define TID_5 5
+#define TID_6 6
+#define TID_7 7
+#define TID_8 8
+#define TID_9 9
+
+bool TimeRecStart(u8 id);
+u32  TimeRecEnd(u8 id);
+
 #endif

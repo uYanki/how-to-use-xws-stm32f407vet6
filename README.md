@@ -17,6 +17,8 @@
 * ADC 16-bit oversample ( single ADC + DMA )
 * I2C device `TODO`
 * cmdline `TODO`
+* freq analysis `TODO`
+* pulse measure & counter `TODO`
 
 #### USB2CAN `TODO`
 

@@ -59,70 +59,70 @@
 //---------------------------------------------------------
 
 /**
- * @note Ê±ÖÓÆµÂÊ
+ * @note æ—¶é’Ÿé¢‘çŽ‡
  *
  *      - APB1_GPIO_CLK: 42M
  *      - APB1_TIM_CLK: 84M
  *      - APB2_GPIO_CLK: 84M
  *      - APB2_TIM_CLK: 168M
  *
- * @note Ê±ÖÓ·ÖÆµ
+ * @note æ—¶é’Ÿåˆ†é¢‘
  *
  *      - TIM_Prescaler: clksrc = internal (APBx)
- *      - TIM_ClockDivision: clksrc = external, Íâ²¿Ê±ÖÓÂË²¨Ê±¼ä (TIM1ETR..)
+ *      - TIM_ClockDivision: clksrc = external, å¤–éƒ¨æ—¶é’Ÿæ»¤æ³¢æ—¶é—´ (TIM1ETR..)
  *
- * @note ¶ÔÆëÄ£Ê½
+ * @note å¯¹é½æ¨¡å¼
  *
  *      - TIM_CounterMode:
- *           ±ßÑØ¶ÔÆëÄ£Ê½: ¼ÆÊýÆ÷¸ù¾Ý·½ÏòÎ»µÝÔö¼ÆÊý»òµÝ¼õ¼ÆÊý¡£
+ *           è¾¹æ²¿å¯¹é½æ¨¡å¼: è®¡æ•°å™¨æ ¹æ®æ–¹å‘ä½é€’å¢žè®¡æ•°æˆ–é€’å‡è®¡æ•°ã€‚
  *              TIM_CounterMode_Up:   0->TIM_Period
  *              TIM_CounterMode_Down: TIM_Period->0
- *           ÖÐÐÄ¶ÔÆëÄ£Ê½: ¼ÆÊýÆ÷½»Ìæ½øÐÐµÝÔö¼ÆÊýºÍµÝ¼õ¼ÆÊý
- *              TIM_CounterMode_CenterAligned1: 0->TIM_Period->0, ½öµÝ¼õÊ±,²ÅÊä³ö±È½ÏÖÐ¶Ï  (TIM_IT_CC)
- *              TIM_CounterMode_CenterAligned2: 0->TIM_Period->0, ½öµÝ¼õÊ±,²ÅÊä³ö±È½ÏÖÐ¶Ï
- *              TIM_CounterMode_CenterAligned3: 0->TIM_Period->0, µÝ¼õµÝÔö,¶¼Êä³ö±È½ÏÖÐ¶Ï
- *           ×¢:Ö»Òª¼ÆÊýÆ÷´¦ÓÚÊ¹ÄÜ×´Ì¬, ¾Í²»µÃ´Ó±ßÑØ¶Ô²úÄ£Ê½ÇÐ»»ÎªÖÐÐ¡¶Ô²úÄ£
+ *           ä¸­å¿ƒå¯¹é½æ¨¡å¼: è®¡æ•°å™¨äº¤æ›¿è¿›è¡Œé€’å¢žè®¡æ•°å’Œé€’å‡è®¡æ•°
+ *              TIM_CounterMode_CenterAligned1: 0->TIM_Period->0, ä»…é€’å‡æ—¶,æ‰è¾“å‡ºæ¯”è¾ƒä¸­æ–­  (TIM_IT_CC)
+ *              TIM_CounterMode_CenterAligned2: 0->TIM_Period->0, ä»…é€’å‡æ—¶,æ‰è¾“å‡ºæ¯”è¾ƒä¸­æ–­
+ *              TIM_CounterMode_CenterAligned3: 0->TIM_Period->0, é€’å‡é€’å¢ž,éƒ½è¾“å‡ºæ¯”è¾ƒä¸­æ–­
+ *           æ³¨:åªè¦è®¡æ•°å™¨å¤„äºŽä½¿èƒ½çŠ¶æ€, å°±ä¸å¾—ä»Žè¾¹æ²¿å¯¹äº§æ¨¡å¼åˆ‡æ¢ä¸ºä¸­å°å¯¹äº§æ¨¡
  *
- * @note ÖØ¸´¼ÆÊý
+ * @note é‡å¤è®¡æ•°
  *
- *      - TIM_RepetitionCounter: ÔÚ¶¨Ê±Æ÷ÖØ¸´Íê³Én´Î¼ÆÊýºó, ²úÉúÒç³öÖÐ¶Ï, ¼´¸üÐÂÊÂ¼þ (TIM_IT_Update)
- *           ×÷ÓÃ? ´¥·¢ADC²ÉÑù»òDACÊä³ö...
+ *      - TIM_RepetitionCounter: åœ¨å®šæ—¶å™¨é‡å¤å®Œæˆnæ¬¡è®¡æ•°åŽ, äº§ç”Ÿæº¢å‡ºä¸­æ–­, å³æ›´æ–°äº‹ä»¶ (TIM_IT_Update)
+ *           ä½œç”¨? è§¦å‘ADCé‡‡æ ·æˆ–DACè¾“å‡º...
  *
- * @note ÓÐÐ§µçÆ½
+ * @note æœ‰æ•ˆç”µå¹³
  *
- *    ÏòÉÏ¼ÆÊýÊ±:
+ *    å‘ä¸Šè®¡æ•°æ—¶:
  *
  *      - TIM_OCMode = TIM_OCMode_PWM1:
  *
- *          TIMx_CNT < TIMx_CCRn, Êä³öÓÐÐ§µçÆ½
- *          TIMx_CNT > TIMx_CCRn, Êä³öÎÞÐ§µçÆ½
+ *          TIMx_CNT < TIMx_CCRn, è¾“å‡ºæœ‰æ•ˆç”µå¹³
+ *          TIMx_CNT > TIMx_CCRn, è¾“å‡ºæ— æ•ˆç”µå¹³
  *
  *      - TIM_OCMode = TIM_OCMode_PWM2:
  *
- *          TIMx_CNT < TIMx_CCRn, Êä³öÎÞÐ§µçÆ½
- *          TIMx_CNT > TIMx_CCRn, Êä³öÓÐÐ§µçÆ½
+ *          TIMx_CNT < TIMx_CCRn, è¾“å‡ºæ— æ•ˆç”µå¹³
+ *          TIMx_CNT > TIMx_CCRn, è¾“å‡ºæœ‰æ•ˆç”µå¹³
  *
- * @note ÓÐÐ§µçÆ½
+ * @note æœ‰æ•ˆç”µå¹³
  *
- *    - TIM_OCPolarity = TIM_OCPolarity_High£¨¸ßµçÆ½£©
- *    - TIM_OCPolarity = TIM_OCPolarity_Low £¨µÍµçÆ½£©
+ *    - TIM_OCPolarity = TIM_OCPolarity_Highï¼ˆé«˜ç”µå¹³ï¼‰
+ *    - TIM_OCPolarity = TIM_OCPolarity_Low ï¼ˆä½Žç”µå¹³ï¼‰
  *
- * @note ´¥·¢Ô´
+ * @note è§¦å‘æº
  *
  *      Trigger Source: TI1FP1, TI1(Timer input 1) after FP(filter and polarity selection)
  *
- * @note µ¥Âö³åÄ£Ê½ (One Pulse)
+ * @note å•è„‰å†²æ¨¡å¼ (One Pulse)
  *
  *     TIM_SelectOnePulseMode(PULSE_GEN_TIM_PORT, TIM_OPMode_Single);  // one pulse mode
  *     TIM_SelectOnePulseMode(PULSE_GEN_TIM_PORT, TIM_OPMode_Repetitive);  // pwm mode
  *
- * @note ×Ô¶¯ÖØ×°ÔØÔ¤×°ÔØÔÊÐíÎ» (Auto-reload preload enable, ARPE)
+ * @note è‡ªåŠ¨é‡è£…è½½é¢„è£…è½½å…è®¸ä½ (Auto-reload preload enable, ARPE)
  *
- *      Disable£º×Ô¶¯ÖØ×°ÔØ¼Ä´æÆ÷Ð´ÈëÐÂÖµºó£¬¼ÆÊýÆ÷Á¢¼´²úÉú¼ÆÊýÒç³ö£¬È»ºó¿ªÊ¼ÐÂµÄ¼ÆÊýÖÜÆÚ
- *      Enable£º ×Ô¶¯ÖØ×°ÔØ¼Ä´æÆ÷Ð´ÈëÐÂÖµºó£¬¼ÆÊýÆ÷Íê³Éµ±Ç°¾ÉµÄ¼ÆÊýºó£¬ÔÙ¿ªÊ¼ÐÂµÄ¼ÆÊýÖÜÆÚ
+ *      Disableï¼šè‡ªåŠ¨é‡è£…è½½å¯„å­˜å™¨å†™å…¥æ–°å€¼åŽï¼Œè®¡æ•°å™¨ç«‹å³äº§ç”Ÿè®¡æ•°æº¢å‡ºï¼Œç„¶åŽå¼€å§‹æ–°çš„è®¡æ•°å‘¨æœŸ
+ *      Enableï¼š è‡ªåŠ¨é‡è£…è½½å¯„å­˜å™¨å†™å…¥æ–°å€¼åŽï¼Œè®¡æ•°å™¨å®Œæˆå½“å‰æ—§çš„è®¡æ•°åŽï¼Œå†å¼€å§‹æ–°çš„è®¡æ•°å‘¨æœŸ
  */
 
-void PULSE_GEN_SLV_TIM_IRQHandler()  // ´ïµ½Ö¸¶¨Âö³åÊý
+void PULSE_GEN_SLV_TIM_IRQHandler()  // è¾¾åˆ°æŒ‡å®šè„‰å†²æ•°
 {
     if (SET == TIM_GetITStatus(PULSE_GEN_SLV_TIM_PORT, PULSE_GEN_SLV_TIM_IT))
     {
@@ -218,14 +218,14 @@ void PulseGenInit(void)
     }
 }
 
-bool PulseGenConfig(u32 freq, f32 duty)  // ÅäÖÃÂö³å
+bool PulseGenConfig(u32 freq, f32 duty)  // é…ç½®è„‰å†²
 {
 #if 1
 
     if ((PULSE_GEN_MST_TIM_PORT->CR1 & TIM_CR1_CEN) ||
         (PULSE_GEN_SLV_TIM_PORT->CR1 & TIM_CR1_CEN))
     {
-        // ÅäÖÃÊ§°Ü: Âö³åÕýÔÚÉú³É
+        // é…ç½®å¤±è´¥: è„‰å†²æ­£åœ¨ç”Ÿæˆ
         return false;
     }
 
@@ -233,7 +233,7 @@ bool PulseGenConfig(u32 freq, f32 duty)  // ÅäÖÃÂö³å
 
     if (freq == 0)
     {
-        // ÅäÖÃÊ§°Ü: Âö³åÆµÂÊ²»ÄÜÎªÁã
+        // é…ç½®å¤±è´¥: è„‰å†²é¢‘çŽ‡ä¸èƒ½ä¸ºé›¶
         return false;
     }
 
@@ -241,7 +241,7 @@ bool PulseGenConfig(u32 freq, f32 duty)  // ÅäÖÃÂö³å
 
     if (TIM_Calc(PULSE_GEN_MST_TIM_FRQ, freq, freq * 0.02, &prd, &psc, nullptr) == false)
     {
-        // ÅäÖÃÊ§°Ü: ÎÞ·¨Éú³ÉÄ¿±êÆµÂÊµÄÂö³å
+        // é…ç½®å¤±è´¥: æ— æ³•ç”Ÿæˆç›®æ ‡é¢‘çŽ‡çš„è„‰å†²
         return false;
     }
 
@@ -249,18 +249,18 @@ bool PulseGenConfig(u32 freq, f32 duty)  // ÅäÖÃÂö³å
 
     if (ccr == 0)
     {
-        // ÅäÖÃÊ§°Ü: Õ¼¿Õ±È²»ÕýÈ·
+        // é…ç½®å¤±è´¥: å ç©ºæ¯”ä¸æ­£ç¡®
         return false;
     }
 
-    // ±È½ÏÖµ
+    // æ¯”è¾ƒå€¼
     ccr -= 1;
 
-    // ÆµÂÊ
-    PULSE_GEN_MST_TIM_PORT->PSC = psc;  // ·ÖÆµ
-    PULSE_GEN_MST_TIM_PORT->ARR = prd;  // ÖÜÆÚ
+    // é¢‘çŽ‡
+    PULSE_GEN_MST_TIM_PORT->PSC = psc;  // åˆ†é¢‘
+    PULSE_GEN_MST_TIM_PORT->ARR = prd;  // å‘¨æœŸ
 
-    // Õ¼¿Õ±È
+    // å ç©ºæ¯”
 
 #if PULSE_GEN_MST_TIM_CH == 1
     PULSE_GEN_MST_TIM_PORT->CCR1 = ccr;
@@ -268,23 +268,23 @@ bool PulseGenConfig(u32 freq, f32 duty)  // ÅäÖÃÂö³å
     PULSE_GEN_MST_TIM_PORT->CCR4 = ccr;
 #endif
 
-    // ÅäÖÃ³É¹¦
+    // é…ç½®æˆåŠŸ
     return true;
 }
 
-bool PulseGenStart(u32 count)  // Éú³ÉÂö³å
+bool PulseGenStart(u32 count)  // ç”Ÿæˆè„‰å†²
 {
     if ((PULSE_GEN_MST_TIM_PORT->CR1 & TIM_CR1_CEN) ||
         (PULSE_GEN_SLV_TIM_PORT->CR1 & TIM_CR1_CEN))
     {
-        // ÅäÖÃÊ§°Ü: Âö³åÕýÔÚÉú³É
+        // é…ç½®å¤±è´¥: è„‰å†²æ­£åœ¨ç”Ÿæˆ
         return false;
     }
 
     if (count == 0 || count > 65536)
     {
-        // ÅäÖÃÊ§°Ü: È¡Öµ·¶Î§³¬¹ýÉÏÏÂÏÞÖÆ
-        // TODO: 16ÎªÎ»¶¨Ê±Æ÷,´ý²âµ¥´Î×î¶à¸öÊýÊ± 65535 »¹ÊÇ 65536
+        // é…ç½®å¤±è´¥: å–å€¼èŒƒå›´è¶…è¿‡ä¸Šä¸‹é™åˆ¶
+        // TODO: 16ä¸ºä½å®šæ—¶å™¨,å¾…æµ‹å•æ¬¡æœ€å¤šä¸ªæ•°æ—¶ 65535 è¿˜æ˜¯ 65536
         return false;
     }
 
@@ -292,7 +292,7 @@ bool PulseGenStart(u32 count)  // Éú³ÉÂö³å
 
     if (count == 0)
     {
-        // µ¥Âö³åÄ£Ê½
+        // å•è„‰å†²æ¨¡å¼
         TIM_SelectOnePulseMode(PULSE_GEN_MST_TIM_PORT, TIM_OPMode_Single);
 
         // enable pulse generator
@@ -300,10 +300,10 @@ bool PulseGenStart(u32 count)  // Éú³ÉÂö³å
     }
     else
     {
-        // PWM Ä£Ê½
+        // PWM æ¨¡å¼
         TIM_SelectOnePulseMode(PULSE_GEN_MST_TIM_PORT, TIM_OPMode_Repetitive);
 
-        // Âö³åÉú³É¸öÊý (±ØÐë´óÓÚ2)
+        // è„‰å†²ç”Ÿæˆä¸ªæ•° (å¿…é¡»å¤§äºŽ2)
         TIM_SetAutoreload(PULSE_GEN_SLV_TIM_PORT, count);
 
         // enable pulse generator

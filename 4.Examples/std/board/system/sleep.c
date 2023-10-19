@@ -123,3 +123,27 @@ void FirewareDelay(u32 nWaitTime)
         }
     }
 }
+
+//---------------------------------------------------------------
+// time measure
+
+static tick_t saMeasureTime[10] = {0};
+
+bool TimeRecStart(u8 id)
+{
+    if (id < ARRAY_SIZE(saMeasureTime))
+    {
+        saMeasureTime[id] = dwt_tick();
+        return true;
+    }
+    return false;
+}
+
+u32 TimeRecEnd(u8 id)
+{
+    if (id < ARRAY_SIZE(saMeasureTime))
+    {
+        return dwt_tick() - saMeasureTime[id];
+    }
+    return U32_MAX;
+}

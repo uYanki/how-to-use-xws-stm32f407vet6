@@ -28,7 +28,7 @@
 //----------------------------------------------------------
 // funcs
 
-#define TIM_BaseLine      ((ENC_TIM_MAX_PRD) >> 4)
+#define TIM_BaseLine      ((ENC_TIM_MAX_PRD) >> 1)
 
 static inline s32 IncEncGet(void)
 {
@@ -106,7 +106,7 @@ void IncEncInit(IncEncArgs_t* args)
  * [in]  u32EncRes
  * [out] s32EncPos
  * [out] s32EncTurns
- * [out] s16UserSpdFb
+ * [out] s32UserSpdFb
  * [out] s64UserPosFb
  *
  * [ret] s32DeltaPos
@@ -139,8 +139,8 @@ s32 IncEncCycle(IncEncArgs_t* args)
         *args->s32EncTurns = *args->s64UserPosFb / (s64)(*args->u32EncRes);
 
         // speed (rpm)
-        *args->s16UserSpdFb = *args->u16SpdCoeff;
-        *args->s16UserSpdFb *= 60 * (f32)s32DeltaPos / (f32)args->f32DeltaTick / (f32)(*args->u32EncRes);
+        *args->s32UserSpdFb = *args->u16SpdCoeff;
+        *args->s32UserSpdFb *= 60 * (f32)s32DeltaPos / (f32)args->f32DeltaTick / (f32)(*args->u32EncRes);
 
         return s32DeltaPos;
     }
