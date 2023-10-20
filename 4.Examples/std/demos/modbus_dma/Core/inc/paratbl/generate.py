@@ -1,13 +1,30 @@
+# python3
+
 import re
 import os
 import shutil
 
+__block = r'''(EXPORT_PARA_GROUP typedef union \{
+    __packed struct \{(.*?)\};
+    u16 GROUP\[GROUP_SIZE\];.*?
+\} (\w+_u);)'''
+
+__line = r'''((\w+) \w+(\[(\d{1,})\])?;) {0,}///< ?(P\d{0,}\.\d{0,})? ?(.*?\n)'''
+
+
 filesrc = "./tbl.h"
 filedst = filesrc
 
-# regex
-blocks = re.compile(r"(EXPORT_PARA_GROUP)? typedef __packed struct {\n(.*?)} (\w+_t);", re.S)
-lines = re.compile(r"((([u|s|f])(\d{1,2}) .*?(\[(\d{1,})\])?;\s+///<) ?(P\d{1,}\.\d{1,})? ?(.*?))\n")
+
+def backup(filesrc):
+    index = 1
+    filedst = ""
+    while True:
+        filedst = filesrc + "." + str(index) + ".bak"
+        if not os.path.exists(filedst):
+            break
+        index += 1
+    shutil.copyfile(filesrc, filedst)
 
 
 def add_prefix(number, prefix, length):
@@ -18,78 +35,76 @@ def add_prefix(number, prefix, length):
     return result
 
 
+def generate_id(group, offset):
+    return " ///< P" + add_prefix(group, "0", 2) + "." + add_prefix(offset, "0", 3) + " "
+
+
 if os.path.exists(filesrc):
 
-    ctx = ""
+    file_ctx = ""
 
     if filedst == filesrc:  # backup
-        backup_index = 1
-        backup_filename = ""
-        while True:
-            backup_filename = filesrc + "." + str(backup_index) + ".bak"
-            if not os.path.exists(backup_filename):
-                break
-            backup_index += 1
-        shutil.copyfile(filesrc, backup_filename)
+        backup(filesrc)
 
-    with open(filesrc, "r") as fsrc:
-        ctx = fsrc.read()
+    with open(filesrc, "r", encoding="utf-8") as fsrc:
+        file_ctx = ''.join(fsrc.readlines())
 
-    with open(filedst, "w+") as fdst:
+    with open(filedst, "w", encoding="utf-8") as fdst:
 
-        group_index = 0
+        # regex
+        blocks = re.compile(__block, re.S)
+        lines = re.compile(__line)
 
-        for block in blocks.findall(ctx):
-            group_export = len(block[0]) != 0
-            group_paras = block[1]
-            group_name = block[2]
+        # groups
+        for grp_idx, block in enumerate(blocks.findall(file_ctx)):
+            _grp_ctx = block[0]
+            _grp_paras = block[1]
+            _grp_name = block[2]
 
-            member_offset = 0
+            # params
+            para_elem_offset = 0
+            para_elem_type = {
+                "s16": 1, "s32": 2, "s64": 4,
+                "u16": 1, "u32": 2, "u64": 4,
+                "f32": 2, "f64": 4,
+            }
 
-            # para
-            for line in lines.findall(group_paras):
+            grp_paras = [""]
 
-                para_line = line[0]
-                para_left = line[1]
-                para_type = line[2]
-                para_elem_size = line[3]
-                para_array_size = line[5]
-                para_right = line[7]
+            for line in lines.findall(_grp_paras):
 
-                if para_type == "s":
-                    pass
-                elif para_type == "u":
-                    pass
-                elif para_type == "f":
-                    pass
-                else:
-                    print(para_type)
-                    raise "error type"
+                _para_ctx_left = line[0]
+                _para_ctx_right = line[5]
 
-                para_index = " P" + add_prefix(group_index, "0", 2) + "." + add_prefix(member_offset, "0",  3) + " "
-                para_newline = para_left + para_index + para_right
-                ctx = ctx.replace(para_line, para_newline)
-                # print(para_newline)
+                _para_elem_type = line[1]
+                _para_array_size = line[3]
 
-                offset = 0
+                para_new_line = (_para_ctx_left + generate_id(grp_idx, para_elem_offset) + _para_ctx_right)
+                grp_paras.append(para_new_line)
+                # print(para_new_line)
 
-                if para_elem_size == "16":
-                    offset = 1
-                elif para_elem_size == "32":
-                    offset = 2
-                elif para_elem_size == "64":
-                    offset = 4
-                else:
-                    print(para_elem_size)
-                    raise "error size"
+                try:
+                    para_array_size = 1 if _para_array_size == '' else int(_para_array_size)
+                    para_elem_offset += para_elem_type[_para_elem_type] * para_array_size
+                except:
+                    raise f"error type: {_para_elem_type}"
 
-                if para_array_size != '':
-                    offset *= int(para_array_size)
+            grp_paras_ctx = ""
+            grp_paras_ctx += "EXPORT_PARA_GROUP typedef union {\n"
+            grp_paras_ctx += "    __packed struct {\n"
+            grp_paras_ctx += "        ".join(grp_paras)
+            grp_paras_ctx += "    };\n"
+            grp_paras_ctx += "    u16 GROUP[GROUP_SIZE];" + generate_id(grp_idx, para_elem_offset-1) + "\n"
+            grp_paras_ctx += "} " + _grp_name + ";"
 
-                member_offset += offset
+            file_ctx = file_ctx.replace(_grp_ctx, grp_paras_ctx)
 
-            if group_export:
-                group_index += 1
+        fdst.write(file_ctx)
 
-        fdst.write(ctx)
-        # print(ctx)
+
+# grp_idx = 0
+# grp_elem_offset = 0
+# grp_name = "arr_a"
+
+
+# print(ctx)

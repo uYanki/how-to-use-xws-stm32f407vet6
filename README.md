@@ -11,11 +11,12 @@
 ##### Modbus DMA
 
 * RS232, RS485 ( RxTxDMA + IdleIrq )
-* Dual Wave Generator：noise,triangle,sine,custom ( DAC+DMA )
+* Dual Wave Generator：noise,triangle,sine,custom ( DAC + DMA )
 * Incremental encoder counting and speed measurement ( TIM Encoder Mode )
 * Pulse Generator ( TIM master slave mode )
 * ADC 16-bit oversample ( single ADC + DMA )
 * I2C device `TODO`
+* SSD1306 (I2C + DMA)  `TODO`
 * cmdline `TODO`
 * freq analysis `TODO`
 * pulse measure & counter `TODO`

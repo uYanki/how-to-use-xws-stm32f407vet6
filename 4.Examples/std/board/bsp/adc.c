@@ -21,7 +21,7 @@ typedef struct {
 #define CONFIG_ADC_OVS_RATIO  16u  // 过采样率
 #define CONFIG_ADC_DMA_IRQ_SW 1u   // 使能DMA中断
 
-// Channel
+// Channels
 static RO ADConv_t aADConv[] = {
     {ADC_Channel_8,  ADC_SampleTime_3Cycles}, // AI1
     {ADC_Channel_9,  ADC_SampleTime_3Cycles}, // AI2
@@ -30,18 +30,22 @@ static RO ADConv_t aADConv[] = {
     {ADC_Channel_18, ADC_SampleTime_3Cycles}, // VBAT
 };
 
+// Channel Index
+#define CONFIG_INDEX_CHIP_TEMP 2
+#define CONFIG_INDEX_VREF      3
+
 //-------------------------------------
 // GPIO
 
 // 模拟量输入 (Analog Input): ADC12_IN8
-#define AI1_GPIO_CLK       RCC_AHB1Periph_GPIOB
-#define AI1_GPIO_PORT      GPIOB
-#define AI1_GPIO_PIN       GPIO_Pin_0
+#define AI1_GPIO_CLK           RCC_AHB1Periph_GPIOB
+#define AI1_GPIO_PORT          GPIOB
+#define AI1_GPIO_PIN           GPIO_Pin_0
 
 // 模拟量输入 (Analog Input): ADC12_IN9
-#define AI2_GPIO_CLK       RCC_AHB1Periph_GPIOB
-#define AI2_GPIO_PORT      GPIOB
-#define AI2_GPIO_PIN       GPIO_Pin_1
+#define AI2_GPIO_CLK           RCC_AHB1Periph_GPIOB
+#define AI2_GPIO_PORT          GPIOB
+#define AI2_GPIO_PIN           GPIO_Pin_1
 
 // 芯片温度 (Temperature Sensor): ADC1_IN16
 // 参考电压 (Reference Voltage): ADC1_IN17
@@ -50,23 +54,23 @@ static RO ADConv_t aADConv[] = {
 //-------------------------------------
 // ADC
 
-#define ADC_CLKEN          RCC_APB2PeriphClockCmd
-#define ADC_CLK            RCC_APB2Periph_ADC1
-#define ADC_PORT           ADC1
-#define ADC_RES            12u  // 分辨率
+#define ADC_CLKEN              RCC_APB2PeriphClockCmd
+#define ADC_CLK                RCC_APB2Periph_ADC1
+#define ADC_PORT               ADC1
+#define ADC_RES                12u  // 分辨率
 
 //-------------------------------------
 // DMA
 
-#define ADC_DMA_CLKEN      RCC_AHB1PeriphClockCmd
-#define ADC_DMA_CLK        RCC_AHB1Periph_DMA2
-#define ADC_DMA_CHANNEL    DMA_Channel_0
-#define ADC_DMA_STREAM     DMA2_Stream0
+#define ADC_DMA_CLKEN          RCC_AHB1PeriphClockCmd
+#define ADC_DMA_CLK            RCC_AHB1Periph_DMA2
+#define ADC_DMA_CHANNEL        DMA_Channel_0
+#define ADC_DMA_STREAM         DMA2_Stream0
 
-#define ADC_DMA_FLAG       DMA_FLAG_TCIF0
-#define ADC_DMA_IT         DMA_IT_TCIF0
-#define ADC_DMA_IRQn       DMA2_Stream0_IRQn
-#define ADC_DMA_IRQHandler DMA2_Stream0_IRQHandler
+#define ADC_DMA_FLAG           DMA_FLAG_TCIF0
+#define ADC_DMA_IT             DMA_IT_TCIF0
+#define ADC_DMA_IRQn           DMA2_Stream0_IRQn
+#define ADC_DMA_IRQHandler     DMA2_Stream0_IRQHandler
 
 //------------------------------------------------------------------------------
 // Regular Oversampler
@@ -132,6 +136,7 @@ void AdcInit(void)
         DMA_Init(ADC_DMA_STREAM, &DMA_InitStructure);
         DMA_Cmd(ADC_DMA_STREAM, ENABLE);
     }
+#if CONFIG_ADC_DMA_IRQ_SW
     // NVIC
     {
         NVIC_InitTypeDef NVIC_InitStructure;
@@ -145,13 +150,14 @@ void AdcInit(void)
         DMA_ClearITPendingBit(ADC_DMA_STREAM, ADC_DMA_IT);
         DMA_ITConfig(ADC_DMA_STREAM, DMA_IT_TC, ENABLE);
     }
+#endif
     // ADC
     {
         ADC_CLKEN(ADC_CLK, ENABLE);
 
         ADC_CommonInitTypeDef ADC_CommonInitStructure = {
             .ADC_Mode             = ADC_Mode_Independent,
-            .ADC_TwoSamplingDelay = ADC_TwoSamplingDelay_5Cycles,  // 通道间采样间隔
+            .ADC_TwoSamplingDelay = ADC_TwoSamplingDelay_8Cycles,  // 通道间采样间隔
             .ADC_DMAAccessMode    = ADC_DMAAccessMode_Disabled,
             .ADC_Prescaler        = ADC_Prescaler_Div4,
         };
@@ -258,6 +264,21 @@ void AdcOvsCalc(vu16* pau16Output)
     }
 }
 
+#ifdef CONFIG_INDEX_CHIP_TEMP
+
+// AD采样值转换为芯片温度
+static u16 ConvToChipTemp(u16 advalue)  // 0.01 °C
+{
+    // Vsense = ADValue × 3300 / 4096 (mV)
+    // Temp = ( (Vsense) - V25 ) / AvgSlope ) +25
+    // 25° 时的 Vsense: V25 = 0.76V
+    // 温度转换率 AvgSlope = 2.5 mV/°C
+
+    return 2500 + (advalue * 3300 / 4096 - 760) / 25;
+}
+
+#endif
+
 #if CONFIG_ADC_DMA_IRQ_SW
 
 void ADC_DMA_IRQHandler(void)
@@ -274,17 +295,11 @@ void ADC_DMA_IRQHandler(void)
         P(MotSta.u32AdcSampTime) = TimeRecEnd(TID_0);
         TimeRecStart(TID_0);  // 16-bit: 10ms
 
-#if 0
-        Vsense = Value×3300/4096  （mV）
-        Temp = （（Vsense - V25）/Avg_Slope）+25
-        V25是Vsense 在25度时候的值，Avg_Slope 是温度转换率。这两个值可在datasheet里边查到。
-        V25 = 0.76V   Avg_Slope = 2.5 mV/°C
-        Temp = (Vsense– 760)/2500 + 25;
+#ifdef CONFIG_INDEX_CHIP_TEMP
+        P(MotSta).s16ChipTemp = ConvToChipTemp(P(MotSta.u16AdcSampRes[CONFIG_INDEX_CHIP_TEMP]));
 #endif
-
-        f32 Vsense             = P(DbgSta.u16DbgBuf[2]) / 4096.f * 3300;  // mV
-        f32 temp               = (Vsense - 760) / 2500.f + 25;
-        P(DbgSta.u16DbgBuf[8]) = temp * 100;  // 0.01 °
+#ifdef CONFIG_INDEX_VREF
+#endif
     }
 }
 

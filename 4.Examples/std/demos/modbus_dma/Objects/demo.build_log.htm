@@ -21,48 +21,63 @@ Target DLL:      CMSIS_AGDI.dll V1.33.0.0
 Dialog DLL:      TCM.DLL V1.53.0.0
  
 <h2>Project:</h2>
-D:\how-to-use-xws-stm32f407vet6\4.Examples\std\demos\modbus_dma\demo.uvprojx
+d:\how-to-use-xws-stm32f407vet6\4.Examples\std\demos\modbus_dma\demo.uvprojx
 Project File Date:  10/19/2023
 
 <h2>Output:</h2>
 *** Using Compiler 'V5.06 update 7 (build 960)', folder: 'C:\Keil_v5\ARM\ARMCC\Bin'
 Build target 'Project'
 Note: source file '..\..\board\enc\pulse.c' - object file renamed from '.\Objects\pulse.o' to '.\Objects\pulse_1.o'.
+compiling rotEnc.c...
+compiling paratbl.c...
+compiling hallEnc.c...
+compiling wave.c...
+compiling incEnc.c...
 compiling adc.c...
-..\..\board\bsp\adc.c(234): warning:  #175-D: subscript out of range
-          if (ADC_CH_NBR >  5) { au32Sum[ 5] += *pu16Input++; }
-..\..\board\bsp\adc.c(235): warning:  #175-D: subscript out of range
-          if (ADC_CH_NBR >  6) { au32Sum[ 6] += *pu16Input++; }
-..\..\board\bsp\adc.c(236): warning:  #175-D: subscript out of range
-          if (ADC_CH_NBR >  7) { au32Sum[ 7] += *pu16Input++; }
-..\..\board\bsp\adc.c(237): warning:  #175-D: subscript out of range
-          if (ADC_CH_NBR >  8) { au32Sum[ 8] += *pu16Input++; }
-..\..\board\bsp\adc.c(238): warning:  #175-D: subscript out of range
-          if (ADC_CH_NBR >  9) { au32Sum[ 9] += *pu16Input++; }
-..\..\board\bsp\adc.c(239): warning:  #175-D: subscript out of range
-          if (ADC_CH_NBR > 10) { au32Sum[10] += *pu16Input++; }
 ..\..\board\bsp\adc.c(240): warning:  #175-D: subscript out of range
-          if (ADC_CH_NBR > 11) { au32Sum[11] += *pu16Input++; }
+          if (ADC_CH_NBR >  5) { au32Sum[ 5] += *pu16Input++; }
 ..\..\board\bsp\adc.c(241): warning:  #175-D: subscript out of range
-          if (ADC_CH_NBR > 12) { au32Sum[12] += *pu16Input++; }
+          if (ADC_CH_NBR >  6) { au32Sum[ 6] += *pu16Input++; }
 ..\..\board\bsp\adc.c(242): warning:  #175-D: subscript out of range
-          if (ADC_CH_NBR > 13) { au32Sum[13] += *pu16Input++; }
+          if (ADC_CH_NBR >  7) { au32Sum[ 7] += *pu16Input++; }
 ..\..\board\bsp\adc.c(243): warning:  #175-D: subscript out of range
-          if (ADC_CH_NBR > 14) { au32Sum[14] += *pu16Input++; }
+          if (ADC_CH_NBR >  8) { au32Sum[ 8] += *pu16Input++; }
 ..\..\board\bsp\adc.c(244): warning:  #175-D: subscript out of range
-          if (ADC_CH_NBR > 15) { au32Sum[15] += *pu16Input++; }
+          if (ADC_CH_NBR >  9) { au32Sum[ 9] += *pu16Input++; }
 ..\..\board\bsp\adc.c(245): warning:  #175-D: subscript out of range
-          if (ADC_CH_NBR > 16) { au32Sum[16] += *pu16Input++; }
+          if (ADC_CH_NBR > 10) { au32Sum[10] += *pu16Input++; }
 ..\..\board\bsp\adc.c(246): warning:  #175-D: subscript out of range
-          if (ADC_CH_NBR > 17) { au32Sum[17] += *pu16Input++; }
+          if (ADC_CH_NBR > 11) { au32Sum[11] += *pu16Input++; }
 ..\..\board\bsp\adc.c(247): warning:  #175-D: subscript out of range
+          if (ADC_CH_NBR > 12) { au32Sum[12] += *pu16Input++; }
+..\..\board\bsp\adc.c(248): warning:  #175-D: subscript out of range
+          if (ADC_CH_NBR > 13) { au32Sum[13] += *pu16Input++; }
+..\..\board\bsp\adc.c(249): warning:  #175-D: subscript out of range
+          if (ADC_CH_NBR > 14) { au32Sum[14] += *pu16Input++; }
+..\..\board\bsp\adc.c(250): warning:  #175-D: subscript out of range
+          if (ADC_CH_NBR > 15) { au32Sum[15] += *pu16Input++; }
+..\..\board\bsp\adc.c(251): warning:  #175-D: subscript out of range
+          if (ADC_CH_NBR > 16) { au32Sum[16] += *pu16Input++; }
+..\..\board\bsp\adc.c(252): warning:  #175-D: subscript out of range
+          if (ADC_CH_NBR > 17) { au32Sum[17] += *pu16Input++; }
+..\..\board\bsp\adc.c(253): warning:  #175-D: subscript out of range
           if (ADC_CH_NBR > 18) { au32Sum[18] += *pu16Input++; }
-..\..\board\bsp\adc.c(287): warning:  #175-D: subscript out of range
-          P(DbgSta.u16DbgBuf[8]) = temp * 100;  // 0.01 °
-..\..\board\bsp\adc.c: 15 warnings, 0 errors
+..\..\board\bsp\adc.c: 14 warnings, 0 errors
+compiling mbslave.c...
+Core\src\mbslave\mbslave.c(140): warning:  #186-D: pointless comparison of unsigned integer with zero
+      if ((usAddress >= COIL_START) &&
+Core\src\mbslave\mbslave.c(207): warning:  #186-D: pointless comparison of unsigned integer with zero
+      if ((usAddress >= DISC_INPUT_START) && (usAddress + usNDiscrete <= DISC_INPUT_START + DISC_INPUT_NDISCS))
+Core\src\mbslave\mbslave.c: 2 warnings, 0 errors
+compiling main.c...
+Core\src\main.c(193): warning:  #223-D: function "abs" declared implicitly
+          pulse += abs(IncEncCycle(pEncArgs));
+Core\src\main.c(277): warning:  #1-D: last line of file ends without a newline
+  #endif
+Core\src\main.c: 2 warnings, 0 errors
 linking...
-Program Size: Code=15036 RO-data=1464 RW-data=288 ZI-data=3472  
-".\Objects\demo.axf" - 0 Error(s), 15 Warning(s).
+Program Size: Code=14976 RO-data=1464 RW-data=288 ZI-data=3272  
+".\Objects\demo.axf" - 0 Error(s), 18 Warning(s).
 
 <h2>Software Packages used:</h2>
 
@@ -75,7 +90,7 @@ Package Vendor: Keil
   C:\Users\Administrator\AppData\Local\Arm\Packs\Keil\STM32F4xx_DFP\2.11.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include
 
 <h2>Collection of Component Files used:</h2>
-Build Time Elapsed:  00:00:02
+Build Time Elapsed:  00:00:03
 </pre>
 </body>
 </html>

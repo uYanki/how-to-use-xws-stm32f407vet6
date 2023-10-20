@@ -55,9 +55,6 @@ void usdk_preinit(void)
 
 //
 
-void PulseGenInit(void);
-void PulseGenN(uint32_t count);
-
 int main()
 {
     NVIC_PriorityGroupConfig(NVIC_PriorityGroup_0);
@@ -250,5 +247,31 @@ if (SpdPID.out > 2000)
 
 R(07, s16VdRef) = SpdPID.out;
 R(07, s16VqRef) = SpdPID.out;
+
+#endif
+
+#if 0
+
+if (AppCheck(APP_OPENLOOP))
+{
+    P(MotSta.u16ElecAngle) = R(07, u16ElecAngRef);
+}
+else if (AppCheck(APP_CLOSELOOP))
+{
+    u32 u32MechAngle;
+    U16 u16ElecAngle;
+
+// 0 <= u32EncOffset < u32EncRes
+// 0 <  s32EncPos    < u32EncRes
+    
+// (0,u32EncRes) => (0,U32_MAX) => (0,U16_MAX)
+u32MechAngle = (u32)((s32)P(PosCtl.s32EncPos) - (s32)P(DrvCfg.u32EncOffset) + (s32)P(DrvCfg.u32EncRes)) % (u32)P(DrvCfg.u32EncRes);
+u32MechAngle = (U32)((u64)U32_MAX * (u64)u32MechAngle / (u64)P(DrvCfg.u32EncRes)) >> 16;
+u16ElecAngle = (U16)u32MechAngle * P(DrvCfg.u16MotPolePairs) + P(DrvCfg.u16HallOffset);
+
+P(MotSta.u16ElecAngle) = u16ElecAngle;
+}
+
+u16 u16HallOffset;  ///< P00.016 霍尔安装偏置(电角度偏置)
 
 #endif

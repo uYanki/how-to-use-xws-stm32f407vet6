@@ -136,45 +136,49 @@ typedef struct
 
 EXPORT_PARA_GROUP typedef union {
     __packed struct {
-        u32 u32SingleRotPos;    ///< P01.000 RO 单圈位置
-        u32 u32MultiRotPos;     ///< P01.002 RO 多圈位置
-        u16 u16PulseCntPerT;    ///< P01.004 增量式单周期编码器脉冲数
-        u16 u16Umdc;            ///< P01.005 RO 母线电压
-        u16 u16CurPhaseU;       ///< P01.006 RO U相电流
-        u16 u16CurPhaseV;       ///< P01.007 RO V相电流
-        u16 u16UmdcSamp;        ///< P01.008 RO 主回路母线电压
-        s16 s16CurPhAFb;        ///< P01.009 RO
-        s16 s16CurPhBFb;        ///< P01.010 RO
-        s16 s16IalphaFb;        ///< P01.011 RO
-        s16 s16IbetaFb;         ///< P01.012 RO
-        s16 s16IqFb;            ///< P01.013 RO Q轴反馈电流
-        s16 s16IdFb;            ///< P01.014 RO D轴反馈电流
-        s16 s16CurPhAFb;        ///< P01.015 A相反馈电流
-        s16 s16CurPhBFb;        ///< P01.016 B相反馈电流
-        s16 s16IalphaFb;        ///< P01.017 Alpha轴反馈电流
-        s16 s16IbetaFb;         ///< P01.018 Beta轴反馈电流
-        s16 s16IqFb;            ///< P01.019 Q轴反馈电流
-        s16 s16IdFb;            ///< P01.020 D轴反馈电流
-        u16 u16ElecAng;         ///< P01.021 RO 电角度(实际值)
-        s16 s16Ualpha;          ///< P01.022 RO Alpha轴输出电压(实际值)
-        s16 s16Ubeta;           ///< P01.023 RO Beta轴输出电压(实际值)
-        u16 u16DutyPha;         ///< P01.024 RO A相输出占空比(实际值)
-        u16 u16DutyPhb;         ///< P01.025 RO B相输出占空比(实际值)
-        u16 u16DutyPhc;         ///< P01.026 RO C相输出占空比(实际值)
-        s16 s16Uq;              ///< P01.027 RO
-        s16 s16Ud;              ///< P01.028 RO
-        s32 s32UserSpdRef;      ///< P01.029 RO 用户速度指令, 单位 rpm
-        s32 s32UserSpdFb;       ///< P01.031 RO 用户速度反馈, 单位 rpm
-        s64 s64UserPosRef;      ///< P01.033 RO 用户位置指令
-        s64 s64UserPosFb;       ///< P01.037 RO 用户位置反馈
-        s16 s16UserTrqRef;      ///< P01.041 RO 用户转矩指令
-        s16 s16UserTrqFb;       ///< P01.042 RO 用户转矩反馈
-        s16 s16EnvTemp;         ///< P01.043 RO 环境温度, 单位 0.01°C
-        s16 s16ChipTemp;        ///< P01.044 RO 芯片温度, 单位 0.01°C
-        u32 u32AdcSampTime;     ///< P01.045 RO ADC采样耗时
-        u16 u16AdcSampRes[10];  ///< P01.047 RO ADC采样结果
+        u32 u32SingleRotPos;  ///< RO 单圈位置
+        u32 u32MultiRotPos;   ///< RO 多圈位置
+        u16 u16PulseCntPerT;  ///< 增量式单周期编码器脉冲数
+        u16 u16Umdc;          ///< RO 母线电压
+        u16 u16CurPhaseU;     ///< RO U相电流
+        u16 u16CurPhaseV;     ///< RO V相电流
+        u16 u16UmdcSamp;      ///< RO 主回路母线电压
+        s16 s16CurPhAFb;      ///< P01.001 RO
+        s16 s16CurPhBFb;      ///< P01.002 RO
+        s16 s16IalphaFb;      ///< P01.003 RO
+        s16 s16IbetaFb;       ///< P01.004 RO
+        s16 s16IqFb;          ///< P01.005 RO Q轴反馈电流
+        s16 s16IdFb;          ///< P01.006 RO D轴反馈电流
+
+        s16 s16CurPhAFb;  ///< P07.032 A相反馈电流
+        s16 s16CurPhBFb;  ///< P07.033 B相反馈电流
+        s16 s16IalphaFb;  ///< P07.034 Alpha轴反馈电流
+        s16 s16IbetaFb;   ///< P07.035 Beta轴反馈电流
+        s16 s16IqFb;      ///< P07.036 Q轴反馈电流
+        s16 s16IdFb;      ///< P07.037 D轴反馈电流
+
+        // Q轴电压指令(设定值)
+        // D轴电压指令(设定值)
+        u16 u16ElecAng;         ///< P01.007 RO 电角度(实际值)
+        s16 s16Ualpha;          ///< P01.008 RO Alpha轴输出电压(实际值)
+        s16 s16Ubeta;           ///< P01.009 RO Beta轴输出电压(实际值)
+        u16 u16DutyPha;         ///< P01.010 RO A相输出占空比(实际值)
+        u16 u16DutyPhb;         ///< P01.011 RO B相输出占空比(实际值)
+        u16 u16DutyPhc;         ///< P01.012 RO C相输出占空比(实际值)
+        s16 s16Uq;              ///< P01.013 RO
+        s16 s16Ud;              ///< P01.014 RO
+        s32 s32UserSpdRef;      ///< P01.015 RO 用户速度指令, 单位 rpm
+        s32 s32UserSpdFb;       ///< P01.017 RO 用户速度反馈, 单位 rpm
+        s64 s64UserPosRef;      ///< P01.019 RO 用户位置指令
+        s64 s64UserPosFb;       ///< P01.023 RO 用户位置反馈
+        s16 s16UserTrqRef;      ///< P01.027 RO 用户转矩指令
+        s16 s16UserTrqFb;       ///< P01.028 RO 用户转矩反馈
+        s16 s16EnvTemp;         ///< P01.029 RO 环境温度, 单位 0.01°C
+        s16 s16ChipTemp;        ///< P01.030 RO 芯片温度, 单位 0.01°C
+        u32 u32AdcSampTime;     ///< P01.031 RO ADC采样耗时
+        u16 u16AdcSampRes[10];  ///< P01.033 RO ADC采样结果
     };
-    u16 GROUP[GROUP_SIZE];  ///< P01.056
+    u16 GROUP[GROUP_SIZE];  ///< P01.042
 } DevSta_u;
 
 EXPORT_PARA_GROUP typedef union {
