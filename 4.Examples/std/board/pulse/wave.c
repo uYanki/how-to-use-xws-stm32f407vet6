@@ -24,7 +24,7 @@
 // funcs
 
 static void WaveGenDemo(void);
-static bool WaveGenCfg(WaveGen_t* pWaveGen, u32 DAC_CHx, TIM_TypeDef* DAC_TIM_PORT, u32 DAC_TIM_TRGO, DMA_Stream_TypeDef* DAC_DMA_Stream);
+static bool WaveGenCfg(WaveGen_u* pWaveGen, u32 DAC_CHx, TIM_TypeDef* DAC_TIM_PORT, u32 DAC_TIM_TRGO, DMA_Stream_TypeDef* DAC_DMA_Stream);
 
 //-----------------------------------------------------------------------------
 // wave
@@ -76,7 +76,7 @@ void WaveGenInit(void)
 
 void WaveGenCycle(void)
 {
-    WaveGen_t* pWaveGen;
+    WaveGen_u* pWaveGen;
 
     pWaveGen = &P(WaveGen1);
 
@@ -111,7 +111,7 @@ void WaveGenCycle(void)
     }
 }
 
-static bool WaveGenCfg(WaveGen_t* pWaveGen, u32 DAC_CHx, TIM_TypeDef* DAC_TIM_PORT, u32 DAC_TIM_TRGO, DMA_Stream_TypeDef* DAC_DMA_Stream)
+static bool WaveGenCfg(WaveGen_u* pWaveGen, u32 DAC_CHx, TIM_TypeDef* DAC_TIM_PORT, u32 DAC_TIM_TRGO, DMA_Stream_TypeDef* DAC_DMA_Stream)
 {
     assert_param(IS_DAC_CHANNEL(DAC_CHx));
 

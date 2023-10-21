@@ -8,7 +8,7 @@ typedef struct {
 } reg_grp_t;
 
 static RO reg_grp_t m_holding[] = {
-    {0, sizeof(ParaTable_t) / sizeof(u16), (u16*) &m_paratbl},
+    {0, sizeof(ParaTable_t) / sizeof(u16), (u16*) &gParatbl},
 };
 
 

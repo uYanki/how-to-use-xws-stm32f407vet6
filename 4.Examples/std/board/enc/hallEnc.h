@@ -8,7 +8,7 @@
 
 __packed typedef struct {
     vu32* u32EncRes;
-    vs32* s32EncPos;
+    vu32* u32EncPos;
     vs32* s32EncTurns;
     vs32* s32UserSpdFb;
     vs64* s64UserPosFb;

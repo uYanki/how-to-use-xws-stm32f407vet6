@@ -55,13 +55,6 @@ typedef enum {
     ENC_HALL,
 } EncType_e;
 
-typedef enum {
-    // databits - parity - stopbit
-    MODBUS_DATFMR_8N1,
-    MODBUS_DATFMR_8E1,
-    MODBUS_DATFMR_8O1,
-} ModDataFmt_e;
-
 EXPORT_PARA_GROUP typedef union {
     __packed struct {
         u16 u16___System___;       ///< P00.000 NO 保留
@@ -99,7 +92,7 @@ EXPORT_PARA_GROUP typedef union {
         u16 u16MotTm;              ///< P00.035 RW 电机机械时间常数 0.01ms
         u16 u16___Encoder___;      ///< P00.036 NO 保留
         u16 u16EncType;            ///< P00.037 RW 编码器类型
-        u32 u32EncRes;             ///< P00.038 RW 编码器分辨率 pulse
+        s32 s32EncRes;             ///< P00.038 RW 编码器分辨率 pulse
         s32 s32EncOffset;          ///< P00.040 RW 编码器安装偏置: 编码器"0"位置与FOC坐标系0电角度之间的偏置角,标定到编码器分辨率
         u16 u16HallOffset;         ///< P00.042 RW 霍尔安装偏置: 霍尔"0"位置与FOC坐标系0电角度之间的偏置角,标定到2^16
         u16 u16___AdcSampler___;   ///< P00.043 NO 保留
@@ -108,13 +101,13 @@ EXPORT_PARA_GROUP typedef union {
         s16 s16IbBias;             ///< P00.046 RW B相电流采样偏置
         s16 s16IcBias;             ///< P00.047 RW C相电流采样偏置
         u16 u16UmdcZoom;           ///< P00.048 RW 供电母线采样缩放系数
-        s16 s16UmdcBias;           ///< P00.049 RW 供电母线采样偏置 0.1V
+        s16 s16UmdcOffset;         ///< P00.049 RW 供电母线采样偏置
         u16 u16UcdcZoom;           ///< P00.050 RW 控制母线采样缩放系数
-        s16 s16UcdcBias;           ///< P00.051 RW 控制母线采样偏置 0.1V
+        s16 s16UcdcOffset;         ///< P00.051 RW 控制母线采样偏置
         u16 u16TempZoom;           ///< P00.052 RW 温度采样缩放系数
-        s16 s16TempBias;           ///< P00.053 RW 温度采样偏置
+        s16 s16TempOffset;         ///< P00.053 RW 温度采样偏置
         u16 u16AiZoom[3];          ///< P00.054 RW 模拟量采样缩放系数
-        s16 s16AiBias[3];          ///< P00.057 RW 模拟量采样偏置 0.1V
+        s16 s16AiBias[3];          ///< P00.057 RW 模拟量采样偏置
         u16 u16AiDeadZone[3];      ///< P00.060 RW 模拟量输入死区
         u16 u16AiFltrTime[3];      ///< P00.063 RW 模拟量输入滤波时间常数
         u16 u16___SlvCom___;       ///< P00.066 NO 保留
@@ -128,75 +121,77 @@ EXPORT_PARA_GROUP typedef union {
         u16 u16CopPdoInhTime;      ///< P00.074 RW CANopen PDO禁止时间
     };
     u16 GROUP[GROUP_SIZE * 1];  ///< P00.074
-} SysPara_u;
+} MotPara_u;
 
 EXPORT_PARA_GROUP typedef union {
     __packed struct {
         u16 u16FocMode;          ///< P01.000 RW FOC模式配置
-        u16 u16___MotDrvRef___;  ///< P01.001 NO 保留
-        u16 u16ElecAngRef;       ///< P01.002 RW 电角度指令
-        s16 s16VqRef;            ///< P01.003 RW Q轴电压指令
-        s16 s16VdRef;            ///< P01.004 RW D轴电压指令
-        s16 s16ValphaRef;        ///< P01.005 RW Alpha轴电压指令
-        s16 s16VbetaRef;         ///< P01.006 RW Beta轴电压指令
-        u16 u16SvpwmTaRef;       ///< P01.007 RW A相占空比指令
-        u16 u16SvpwmTbRef;       ///< P01.008 RW B相占空比指令
-        u16 u16SvpwmTcRef;       ///< P01.009 RW C相占空比指令
-        u16 u16___MotDrvOut___;  ///< P01.010 NO 保留
-        u16 u16SvpwmSector;      ///< P01.011 RW 电压矢量扇区
-        u16 u16ElecAngOut;       ///< P01.012 RW 电角度指令
-        s16 s16VqOut;            ///< P01.013 RW Q轴电压指令
-        s16 s16VdOut;            ///< P01.014 RW D轴电压指令
-        s16 s16ValphaOut;        ///< P01.015 RW Alpha轴电压指令
-        s16 s16VbetaOut;         ///< P01.016 RW Beta轴电压指令
-        u16 u16SvpwmTaOut;       ///< P01.017 RW A相占空比指令
-        u16 u16SvpwmTbOut;       ///< P01.018 RW B相占空比指令
-        u16 u16SvpwmTcOut;       ///< P01.019 RW C相占空比指令
-        u16 u16___MotDrvFb___;   ///< P01.020 NO 保留
-        s16 s16IaFbSi;           ///< P01.021 RO A相反馈电流
-        s16 s16IbFbSi;           ///< P01.022 RO B相反馈电流
-        s16 s16IcFbSi;           ///< P01.023 RO C相反馈电流
-        s16 s16IalphaFb;         ///< P01.024 RW Alpha轴反馈电流
-        s16 s16IbetaFb;          ///< P01.025 RW Beta轴反馈电流
+        u16 u16___MotDrvRef___;  ///< P02.071 NO 保留
+        u16 u16ElecAngRef;       ///< P02.070 RW 电角度指令
+        s16 s16VqRef;            ///< P02.063 RW Q轴电压指令
+        s16 s16VdRef;            ///< P02.064 RW D轴电压指令
+        s16 s16ValphaRef;        ///< P02.065 RW Alpha轴电压指令
+        s16 s16VbetaRef;         ///< P02.066 RW Beta轴电压指令
+        u16 u16SvpwmTaRef;       ///< P02.067 RW A相占空比指令
+        u16 u16SvpwmTbRef;       ///< P02.068 RW B相占空比指令
+        u16 u16SvpwmTcRef;       ///< P02.069 RW C相占空比指令
+        u16 u16___MotDrvOut___;  ///< P02.071 NO 保留
+        u16 u16SvpwmSector;      ///< P02.077 RW 电压矢量扇区
+        u16 u16ElecAngOut;       ///< P02.070 RW 电角度指令
+        s16 s16VqOut;            ///< P02.063 RW Q轴电压指令
+        s16 s16VdOut;            ///< P02.064 RW D轴电压指令
+        s16 s16ValphaOut;        ///< P02.065 RW Alpha轴电压指令
+        s16 s16VbetaOut;         ///< P02.066 RW Beta轴电压指令
+        u16 u16SvpwmTaOut;       ///< P02.067 RW A相占空比指令
+        u16 u16SvpwmTbOut;       ///< P02.068 RW B相占空比指令
+        u16 u16SvpwmTcOut;       ///< P02.069 RW C相占空比指令
+        u16 u16___MotDrvFb___;   ///< P02.071 NO 保留
+        s16 s16IaFbSi;           ///< P02.072 RO A相反馈电流
+        s16 s16IbFbSi;           ///< P02.073 RO B相反馈电流
+        s16 s16IcFbSi;           ///< P02.074 RO C相反馈电流
+        s16 s16IalphaFb;         ///< P02.075 RW Alpha轴反馈电流
+        s16 s16IbetaFb;          ///< P02.076 RW Beta轴反馈电流
     };
-    u16 GROUP[GROUP_SIZE * 1];  ///< P01.025
+    u16 GROUP[GROUP_SIZE * 1];  ///< P01.000
 } MotDrv_u;
 
 EXPORT_PARA_GROUP typedef union {
     __packed struct {
-        u16 u16___System___;    ///< P02.000 NO 保留
-        u16 u32SysRunTime;      ///< P02.001 RO 系统运行时间, minute
-        u16 u32AppRunTime;      ///< P02.002 RO 应用运行时间, minute
-        u16 u16___DiDo___;      ///< P02.003 NO 保留
-        u16 u16VirDiState;      ///< P02.004 RO 虚拟DI输入电平状态
-        u16 u16VirDoState;      ///< P02.005 RO 虚拟DO输出电平状态
-        u16 u16ExtDiState;      ///< P02.006 RO 外部DI输入电平状态
-        u16 u16ExtDoState;      ///< P02.007 RO 外部DO输出电平状态
-        u16 u16___AiAo___;      ///< P02.008 NO 保留
-        u16 u16UmdcSi;          ///< P02.009 RO 供电母线电压, 0.01V
-        u16 u16UcdcSi;          ///< P02.010 RO 控制母线电压, 0.01V
-        s16 s16UaiSi[3];        ///< P02.011 RO AI输入电压, 0.01V
-        u16 u16UaoSi[3];        ///< P02.014 RO AO输出电压, 0.01V
-        s16 s16EnvTemp;         ///< P02.017 RO 环境温度, 0.01°C
-        s16 s16ChipTemp;        ///< P02.018 RO 芯片温度, 0.01°C
-        u32 u32AdcSampTime;     ///< P02.019 RO ADC采样耗时, 0.01 us
-        u16 u16AdcSampRes[10];  ///< P02.021 RO ADC采样原始结果
-        u16 u16___Encoder___;   ///< P02.031 NO 保留
-        u16 u16EncState;        ///< P02.032 RO 编码器状态
-        s16 s16EncTemp;         ///< P02.033 RO 编码器温度, 0.01°C
-        u16 u16EncMode;         ///< P02.034 RW 编码器工作模式
-        s64 s64EncPosInit;      ///< P02.035 RO 编码器上电初始位置, pulse
-        u32 u32EncPos;          ///< P02.039 RO 编码器单圈位置, pulse
-        s32 s32EncTurns;        ///< P02.041 RO 编码器圈数, turn
-        u16 u16___MotSta___;    ///< P02.043 NO 保留
-        s32 s32UserSpdRef;      ///< P02.044 RO 用户速度指令, rpm
-        s32 s32UserSpdFb;       ///< P02.046 RO 用户速度反馈, rpm
-        s64 s64UserPosRef;      ///< P02.048 RO 用户位置指令, pulse
-        s64 s64UserPosFb;       ///< P02.052 RO 用户位置反馈, pulse
-        s16 s16UserTrqRef;      ///< P02.056 RO 用户转矩指令
-        s16 s16UserTrqFb;       ///< P02.057 RO 用户转矩反馈
+        u16 u16___System___;     ///< P02.000 NO 保留
+        u16 u32SysRunTime;       ///< P02.001 RO 系统运行时间
+        u16 u32AppRunTime;       ///< P02.002 RO 应用运行时间
+        u16 u16___DiDo___;       ///< P02.003 NO 保留
+        u16 s32PulseCnt;         ///< P02.004 RO 外部DI输入脉冲计数
+        u16 u16ExtDiState;       ///< P02.005 RO 外部DI输入电平状态
+        u16 u16ExtDoState;       ///< P02.006 RO 外部DO输出电平状态
+        u16 u16VirDiState;       ///< P02.007 RO 外部DO输出电平状态
+        u16 u16VirDoState;       ///< P02.008 RO 外部DO输出电平状态
+        u16 u16___AiAo___;       ///< P02.009 NO 保留
+        u16 u16UmdcSi;           ///< P02.010 RO 供电母线电压, 0.1V
+        u16 u16UcdcSi;           ///< P02.011 RO 控制母线电压, 0.1V
+        s16 s16UaiSi[3];         ///< P02.012 RO AI输入电压, 0.1V
+        u16 u16UaoSi[3];         ///< P02.015 RO AO输出电压, 0.1V
+        s16 s16EnvTemp;          ///< P02.018 RO 环境温度, 0.01°C
+        s16 s16ChipTemp;         ///< P02.019 RO 芯片温度, 0.01°C
+        u32 u32AdcSampTime;      ///< P02.020 RO ADC采样耗时, us
+        u16 u16AdcSampRes[10];   ///< P02.022 RO ADC采样原始结果
+        u16 u16___Encoder___;    ///< P02.032 NO 保留
+        u16 u16EncState;         ///< P02.033 RO 编码器状态
+        s16 s16EncTemp;          ///< P02.034 RO 编码器温度
+        u16 u16EncMode;          ///< P02.035 RW 编码器工作模式
+        s64 s64EncPosInit;       ///< P02.036 RO 编码器上电初始位置
+        s32 s32EncTurns;         ///< P02.044 RO 编码器圈数
+        u32 u32EncSingleRotPos;  ///< P02.040 RO 编码器单圈位置 pulse
+        u32 u32EncMultiRotPos;   ///< P02.042 RO 编码器多圈位置(仅多圈绝对值) pulse
+        u16 u16___MotSta___;     ///< P02.046 NO 保留
+        s32 s32UserSpdRef;       ///< P02.047 RO 用户速度指令, rpm
+        s32 s32UserSpdFb;        ///< P02.049 RO 用户速度反馈, rpm
+        s64 s64UserPosRef;       ///< P02.051 RO 用户位置指令, pulse
+        s64 s64UserPosFb;        ///< P02.055 RO 用户位置反馈, pulse
+        s16 s16UserTrqRef;       ///< P02.059 RO 用户转矩指令
+        s16 s16UserTrqFb;        ///< P02.060 RO 用户转矩反馈
     };
-    u16 GROUP[GROUP_SIZE * 1];  ///< P02.057
+    u16 GROUP[GROUP_SIZE * 1];  ///< P02.078
 } MotSta_u;
 
 //-----------------------------------------------------------------------------
@@ -264,31 +259,31 @@ EXPORT_PARA_GROUP typedef union {
 
 EXPORT_PARA_GROUP typedef union {
     __packed struct {
-        u16 u16DbgVal[8];  ///< P06.000 RW
-        u32 u32DbgVal[8];  ///< P06.008 RW
-        u64 u64DbgVal[4];  ///< P06.024 RW
-        f32 f32DbgVal[8];  ///< P06.040 RW
+        u16 u16WaveConfig;      ///< P06.000 RW 触发配置
+        u16 u16WaveType;        ///< P06.001 RW 波形类型
+        u32 u32WaveTargetFreq;  ///< P06.002 RW 波形期望频率
+        u32 u32WaveActualFreq;  ///< P06.004 RO 波形实际频率
+        u16 u16WaveFreqUnit;    ///< P06.006 RW 波形频率单位
+        u16 u16WaveAmplitude;   ///< P06.007 RW 波形振幅
+        u16 u16WaveAlign;       ///< P06.008 RW 数据点对齐方式
+        u16 u16WaveSize;        ///< P06.009 RW 数据点数量
+        u16 u16WaveData[80];    ///< P06.010 RW 数据点数值
     };
-    u16 GROUP[GROUP_SIZE * 1];  ///< P06.055
-} DbgVal_u;
+    u16 GROUP[GROUP_SIZE * 1];  ///< P06.089
+} WaveGen_u;
 
 //-----------------------------------------------------------------------------
 //
 
 EXPORT_PARA_GROUP typedef union {
     __packed struct {
-        u16 u16WaveConfig;      ///< P07.000 RW 触发配置
-        u16 u16WaveType;        ///< P07.001 RW 波形类型
-        u32 u32WaveTargetFreq;  ///< P07.002 RW 波形期望频率
-        u32 u32WaveActualFreq;  ///< P07.004 RO 波形实际频率
-        u16 u16WaveFreqUnit;    ///< P07.006 RW 波形频率单位
-        u16 u16WaveAmplitude;   ///< P07.007 RW 波形振幅
-        u16 u16WaveAlign;       ///< P07.008 RW 数据点对齐方式
-        u16 u16WaveSize;        ///< P07.009 RW 数据点数量
-        u16 u16WaveData[80];    ///< P07.010 RW 数据点数值
+        u16 u16DbgVal[8];  ///< P07.000 RW
+        u32 u32DbgVal[8];  ///< P07.008 RW
+        u64 u64DbgVal[4];  ///< P07.024 RW
+        f32 f32DbgVal[8];  ///< P07.040 RW
     };
-    u16 GROUP[GROUP_SIZE * 1];  ///< P07.089
-} WaveGen_u;
+    u16 GROUP[GROUP_SIZE * 1];  ///< P07.055
+} DbgVal_u;
 
 //-----------------------------------------------------------------------------
 //
@@ -345,15 +340,15 @@ EXPORT_PARA_GROUP typedef union {
 //
 
 typedef struct {
-    SysPara_u SysPara;   // 0
+    MotPara_u MotPara;   // 0
     MotDrv_u  MotDrv;    // 1
-    MotSta_u  MotSta;    // 2
+    MotSta_u  MotState;  // 2
     TrqCtl_u  TrqCtl;    // 3
     SpdCtl_u  SpdCtl;    // 4
     PosCtl_u  PosCtl;    // 5
-    DbgVal_u  DbgVal;    // 6
-    WaveGen_u WaveGen1;  // 7
-    WaveGen_u WaveGen2;  // 8
+    WaveGen_u WaveGen1;  // 6
+    WaveGen_u WaveGen2;  // 7
+    DbgVal_u  DbgVal;    // 8
 } ParaTable_t;
 
 //-----------------------------------------------------------------------------
@@ -361,9 +356,7 @@ typedef struct {
 
 extern ParaTable_t gParatbl;
 
-#define P(group)      gParatbl.group
-#define P_ADDR(group) &P(group)
-
-extern void SystemParaConfig(void);
+#define P(grp)      gParatbl.grp
+#define P_ADDR(grp) &P(grp)
 
 #endif

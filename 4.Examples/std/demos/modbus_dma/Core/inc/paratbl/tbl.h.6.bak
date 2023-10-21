@@ -99,7 +99,7 @@ EXPORT_PARA_GROUP typedef union {
         u16 u16MotTm;              ///< P00.035 RW 电机机械时间常数 0.01ms
         u16 u16___Encoder___;      ///< P00.036 NO 保留
         u16 u16EncType;            ///< P00.037 RW 编码器类型
-        u32 u32EncRes;             ///< P00.038 RW 编码器分辨率 pulse
+        s32 s32EncRes;             ///< P00.038 RW 编码器分辨率 pulse
         s32 s32EncOffset;          ///< P00.040 RW 编码器安装偏置: 编码器"0"位置与FOC坐标系0电角度之间的偏置角,标定到编码器分辨率
         u16 u16HallOffset;         ///< P00.042 RW 霍尔安装偏置: 霍尔"0"位置与FOC坐标系0电角度之间的偏置角,标定到2^16
         u16 u16___AdcSampler___;   ///< P00.043 NO 保留
@@ -164,39 +164,41 @@ EXPORT_PARA_GROUP typedef union {
 
 EXPORT_PARA_GROUP typedef union {
     __packed struct {
-        u16 u16___System___;    ///< P02.000 NO 保留
-        u16 u32SysRunTime;      ///< P02.001 RO 系统运行时间, minute
-        u16 u32AppRunTime;      ///< P02.002 RO 应用运行时间, minute
-        u16 u16___DiDo___;      ///< P02.003 NO 保留
-        u16 u16VirDiState;      ///< P02.004 RO 虚拟DI输入电平状态
-        u16 u16VirDoState;      ///< P02.005 RO 虚拟DO输出电平状态
-        u16 u16ExtDiState;      ///< P02.006 RO 外部DI输入电平状态
-        u16 u16ExtDoState;      ///< P02.007 RO 外部DO输出电平状态
-        u16 u16___AiAo___;      ///< P02.008 NO 保留
-        u16 u16UmdcSi;          ///< P02.009 RO 供电母线电压, 0.01V
-        u16 u16UcdcSi;          ///< P02.010 RO 控制母线电压, 0.01V
-        s16 s16UaiSi[3];        ///< P02.011 RO AI输入电压, 0.01V
-        u16 u16UaoSi[3];        ///< P02.014 RO AO输出电压, 0.01V
-        s16 s16EnvTemp;         ///< P02.017 RO 环境温度, 0.01°C
-        s16 s16ChipTemp;        ///< P02.018 RO 芯片温度, 0.01°C
-        u32 u32AdcSampTime;     ///< P02.019 RO ADC采样耗时, 0.01 us
-        u16 u16AdcSampRes[10];  ///< P02.021 RO ADC采样原始结果
-        u16 u16___Encoder___;   ///< P02.031 NO 保留
-        u16 u16EncState;        ///< P02.032 RO 编码器状态
-        s16 s16EncTemp;         ///< P02.033 RO 编码器温度, 0.01°C
-        u16 u16EncMode;         ///< P02.034 RW 编码器工作模式
-        s64 s64EncPosInit;      ///< P02.035 RO 编码器上电初始位置, pulse
-        u32 u32EncPos;          ///< P02.039 RO 编码器单圈位置, pulse
-        s32 s32EncTurns;        ///< P02.041 RO 编码器圈数, turn
-        u16 u16___MotSta___;    ///< P02.043 NO 保留
-        s32 s32UserSpdRef;      ///< P02.044 RO 用户速度指令, rpm
-        s32 s32UserSpdFb;       ///< P02.046 RO 用户速度反馈, rpm
-        s64 s64UserPosRef;      ///< P02.048 RO 用户位置指令, pulse
-        s64 s64UserPosFb;       ///< P02.052 RO 用户位置反馈, pulse
-        s16 s16UserTrqRef;      ///< P02.056 RO 用户转矩指令
-        s16 s16UserTrqFb;       ///< P02.057 RO 用户转矩反馈
+        u16 u16___System___;     ///< P02.000 NO 保留
+        u16 u32SysRunTime;       ///< P02.001 RO 系统运行时间
+        u16 u32AppRunTime;       ///< P02.002 RO 应用运行时间
+        u16 u16___DiDo___;       ///< P02.003 NO 保留
+        u16 s32PulseCnt;         ///< P02.004 RO 外部DI输入脉冲计数
+        u16 u16ExtDiState;       ///< P02.005 RO 外部DI输入电平状态
+        u16 u16ExtDoState;       ///< P02.006 RO 外部DO输出电平状态
+        u16 u16VirDiState;       ///< P02.007 RO 外部DO输出电平状态
+        u16 u16VirDoState;       ///< P02.008 RO 外部DO输出电平状态
+        u16 u16___AiAo___;       ///< P02.009 NO 保留
+        u16 u16UmdcSi;           ///< P02.010 RO 供电母线电压, 0.1V
+        u16 u16UcdcSi;           ///< P02.011 RO 控制母线电压, 0.1V
+        s16 s16UaiSi[3];         ///< P02.012 RO AI输入电压, 0.1V
+        u16 u16UaoSi[3];         ///< P02.015 RO AO输出电压, 0.1V
+        s16 s16EnvTemp;          ///< P02.018 RO 环境温度, 0.01°C
+        s16 s16ChipTemp;         ///< P02.019 RO 芯片温度, 0.01°C
+        u32 u32AdcSampTime;      ///< P02.020 RO ADC采样耗时, us
+        u16 u16AdcSampRes[10];   ///< P02.022 RO ADC采样原始结果
+        u16 u16___Encoder___;    ///< P02.032 NO 保留
+        u16 u16EncState;         ///< P02.033 RO 编码器状态
+        s16 s16EncTemp;          ///< P02.034 RO 编码器温度
+        u16 u16EncMode;          ///< P02.035 RW 编码器工作模式
+        s64 s64EncPosInit;       ///< P02.036 RO 编码器上电初始位置
+        s32 s32EncTurns;         ///< P02.040 RO 编码器圈数
+        u32 u32EncSingleRotPos;  ///< P02.042 RO 编码器单圈位置 pulse
+        u32 u32EncMultiRotPos;   ///< P02.044 RO 编码器多圈位置(仅多圈绝对值) pulse
+        u16 u16___MotSta___;     ///< P02.046 NO 保留
+        s32 s32UserSpdRef;       ///< P02.047 RO 用户速度指令, rpm
+        s32 s32UserSpdFb;        ///< P02.049 RO 用户速度反馈, rpm
+        s64 s64UserPosRef;       ///< P02.051 RO 用户位置指令, pulse
+        s64 s64UserPosFb;        ///< P02.055 RO 用户位置反馈, pulse
+        s16 s16UserTrqRef;       ///< P02.059 RO 用户转矩指令
+        s16 s16UserTrqFb;        ///< P02.060 RO 用户转矩反馈
     };
-    u16 GROUP[GROUP_SIZE * 1];  ///< P02.057
+    u16 GROUP[GROUP_SIZE * 1];  ///< P02.060
 } MotSta_u;
 
 //-----------------------------------------------------------------------------
@@ -264,12 +266,12 @@ EXPORT_PARA_GROUP typedef union {
 
 EXPORT_PARA_GROUP typedef union {
     __packed struct {
-        u16 u16DbgVal[8];  ///< P06.000 RW
-        u32 u32DbgVal[8];  ///< P06.008 RW
-        u64 u64DbgVal[4];  ///< P06.024 RW
-        f32 f32DbgVal[8];  ///< P06.040 RW
+        u16 u16DbgVal[8];  ///< P07.000 RW
+        u32 u32DbgVal[8];  ///< P07.008 RW
+        u64 u64DbgVal[4];  ///< P07.024 RW
+        f32 f32DbgVal[8];  ///< P07.040 RW
     };
-    u16 GROUP[GROUP_SIZE * 1];  ///< P06.055
+    u16 GROUP[GROUP_SIZE * 1];  ///< P07.055
 } DbgVal_u;
 
 //-----------------------------------------------------------------------------
@@ -277,17 +279,17 @@ EXPORT_PARA_GROUP typedef union {
 
 EXPORT_PARA_GROUP typedef union {
     __packed struct {
-        u16 u16WaveConfig;      ///< P07.000 RW 触发配置
-        u16 u16WaveType;        ///< P07.001 RW 波形类型
-        u32 u32WaveTargetFreq;  ///< P07.002 RW 波形期望频率
-        u32 u32WaveActualFreq;  ///< P07.004 RO 波形实际频率
-        u16 u16WaveFreqUnit;    ///< P07.006 RW 波形频率单位
-        u16 u16WaveAmplitude;   ///< P07.007 RW 波形振幅
-        u16 u16WaveAlign;       ///< P07.008 RW 数据点对齐方式
-        u16 u16WaveSize;        ///< P07.009 RW 数据点数量
-        u16 u16WaveData[80];    ///< P07.010 RW 数据点数值
+        u16 u16WaveConfig;      ///< P06.000 RW 触发配置
+        u16 u16WaveType;        ///< P06.001 RW 波形类型
+        u32 u32WaveTargetFreq;  ///< P06.002 RW 波形期望频率
+        u32 u32WaveActualFreq;  ///< P06.004 RO 波形实际频率
+        u16 u16WaveFreqUnit;    ///< P06.006 RW 波形频率单位
+        u16 u16WaveAmplitude;   ///< P06.007 RW 波形振幅
+        u16 u16WaveAlign;       ///< P06.008 RW 数据点对齐方式
+        u16 u16WaveSize;        ///< P06.009 RW 数据点数量
+        u16 u16WaveData[80];    ///< P06.010 RW 数据点数值
     };
-    u16 GROUP[GROUP_SIZE * 1];  ///< P07.089
+    u16 GROUP[GROUP_SIZE * 1];  ///< P06.089
 } WaveGen_u;
 
 //-----------------------------------------------------------------------------
@@ -351,9 +353,9 @@ typedef struct {
     TrqCtl_u  TrqCtl;    // 3
     SpdCtl_u  SpdCtl;    // 4
     PosCtl_u  PosCtl;    // 5
-    DbgVal_u  DbgVal;    // 6
-    WaveGen_u WaveGen1;  // 7
-    WaveGen_u WaveGen2;  // 8
+    DbgVal_u  DbgVal;    // 8
+    WaveGen_u WaveGen1;  // 6
+    WaveGen_u WaveGen2;  // 7
 } ParaTable_t;
 
 //-----------------------------------------------------------------------------
@@ -361,8 +363,8 @@ typedef struct {
 
 extern ParaTable_t gParatbl;
 
-#define P(group)      gParatbl.group
-#define P_ADDR(group) &P(group)
+#define P(grp)      gParatbl.grp
+#define P_ADDR(grp) &P(grp)
 
 extern void SystemParaConfig(void);
 

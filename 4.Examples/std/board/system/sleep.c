@@ -143,7 +143,7 @@ u32 TimeRecEnd(u8 id)
 {
     if (id < ARRAY_SIZE(saMeasureTime))
     {
-        return dwt_tick() - saMeasureTime[id];
+        return 1e2 * 1e6 * (dwt_tick() - saMeasureTime[id]) / SystemCoreClock;  // 0.01us
     }
     return U32_MAX;
 }

@@ -51,6 +51,8 @@ void usdk_preinit(void)
     USART_InitStructure.USART_WordLength          = USART_WordLength_8b;
     UART_Config(&USART_InitStructure);
     UART_DMA_Config();
+    // paratbl
+    SystemParaConfig();
 }
 
 //
@@ -68,7 +70,7 @@ int main()
 
     WaveGenInit();
 
-    P(DrvCfg).u16BlinkPeriod = 1000;
+    P(SysPara).u16BlinkPeriod = 1000;
 
     while (1)
     {
@@ -87,7 +89,7 @@ int main()
         PEout(15) = !GETBIT(ucCoilBuf[0], 2);  // led3
 #else
         static tick_t t_blink = 0;
-        if (DelayNonBlockMS(t_blink, P(DrvCfg).u16BlinkPeriod))
+        if (DelayNonBlockMS(t_blink, P(SysPara).u16BlinkPeriod))
         {
             PEout(15) ^= 1;  // toggle
             t_blink = HAL_GetTick();
@@ -160,16 +162,16 @@ static int BspEncInit(void)
 {
     static IncEncArgs_t EncArgs;
 
-    EncArgs.u32EncRes    = (vu32*)P_ADDR(DrvCfg.u32EncRes);
-    EncArgs.s32EncPos    = (vs32*)P_ADDR(PosCtl.s32EncPos);
-    EncArgs.s32EncTurns  = (vs32*)P_ADDR(PosCtl.s32EncTurns);
+    EncArgs.u32EncRes    = (vu32*)P_ADDR(SysPara.u32EncRes);
+    EncArgs.u32EncPos    = (vu32*)P_ADDR(MotSta.u32EncPos);
+    EncArgs.s32EncTurns  = (vs32*)P_ADDR(MotSta.s32EncTurns);
     EncArgs.s32UserSpdFb = (vs32*)P_ADDR(MotSta.s32UserSpdFb);
     EncArgs.s64UserPosFb = (vs64*)P_ADDR(MotSta.s64UserPosFb);
     EncArgs.u16SpdCoeff  = (vu16*)P_ADDR(SpdCtl.u16SpdCoeff);
 
     pEncArgs = &EncArgs;
 
-    P(DrvCfg.u32EncRes)   = CONFIG_ENC_PPS;
+    P(SysPara.u32EncRes)  = CONFIG_ENC_PPS;
     P(SpdCtl.u16SpdCoeff) = 100;
 
     IncEncInit(pEncArgs);
@@ -262,12 +264,12 @@ else if (AppCheck(APP_CLOSELOOP))
     U16 u16ElecAngle;
 
 // 0 <= u32EncOffset < u32EncRes
-// 0 <  s32EncPos    < u32EncRes
+// 0 <  u32EncPos    < u32EncRes
     
 // (0,u32EncRes) => (0,U32_MAX) => (0,U16_MAX)
-u32MechAngle = (u32)((s32)P(PosCtl.s32EncPos) - (s32)P(DrvCfg.u32EncOffset) + (s32)P(DrvCfg.u32EncRes)) % (u32)P(DrvCfg.u32EncRes);
-u32MechAngle = (U32)((u64)U32_MAX * (u64)u32MechAngle / (u64)P(DrvCfg.u32EncRes)) >> 16;
-u16ElecAngle = (U16)u32MechAngle * P(DrvCfg.u16MotPolePairs) + P(DrvCfg.u16HallOffset);
+u32MechAngle = (u32)((s32)P(PosCtl.u32EncPos) - (s32)P(SysPara.u32EncOffset) + (s32)P(SysPara.u32EncRes)) % (u32)P(SysPara.u32EncRes);
+u32MechAngle = (U32)((u64)U32_MAX * (u64)u32MechAngle / (u64)P(SysPara.u32EncRes)) >> 16;
+u16ElecAngle = (U16)u32MechAngle * P(SysPara.u16MotPolePairs) + P(SysPara.u16HallOffset);
 
 P(MotSta.u16ElecAngle) = u16ElecAngle;
 }
@@ -275,3 +277,96 @@ P(MotSta.u16ElecAngle) = u16ElecAngle;
 u16 u16HallOffset;  ///< P00.016 霍尔安装偏置(电角度偏置)
 
 #endif
+
+void SystemParaConfig(void)
+{
+    u8 u8idx;
+
+    // System
+    {
+        P(SysPara).u32DrvScheme = 0;
+
+        P(SysPara).u16McuSwVerMajor  = 0;
+        P(SysPara).u16McuSwVerMinor  = 1;
+        P(SysPara).u16McuSwVerPatch  = 1;
+        P(SysPara).u32McuSwBuildDate = 0;
+
+        P(SysPara).u16RunTimeLim = 0;
+
+        P(SysPara).u16ExtDiNbr = 0;
+        P(SysPara).u16ExtDoNbr = 0;
+        P(SysPara).u16ExtAiNbr = 2;
+        P(SysPara).u16TempNbr  = 2;  // ChipTemp + EnvTemp
+
+        P(SysPara).u16BlinkPeriod = 500;
+    }
+
+    // MotPara
+    {
+        P(SysPara).u16MotType       = 0;
+        P(SysPara).u16MotVoltInRate = 0;
+        P(SysPara).u16MotVdMax      = 0;
+        P(SysPara).u16MotVqMax      = 0;
+        P(SysPara).u16MotPowerRate  = 0;
+        P(SysPara).u16MotCurRate    = 0;
+        P(SysPara).u16MotCurMax     = 0;
+        P(SysPara).u16MotTrqRate    = 0;
+        P(SysPara).u16MotTrqMax     = 0;
+        P(SysPara).u16MotSpdRate    = 0;
+        P(SysPara).u16MotSpdMax     = 0;
+        P(SysPara).u16MotAccMax     = 0;
+        P(SysPara).u16MotPolePairs  = 0;
+        P(SysPara).u32MotInertia    = 0;
+        P(SysPara).u16MotRs         = 0;
+        P(SysPara).u16MotLds        = 0;
+        P(SysPara).u16MotLqs        = 0;
+        P(SysPara).u16MotEmfCoeff   = 0;
+        P(SysPara).u16MotTrqCoeff   = 0;
+        P(SysPara).u16MotTm         = 0;
+    }
+
+    // Encoder
+    {
+        P(SysPara).u16EncType    = ENC_INC;
+        P(SysPara).u32EncRes     = 60;
+        P(SysPara).s32EncOffset  = 0;
+        P(SysPara).u16HallOffset = 0;
+    }
+
+    // AdcSampler
+    {
+        P(SysPara).u16IphZoom = 1;
+        P(SysPara).s16IaBias  = 0;
+        P(SysPara).s16IbBias  = 0;
+        P(SysPara).s16IcBias  = 0;
+
+        P(SysPara).u16UmdcZoom = 1;
+        P(SysPara).s16UmdcBias = 0;
+        P(SysPara).u16UcdcZoom = 1;
+        P(SysPara).s16UcdcBias = 0;
+
+        P(SysPara).u16TempZoom = 1;
+        P(SysPara).s16TempBias = 0;
+
+        for (u8idx = 0; u8idx < P(SysPara).u16ExtAiNbr; ++u8idx)
+        {
+            P(SysPara).u16AiZoom[u8idx]     = 1;
+            P(SysPara).s16AiBias[u8idx]     = 0;
+            P(SysPara).u16AiDeadZone[u8idx] = 0;
+            P(SysPara).u16AiFltrTime[u8idx] = 0;
+        }
+    }
+    // SlvCom
+    {
+        P(SysPara).u16CommSlaveAddr = 1;
+
+        P(SysPara).u16ModBaudrate       = 0; // 配对应的比特率表
+        P(SysPara).u16ModDataFmt        = (u16)MODBUS_DATFMR_8N1;
+        P(SysPara).u16ModMasterEndian   = 0;
+        P(SysPara).u16ModDisconnectTime = 0;
+        P(SysPara).u16ModAckDelay       = 0;
+
+        P(SysPara).u16CopBitrate    = 0;  // 配对应的比特率表
+        P(SysPara).u16CopPdoInhTime = 0;
+    }
+}

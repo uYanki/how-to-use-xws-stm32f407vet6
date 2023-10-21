@@ -11,7 +11,7 @@
 #define ENC_TIM_PORT      TIM4
 #define ENC_TIM_CH_A      TIM_Channel_1
 #define ENC_TIM_CH_B      TIM_Channel_2
-#define ENC_TIM_MAX_PRD   0x7FFFF
+#define ENC_TIM_MAX_PRD   (0x7FFF)
 
 #define ENC_GPIO_AF       GPIO_AF_TIM4
 
@@ -95,8 +95,7 @@ void IncEncInit(IncEncArgs_t* args)
     // Reset counter
     IncEncRst();
 
-    args->u32LastTick  = 0;
-    args->f32DeltaTick = 0;
+    args->u32LastTick = 0;
 
     TIM_Cmd(ENC_TIM_PORT, ENABLE);
 }
@@ -108,41 +107,41 @@ void IncEncInit(IncEncArgs_t* args)
  * [out] s32EncTurns
  * [out] s32UserSpdFb
  * [out] s64UserPosFb
- *
- * [ret] s32DeltaPos
  */
 s32 IncEncCycle(IncEncArgs_t* args)
 {
     u32 u32CurTick = dwt_tick();
 
-    if (args->u32LastTick != 0)
+    if (args->u32LastTick == 0)
     {
-        s32 s32DeltaPos = IncEncGet();
+        args->u32LastTick = u32CurTick;
+        return 0;
+    }
 
-        // immediately reset, otherwise pulse loss may occur
-        IncEncRst();
+    RO s32 s32EncRes   = (s32)(*args->u32EncRes);
+    s32    s32DeltaPos = IncEncGet();
+    IncEncRst();  // immediately reset, otherwise pulse loss may occur
 
-        // time (second)
-        args->f32DeltaTick = (f32)HAL_DeltaTick(args->u32LastTick, u32CurTick) / (f32)SystemCoreClock;
+    // speed (rpm)
+    {
+        // deltaTime_s = (f32)HAL_DeltaTick(args->u32LastTick, u32CurTick) / (f32)SystemCoreClock
+        // speed_rpm = 60 * (f32)s32DeltaPos / (f32)s32EncRes / (f32)deltaTime_s
+        // speed_out = u16SpdCoeff * speed_rpm
 
-        // position (pulse)
-        *args->s32EncPos += s32DeltaPos;
-        if (*args->s32EncPos >= (s32)(*args->u32EncRes))
-        {
-            *args->s32EncPos -= (s32)(*args->u32EncRes);
-        }
-        else if (*args->s32EncPos < 0)
-        {
-            *args->s32EncPos += (s32)(*args->u32EncRes);
-        }
+        s32 s32Tmp;
+
+        s32Tmp = 60 * (s32)(*args->u16SpdCoeff);
+        s32Tmp = s32Tmp * (s32)s32DeltaPos * (s32)SystemCoreClock;
+        s32Tmp = s32Tmp / (s32)s32EncRes / (s32)HAL_DeltaTick(args->u32LastTick, u32CurTick);
+
+        *args->s32UserSpdFb = s32Tmp;
+    }
+
+    // position (pulse)
+    {
         *args->s64UserPosFb += (s64)s32DeltaPos;
-        *args->s32EncTurns = *args->s64UserPosFb / (s64)(*args->u32EncRes);
-
-        // speed (rpm)
-        *args->s32UserSpdFb = *args->u16SpdCoeff;
-        *args->s32UserSpdFb *= 60 * (f32)s32DeltaPos / (f32)args->f32DeltaTick / (f32)(*args->u32EncRes);
-
-        return s32DeltaPos;
+        *args->u32EncPos   = (s64)(*args->s64UserPosFb) % (s64)s32EncRes;
+        *args->s32EncTurns = (s64)(*args->s64UserPosFb) / (s64)s32EncRes;
     }
 
     // time (microsecond,us)

@@ -168,35 +168,35 @@ EXPORT_PARA_GROUP typedef union {
         u16 u32SysRunTime;      ///< P02.001 RO 系统运行时间, minute
         u16 u32AppRunTime;      ///< P02.002 RO 应用运行时间, minute
         u16 u16___DiDo___;      ///< P02.003 NO 保留
-        u16 u16VirDiState;      ///< P02.004 RO 虚拟DI输入电平状态
-        u16 u16VirDoState;      ///< P02.005 RO 虚拟DO输出电平状态
-        u16 u16ExtDiState;      ///< P02.006 RO 外部DI输入电平状态
-        u16 u16ExtDoState;      ///< P02.007 RO 外部DO输出电平状态
-        u16 u16___AiAo___;      ///< P02.008 NO 保留
-        u16 u16UmdcSi;          ///< P02.009 RO 供电母线电压, 0.01V
-        u16 u16UcdcSi;          ///< P02.010 RO 控制母线电压, 0.01V
-        s16 s16UaiSi[3];        ///< P02.011 RO AI输入电压, 0.01V
-        u16 u16UaoSi[3];        ///< P02.014 RO AO输出电压, 0.01V
-        s16 s16EnvTemp;         ///< P02.017 RO 环境温度, 0.01°C
-        s16 s16ChipTemp;        ///< P02.018 RO 芯片温度, 0.01°C
-        u32 u32AdcSampTime;     ///< P02.019 RO ADC采样耗时, 0.01 us
-        u16 u16AdcSampRes[10];  ///< P02.021 RO ADC采样原始结果
-        u16 u16___Encoder___;   ///< P02.031 NO 保留
-        u16 u16EncState;        ///< P02.032 RO 编码器状态
-        s16 s16EncTemp;         ///< P02.033 RO 编码器温度, 0.01°C
-        u16 u16EncMode;         ///< P02.034 RW 编码器工作模式
-        s64 s64EncPosInit;      ///< P02.035 RO 编码器上电初始位置, pulse
-        u32 u32EncPos;          ///< P02.039 RO 编码器单圈位置, pulse
-        s32 s32EncTurns;        ///< P02.041 RO 编码器圈数, turn
-        u16 u16___MotSta___;    ///< P02.043 NO 保留
-        s32 s32UserSpdRef;      ///< P02.044 RO 用户速度指令, rpm
-        s32 s32UserSpdFb;       ///< P02.046 RO 用户速度反馈, rpm
-        s64 s64UserPosRef;      ///< P02.048 RO 用户位置指令, pulse
-        s64 s64UserPosFb;       ///< P02.052 RO 用户位置反馈, pulse
-        s16 s16UserTrqRef;      ///< P02.056 RO 用户转矩指令
-        s16 s16UserTrqFb;       ///< P02.057 RO 用户转矩反馈
+        u16 u16VirDiState;      ///< P02.007 RO 虚拟DI输入电平状态
+        u16 u16VirDoState;      ///< P02.008 RO 虚拟DO输出电平状态
+        u16 u16ExtDiState;      ///< P02.005 RO 外部DI输入电平状态
+        u16 u16ExtDoState;      ///< P02.006 RO 外部DO输出电平状态
+        u16 u16___AiAo___;      ///< P02.009 NO 保留
+        u16 u16UmdcSi;          ///< P02.010 RO 供电母线电压, 0.1V
+        u16 u16UcdcSi;          ///< P02.011 RO 控制母线电压, 0.1V
+        s16 s16UaiSi[3];        ///< P02.012 RO AI输入电压, 0.1V
+        u16 u16UaoSi[3];        ///< P02.015 RO AO输出电压, 0.1V
+        s16 s16EnvTemp;         ///< P02.018 RO 环境温度, 0.01°C
+        s16 s16ChipTemp;        ///< P02.019 RO 芯片温度, 0.01°C
+        u32 u32AdcSampTime;     ///< P02.020 RO ADC采样耗时, us
+        u16 u16AdcSampRes[10];  ///< P02.022 RO ADC采样原始结果
+        u16 u16___Encoder___;   ///< P02.032 NO 保留
+        u16 u16EncState;        ///< P02.033 RO 编码器状态
+        s16 s16EncTemp;         ///< P02.034 RO 编码器温度, 0.01°C
+        u16 u16EncMode;         ///< P02.035 RW 编码器工作模式
+        s64 s64EncPosInit;      ///< P02.036 RO 编码器上电初始位置, pulse
+        u32 u32EncPos;          ///< P02.040 RO 编码器单圈位置, pulse
+        s32 s32EncTurns;        ///< P02.040 RO 编码器圈数, turn
+        u16 u16___MotSta___;    ///< P02.046 NO 保留
+        s32 s32UserSpdRef;      ///< P02.047 RO 用户速度指令, rpm
+        s32 s32UserSpdFb;       ///< P02.049 RO 用户速度反馈, rpm
+        s64 s64UserPosRef;      ///< P02.051 RO 用户位置指令, pulse
+        s64 s64UserPosFb;       ///< P02.055 RO 用户位置反馈, pulse
+        s16 s16UserTrqRef;      ///< P02.059 RO 用户转矩指令
+        s16 s16UserTrqFb;       ///< P02.060 RO 用户转矩反馈
     };
-    u16 GROUP[GROUP_SIZE * 1];  ///< P02.057
+    u16 GROUP[GROUP_SIZE * 1];  ///< P02.060
 } MotSta_u;
 
 //-----------------------------------------------------------------------------
@@ -361,8 +361,8 @@ typedef struct {
 
 extern ParaTable_t gParatbl;
 
-#define P(group)      gParatbl.group
-#define P_ADDR(group) &P(group)
+#define P(group)      (gParatbl.group)
+#define P_ADDR(group) &(gParatbl.group)
 
 extern void SystemParaConfig(void);
 
