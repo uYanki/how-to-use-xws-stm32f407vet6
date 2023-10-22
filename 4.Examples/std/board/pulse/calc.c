@@ -1,6 +1,6 @@
 #include "calc.h"
 
-// ！！！ 输入频率过小可能会生成失败，可产生增大允许的频率误差
+// ！！！ 输入频率过小可能会生成失败，可增大允许的频率误差
 
 // err_i: maximum allowable frequency error
 bool TIM_Calc(u32 clk_i, u32 frq_i, u32 err_i, u16* prd_o, u16* psc_o, u32* frq_o)
