@@ -145,5 +145,5 @@ u32 TimeRecEnd(u8 id)
     {
         return 1e2 * 1e6 * (dwt_tick() - saMeasureTime[id]) / SystemCoreClock;  // 0.01us
     }
-    return U32_MAX;
+    return TICK_MAX;
 }

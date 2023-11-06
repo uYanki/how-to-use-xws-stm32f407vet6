@@ -45,7 +45,7 @@ typedef u64 tick_t;
 
 // prescaler
 #ifndef TICK_PSC
-#define TICK_PSC (UNIT_MS)
+#define TICK_PSC (TICK_INC)
 #endif
 
 inline void DelayInit(void);
@@ -83,7 +83,7 @@ void FirewareDelay(u32 nWaitTime);
 #define TID_8 8
 #define TID_9 9
 
-bool TimeRecStart(u8 id);
-u32  TimeRecEnd(u8 id);
+bool   TimeRecStart(u8 id);
+tick_t TimeRecEnd(u8 id);
 
 #endif
