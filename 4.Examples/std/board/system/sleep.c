@@ -32,25 +32,25 @@ u32 dwt_tick(void)
 
 void dwt_wait(u32 us)
 {
-    u32 ticks, tcnt = 0;
-    u32 t_old, t_now;
+    u32 ticks, tCnt = 0;
+    u32 tOld, tNow;
 
     ticks = us * (DWT_FREQ / 1000000);  // 节拍数
-    t_old = dwt_tick();
+    tOld  = dwt_tick();
 
-    while (tcnt < ticks)
+    while (tCnt < ticks)
     {
-        if ((t_now = dwt_tick()) != t_old)
+        if ((tNow = dwt_tick()) != tOld)
         {
-            if (t_now > t_old)
+            if (tNow > tOld)
             {
-                tcnt += t_now - t_old;
+                tCnt += tNow - tOld;
             }
             else
             {
-                tcnt += UINT32_MAX + t_now - t_old;
+                tCnt += UINT32_MAX + tNow - tOld;
             }
-            t_old = t_now;
+            tOld = tNow;
         }
     }
 }
@@ -71,13 +71,13 @@ void DelayBlock(tick_t nWaitTime)
 {
     tick_t nStartTick = HAL_GetTick();
 
-    while ((HAL_GetTick() - nStartTick) < nWaitTime)
+    while (HAL_DeltaTick(nStartTick, HAL_GetTick()) < nWaitTime)
         ;
 }
 
 bool DelayNonBlock(tick_t nStartTick, tick_t nWaitTime)
 {
-    return HAL_GetTick() >= (nStartTick + nWaitTime);
+    return HAL_DeltaTick(nStartTick, HAL_GetTick()) >= nWaitTime;
 }
 
 tick_t HAL_GetTick(void)
