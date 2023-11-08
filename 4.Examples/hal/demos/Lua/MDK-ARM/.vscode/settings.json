@@ -1,0 +1,20 @@
+{
+    "files.associations": {
+        "time.h": "c",
+        "main.h": "c",
+        "stm32f4xx_hal.h": "c",
+        "api.h": "c",
+        "lua.h": "c",
+        "lapi.h": "c",
+        "lgc.h": "c",
+        "ldebug.h": "c",
+        "string.h": "c",
+        "limits.h": "c",
+        "lprefix.h": "c",
+        "lundump.h": "c",
+        "ltm.h": "c",
+        "ltable.h": "c",
+        "lstring.h": "c",
+        "lmem.h": "c"
+    }
+}
