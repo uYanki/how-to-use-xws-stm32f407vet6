@@ -14,6 +14,9 @@
                 "C:\\Users\\uYanki\\STM32Cube\\Repository\\STM32Cube_FW_F4_V1.27.1\\Drivers\\CMSIS\\Include",
                 "f:\\how-to-use-xws-stm32f407vet6\\4.Examples\\hal\\3rdparty\\Lua",
                 "f:\\how-to-use-xws-stm32f407vet6\\4.Examples\\hal\\demos\\Lua\\Ports",
+                "f:\\how-to-use-xws-stm32f407vet6\\4.Examples\\hal\\demos\\Lua\\FATFS\\Target",
+                "f:\\how-to-use-xws-stm32f407vet6\\4.Examples\\hal\\demos\\Lua\\FATFS\\App",
+                "C:\\Users\\uYanki\\STM32Cube\\Repository\\STM32Cube_FW_F4_V1.27.1\\Middlewares\\Third_Party\\FatFs\\src",
                 "C:\\Keil_v5\\ARM\\ARMCC\\include",
                 "C:\\Keil_v5\\ARM\\ARMCC\\include\\rw",
                 "f:\\how-to-use-xws-stm32f407vet6\\4.Examples\\hal\\demos\\Lua\\MDK-ARM",
@@ -21,7 +24,8 @@
                 "C:\\Users\\uYanki\\STM32Cube\\Repository\\STM32Cube_FW_F4_V1.27.1\\Drivers\\STM32F4xx_HAL_Driver\\Src",
                 "C:\\Users\\uYanki\\STM32Cube\\Repository\\STM32Cube_FW_F4_V1.27.1\\Middlewares\\ST\\STM32_USB_Device_Library\\Core\\Src",
                 "C:\\Users\\uYanki\\STM32Cube\\Repository\\STM32Cube_FW_F4_V1.27.1\\Middlewares\\ST\\STM32_USB_Device_Library\\Class\\MSC\\Src",
-                "f:\\how-to-use-xws-stm32f407vet6\\4.Examples\\hal\\demos\\Lua\\Ports\\Lua"
+                "f:\\how-to-use-xws-stm32f407vet6\\4.Examples\\hal\\demos\\Lua\\Ports\\Lua",
+                "C:\\Users\\uYanki\\STM32Cube\\Repository\\STM32Cube_FW_F4_V1.27.1\\Middlewares\\Third_Party\\FatFs\\src\\option"
             ],
             "defines": [
                 "USE_HAL_DRIVER",

@@ -18,11 +18,13 @@
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
+#include "fatfs.h"
 #include "usb_device.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "lua/api.h"
+#include "stdbool.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -40,6 +42,8 @@
 /* USER CODE END PM */
 
 /* Private variables ---------------------------------------------------------*/
+SD_HandleTypeDef hsd;
+
 UART_HandleTypeDef huart1;
 DMA_HandleTypeDef  hdma_usart1_rx;
 DMA_HandleTypeDef  hdma_usart1_tx;
@@ -53,6 +57,7 @@ void        SystemClock_Config(void);
 static void MX_GPIO_Init(void);
 static void MX_DMA_Init(void);
 static void MX_USART1_UART_Init(void);
+static void MX_SDIO_SD_Init(void);
 /* USER CODE BEGIN PFP */
 
 /* USER CODE END PFP */
@@ -87,6 +92,189 @@ void lua_run(void)
 
     // luaL_dofile();
 }
+
+#include "fatfs.h"
+
+FATFS    fs;
+FATFS*   pfs;
+FIL      fil;
+FRESULT  fres;
+DWORD    fre_clust;
+uint32_t totalSpace, freeSpace;
+char     buffer[100];
+
+void SD_Error_Handler(char* file, int line)
+{
+    printf("%s:%d\r\n", file, line);
+    while (1) {}
+}
+
+/**
+ * @brief
+ *
+ * @param path the directory to be scanned
+ * @param depth recursively searching sub-directory
+ *
+ */
+FRESULT EnumFiles(char* path, uint8_t depth)
+{
+    FRESULT res;
+    DIR     dir;
+    UINT    i;
+
+    static FILINFO fno;
+
+    static char    cur_path[128];  // buffer
+    static uint8_t cur_depth = 0;
+
+    if (cur_depth == 0)
+    {
+        strcpy(cur_path, path);
+    }
+
+    /* Open the directory */
+    res = f_opendir(&dir, cur_path);
+
+    if (res == FR_OK)
+    {
+        for (;;)
+        {
+            /* Read a directory item */
+            res = f_readdir(&dir, &fno);
+
+            if (res != FR_OK || fno.fname[0] == 0)
+            {
+                /* Break on error or end of dir */
+                break;
+            }
+
+            if (fno.fattrib & AM_DIR)
+            {
+                /* It is a directory */
+                i = strlen(cur_path);
+                sprintf(&cur_path[i], "/%s", fno.fname);
+
+                if (cur_depth < depth)
+                {
+                    cur_depth++;
+
+                    /* Enter the directory */
+                    res = EnumFiles("", depth);
+
+                    cur_depth--;
+
+                    if (res != FR_OK)
+                    {
+                        break;
+                    }
+                }
+
+                cur_path[i] = 0;
+            }
+            else
+            {
+                /* It is a file */
+                printf("%s/%s %u\r\n", cur_path, fno.fname, fno.fsize);
+            }
+        }
+
+        f_closedir(&dir);
+    }
+#if 0
+    else
+    {
+        printf("err");
+    }
+#endif
+
+    return res;
+}
+
+void SDTst()
+{
+    if (f_mount(&fs, "", 0) != FR_OK)
+    {
+        SD_Error_Handler(__FILE__, __LINE__);
+    }
+
+    /* Check freeSpace space */
+    if (f_getfree("", &fre_clust, &pfs) != FR_OK)
+    {
+        SD_Error_Handler(__FILE__, __LINE__);
+    }
+
+    totalSpace = (uint32_t)((pfs->n_fatent - 2) * pfs->csize * 0.5);
+    freeSpace  = (uint32_t)(fre_clust * pfs->csize * 0.5);
+
+    printf("free space: %.2f MB\r\n", freeSpace / 1024.f);
+    printf("total space: %.2f MB\r\n", totalSpace / 1024.f);
+
+    /* free space is less than 1kb */
+    if (freeSpace < 1)
+    {
+        SD_Error_Handler(__FILE__, __LINE__);
+    }
+
+    //	scan_files("/");
+
+    /* Open file to write */
+
+    if (f_open(&fil, "first.txt", FA_OPEN_ALWAYS | FA_READ | FA_WRITE) != FR_OK)
+    {
+        SD_Error_Handler(__FILE__, __LINE__);
+    }
+
+    /* Writing text */
+    f_puts("STM32 SD Card I/O Example via SDIO\n", &fil);
+    f_puts("Save OK!!!", &fil);
+
+    /* Close file */
+    if (f_close(&fil) != FR_OK)
+    {
+        SD_Error_Handler(__FILE__, __LINE__);
+    }
+
+    /* Open file to read */
+    if (f_open(&fil, "first.txt", FA_READ) != FR_OK)
+    {
+        SD_Error_Handler(__FILE__, __LINE__);
+    }
+
+    while (f_gets(buffer, sizeof(buffer), &fil))
+    {
+        /* SWV output */
+        printf("%s", buffer);
+        fflush(stdout);
+    }
+
+    /* Close file */
+    if (f_close(&fil) != FR_OK)
+    {
+        SD_Error_Handler(__FILE__, __LINE__);
+    }
+
+    /* scan file in dir*/
+
+    // https://blog.csdn.net/unsv29/article/details/83301615
+    // 这里吧 fafts 的 lock 从 2 改为 0 了，要不然有些地方搜索不到, 报错误 FR_TOO_MANY_OPEN_FILES
+
+    printf("\r\n[scan]:\r\n");
+    EnumFiles("0:", 3);
+
+    printf("\r\n[scan]:\r\n");
+    EnumFiles("0:", 2);
+
+    printf("\r\n[scan]:\r\n");
+    EnumFiles("0:", 3);
+
+    printf("\r\n[scan]:\r\n");
+    EnumFiles("0:/dir", 1);
+
+    /* Unmount SDCARD */
+    //    if (f_mount(NULL, "", 1) != FR_OK)
+    //        SD_Error_Handler(__FILE__, __LINE__);
+}
+
 /* USER CODE END 0 */
 
 /**
@@ -120,8 +308,11 @@ int main(void)
     MX_DMA_Init();
     MX_USART1_UART_Init();
     MX_USB_DEVICE_Init();
+    MX_SDIO_SD_Init();
+    MX_FATFS_Init();
     /* USER CODE BEGIN 2 */
-    lua_run();
+    SDTst();
+    //  lua_run();
     /* USER CODE END 2 */
 
     /* Infinite loop */
@@ -177,6 +368,32 @@ void SystemClock_Config(void)
     {
         Error_Handler();
     }
+}
+
+/**
+ * @brief SDIO Initialization Function
+ * @param None
+ * @retval None
+ */
+static void MX_SDIO_SD_Init(void)
+{
+    /* USER CODE BEGIN SDIO_Init 0 */
+
+    /* USER CODE END SDIO_Init 0 */
+
+    /* USER CODE BEGIN SDIO_Init 1 */
+
+    /* USER CODE END SDIO_Init 1 */
+    hsd.Instance                 = SDIO;
+    hsd.Init.ClockEdge           = SDIO_CLOCK_EDGE_RISING;
+    hsd.Init.ClockBypass         = SDIO_CLOCK_BYPASS_DISABLE;
+    hsd.Init.ClockPowerSave      = SDIO_CLOCK_POWER_SAVE_DISABLE;
+    hsd.Init.BusWide             = SDIO_BUS_WIDE_1B;
+    hsd.Init.HardwareFlowControl = SDIO_HARDWARE_FLOW_CONTROL_DISABLE;
+    hsd.Init.ClockDiv            = 84;
+    /* USER CODE BEGIN SDIO_Init 2 */
+
+    /* USER CODE END SDIO_Init 2 */
 }
 
 /**
@@ -239,6 +456,7 @@ static void MX_GPIO_Init(void)
     /* GPIO Ports Clock Enable */
     __HAL_RCC_GPIOH_CLK_ENABLE();
     __HAL_RCC_GPIOE_CLK_ENABLE();
+    __HAL_RCC_GPIOC_CLK_ENABLE();
     __HAL_RCC_GPIOA_CLK_ENABLE();
     __HAL_RCC_GPIOD_CLK_ENABLE();
 
